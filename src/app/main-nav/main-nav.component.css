@@ -19,3 +19,7 @@
 .fill-space {
   flex: 1 1 auto;
 }
+
+.mat-toolbar {
+  background-color: #18C1C0;
+}

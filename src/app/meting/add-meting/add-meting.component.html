@@ -1,0 +1,153 @@
+<mat-card>
+  <mat-card-content>
+    <form class="inputcontainer" [formGroup]="meting" (ngSubmit)="onSubmit()">
+      <mat-form-field class="inputveld">  <!-- werk -->
+
+        <input
+          matInput
+          id="werkinput"
+          aria-label="werk"
+          placeholder="Werk"
+          type="text"
+          formControlName="werk"
+        />
+
+        <mat-error
+          *ngIf="meting.get('werk')['errors'] && meting.get('werk').touched"
+        >
+          {{ getErrorMessage(meting.get('werk')['errors']) }}
+        </mat-error>
+      </mat-form-field>
+
+      <button type="button" class="collapsible"></button>     <!--openvouwen werk-->
+      <div class="content" formArrayName="resultaten" *ngFor="
+          let item of meting.get('resultaten')['controls'];
+          let i = index
+        ">
+        <div [formGroupName]="i" >
+          <mat-form-field>
+            <!--<label>Administratie</label>-->
+            <input matInput id="werkAdminInput" type="text" aria-label="werk administratie" placeholder="Administratie" formControlName="werk_Administratie"/>
+          </mat-form-field>
+
+          <mat-form-field>
+            <!--<label>Telefoneren klanten</label>-->
+            <input matInput id="werkTelKlantInput" type="text" aria-label="werk telefoneren klanten" placeholder="Telefoneren klanten" formControlName="werk_TelefonerenKlanten"/>
+          </mat-form-field>
+
+          <mat-form-field>
+            <!--<label>Bezoeken</label>-->
+            <input matInput id="werkBezKlantInput" type="text" aria-label="werk bezoeken klanten" placeholder="Bezoeken klanten" formControlName="werk_BezoekenKlanten"/>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <mat-form-field class="inputveld"> <!-- relaties -->
+
+        <input
+          matInput
+          aria-label="relaties"
+          placeholder="Relaties"
+          type="text"
+          formControlName="relaties"
+          #spy
+        />
+        <mat-error
+          *ngIf="meting.get('relaties')['errors'] && meting.get('relaties').touched"
+        >
+          {{ getErrorMessage(meting.get('relaties')['errors']) }}
+        </mat-error>
+      </mat-form-field>
+      <button type="button" class="collapsible"></button>
+      <div class="content">   <!--openvouwen relaties-->
+        <ol class="ol">
+          <li>
+            <input type="text" placeholder="%">
+          </li>
+          <li>
+            <input type="text" placeholder="%">
+          </li>
+          <li>
+            <input type="text" placeholder="%">
+          </li>
+        </ol>
+      </div>
+
+      <mat-form-field class="inputveld"> <!-- gezondheid -->
+
+        <input
+          matInput
+          aria-label="gezondheid"
+          placeholder="Gezondheid"
+          type="text"
+          formControlName="gezondheid"
+          #spy
+        />
+        <mat-error
+          *ngIf="meting.get('gezondheid')['errors'] && meting.get('gezondheid').touched"
+        >
+          {{ getErrorMessage(meting.get('gezondheid')['errors']) }}
+        </mat-error>
+      </mat-form-field>
+      <button type="button" class="collapsible"></button>
+      <div class="content">   <!--openvouwen gezondheid-->
+        <ol class="ol">
+          <li>
+            <input type="text" placeholder="%">
+          </li>
+          <li>
+            <input type="text" placeholder="%">
+          </li>
+          <li>
+            <input type="text" placeholder="%">
+          </li>
+        </ol>
+      </div>
+
+      <mat-form-field class="inputveld"> <!-- vrije tijd -->
+
+        <input
+          matInput
+          aria-label="vrijetijd"
+          placeholder="Vrije Tijd"
+          type="text"
+          formControlName="vrijetijd"
+          #spy
+        />
+        <mat-error
+          *ngIf="meting.get('vrijetijd')['errors'] && meting.get('vrijetijd').touched"
+        >
+          {{ getErrorMessage(meting.get('vrijetijd')['errors']) }}
+        </mat-error>
+      </mat-form-field>
+      <button type="button" class="collapsible"></button>
+      <div class="content">   <!--openvouwen vrije tijd-->
+        <ol class="ol">
+          <li>
+            <input type="text" placeholder="%">
+          </li>
+          <li>
+            <input type="text" placeholder="%">
+          </li>
+          <li>
+            <input type="text" placeholder="%">
+          </li>
+        </ol>
+      </div>
+     
+      <button class="opslaan" mat-raised-button type="submit" [disabled]="!meting.valid">
+        Opslaan
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
+<mat-card class="error" *ngIf="errorMessage" data-cy="appError">
+  got an error while adding the meting: {{ errorMessage }}
+</mat-card>
+<mat-card
+  class="confirmation"
+  *ngIf="confirmationMessage"
+  data-cy="appConfirmation"
+>
+  {{ confirmationMessage }}
+</mat-card>

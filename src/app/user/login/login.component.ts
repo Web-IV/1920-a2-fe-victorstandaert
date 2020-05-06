@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
               this.router.navigateByUrl(this.authService.redirectUrl);
               this.authService.redirectUrl = undefined;
             } else {
-              this.router.navigate(['/recipe/list']);
+              this.router.navigate(['/meting/list']);
             }
           } else {
             this.errorMessage = `Could not login`;
@@ -59,9 +59,9 @@ export class LoginComponent implements OnInit {
         (err: HttpErrorResponse) => {
           console.log(err);
           if (err.error instanceof Error) {
-            this.errorMessage = `Error while trying to login user ${this.user.value.username}: ${err.error.message}`;
+            this.errorMessage = `Wachtwoord of gebruikersnaam is onjuist`;
           } else {
-            this.errorMessage = `Error ${err.status} while trying to login user ${this.user.value.username}: ${err.error}`;
+            this.errorMessage = `Wachtwoord of gebruikersnaam is onjuist`;
           }
         }
       );

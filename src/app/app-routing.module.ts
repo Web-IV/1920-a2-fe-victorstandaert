@@ -7,13 +7,13 @@ import { AuthGuard } from './user/auth.guard';
 
 const appRoutes: Routes = [
   {
-    path: 'recipe',
+    path: 'meting',
     canActivate: [AuthGuard],
     loadChildren: () =>
-      import('./recipe/recipe.module').then((mod) => mod.RecipeModule),
+      import('./meting/meting.module').then((mod) => mod.MetingModule),
     data: { preload: true },
   },
-  { path: '', redirectTo: 'recipe/list', pathMatch: 'full' },
+  { path: '', redirectTo: 'meting/list', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];
 

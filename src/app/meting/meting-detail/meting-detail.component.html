@@ -1,0 +1,19 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title
+      >{{ meting.id }} created by
+      {{ meting.user }}
+    </mat-card-title>
+    <mat-card-subtitle
+      >added on {{ meting.dateAdded | date: 'longDate' }}</mat-card-subtitle
+    >
+  </mat-card-header>
+  <mat-card-content>
+    <h3 mat-subheader>resultaten</h3>
+    <mat-list>
+      <mat-list-item *ngFor="let resultaat of meting.resultaten">
+        <app-resultaat [resultaat]="resultaat"></app-resultaat>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
