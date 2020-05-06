@@ -66,7 +66,7 @@ export class AddMetingComponent implements OnInit {
       });
     }
 
-    var input1 = (<HTMLInputElement>document.getElementById("werkAdminInput"));
+    var input1 = (<HTMLInputElement>document.getElementById("werkAdminInput")); //automatisch input value aanpassen wanneer 
     var array;
     var value;
     var somInputs;
@@ -82,11 +82,13 @@ export class AddMetingComponent implements OnInit {
                 (<HTMLInputElement>document.getElementById("werkTelKlantInput")).value,
                 (<HTMLInputElement>document.getElementById("werkBezKlantInput")).value]
         array.forEach(element => {
-          if(element)
-          somInputs += element;
-          teller ++;
+          if(element){
+            somInputs += element;
+            teller ++;
+          }
         });
-        (somInputs / teller) * value;
+        (somInputs / teller) * value;       
+        
         (<HTMLInputElement>document.getElementById("werkinput")).value = somInputs;
       }
     });
