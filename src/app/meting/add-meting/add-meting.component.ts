@@ -66,18 +66,18 @@ export class AddMetingComponent implements OnInit {
       });
     }
 
-    var idk = (<HTMLInputElement>document.getElementById("werkAdminInput"));
+    var input1 = (<HTMLInputElement>document.getElementById("werkAdminInput"));
     var array;
     var value;
     var somInputs;
     var teller = 0;
 
-    idk.addEventListener("keyup", function(){
+    input1.addEventListener("keyup", function(){
       value  = (<HTMLInputElement>document.getElementById("werkinput")).value;
       somInputs = 0;
       teller = 0;
 
-      if(typeof idk.value !== 'string'){
+      if(typeof input1.value !== 'string'){
         array = [(<HTMLInputElement>document.getElementById("werkAdminInput")).value,
                 (<HTMLInputElement>document.getElementById("werkTelKlantInput")).value,
                 (<HTMLInputElement>document.getElementById("werkBezKlantInput")).value]
