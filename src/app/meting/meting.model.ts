@@ -9,7 +9,7 @@ interface MetingJson {
 export class Meting {
   private _id: number;
   constructor(
-    private _resultaten: Resultaat[], 
+    private _resultaten = new Array<Resultaat>(), 
     private _dateAdded = new Date(),
     private _user = ''
   ) {

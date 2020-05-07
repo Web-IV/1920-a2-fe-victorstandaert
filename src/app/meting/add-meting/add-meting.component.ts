@@ -129,12 +129,6 @@ export class AddMetingComponent implements OnInit {
     );
   }
   onSubmit() {
-    let amount = 
-        ((this.meting.value.resultaten.werk_Administratie + 
-        this.meting.value.resultaten.werk_BezoekenKlanten +
-        this.meting.value.resultaten.werk_TelefonerenKlanten) / 3) * 
-        this.meting.value.werk / 100
-
     
     let resultaten = this.meting.value.resultaten.map(Resultaat.fromJSON);
     let dateTime = new Date();
