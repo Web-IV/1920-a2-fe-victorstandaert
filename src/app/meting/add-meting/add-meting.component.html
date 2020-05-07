@@ -24,21 +24,37 @@
           let item of meting.get('resultaten')['controls'];
           let i = index
         ">
-        <div [formGroupName]="i" >
+        <div [formGroupName]="i"> <!--input fields -->     
           <mat-form-field>
-            <!--<label>Administratie</label>-->
             <input matInput id="werkAdminInput" type="text" aria-label="werk administratie" placeholder="Administratie" formControlName="werk_Administratie"/>
           </mat-form-field>
-
           <mat-form-field>
-            <!--<label>Telefoneren klanten</label>-->
+            <input matInput id="werkAdminInputIN" type="text" aria-label="werk administratie IN" placeholder="Energie IN" formControlName="werk_AdministratieIN"/>
+          </mat-form-field>
+          <mat-form-field >
+            <input matInput id="werkAdminInputUIT" type="text" aria-label="werk administratie UIT" placeholder="Energie UIT" formControlName="werk_AdministratieUIT"/>
+          </mat-form-field>
+          <br />
+          <mat-form-field>
             <input matInput id="werkTelKlantInput" type="text" aria-label="werk telefoneren klanten" placeholder="Telefoneren klanten" formControlName="werk_TelefonerenKlanten"/>
           </mat-form-field>
-
           <mat-form-field>
-            <!--<label>Bezoeken</label>-->
+            <input matInput id="werkTelKlantInputIN" type="text" aria-label="werk telefoneren klanten IN" placeholder="Energie IN" formControlName="werk_TelefonerenKlantenIN"/>
+          </mat-form-field>
+          <mat-form-field >
+            <input matInput id="werkTelKlantInputUIT" type="text" aria-label="werk telefoneren klanten UIT" placeholder="Energie UIT" formControlName="werk_TelefonerenKlantenUIT"/>
+          </mat-form-field>
+          <br />
+          <mat-form-field>
             <input matInput id="werkBezKlantInput" type="text" aria-label="werk bezoeken klanten" placeholder="Bezoeken klanten" formControlName="werk_BezoekenKlanten"/>
           </mat-form-field>
+          <mat-form-field>
+            <input matInput id="werkTelKlantInputIN" type="text" aria-label="werk telefoneren klanten IN" placeholder="Energie IN" formControlName="werk_TelefonerenKlantenIN"/>
+          </mat-form-field>
+          <mat-form-field >
+            <input matInput id="werkTelKlantInputUIT" type="text" aria-label="werk telefoneren klanten UIT" placeholder="Energie UIT" formControlName="werk_TelefonerenKlantenUIT"/>
+          </mat-form-field>
+          <br />
         </div>
       </div>
 
@@ -58,19 +74,43 @@
           {{ getErrorMessage(meting.get('relaties')['errors']) }}
         </mat-error>
       </mat-form-field>
-      <button type="button" class="collapsible"></button>
-      <div class="content">   <!--openvouwen relaties-->
-        <ol class="ol">
-          <li>
-            <input type="text" placeholder="%">
-          </li>
-          <li>
-            <input type="text" placeholder="%">
-          </li>
-          <li>
-            <input type="text" placeholder="%">
-          </li>
-        </ol>
+      <button type="button" class="collapsible"></button> <!--openvouwen relaties-->
+      <div class="content" formArrayName="resultaten" *ngFor="
+          let item of meting.get('resultaten')['controls'];
+          let i = index
+        ">
+        <div [formGroupName]="i" >  <!--input fields -->
+          <mat-form-field>
+            <input matInput id="relatiesPartner" type="text" aria-label="relaties partner" placeholder="Partner" formControlName="relaties_Partner"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput id="relatiesPartnerIN" type="text" aria-label="relaties partner IN" placeholder="Energie IN" formControlName="relaties_PartnerIN"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput id="relatiesPartnerUIT" type="text" aria-label="relaties partner" placeholder="Energie UIT" formControlName="relaties_PartnerUIT"/>
+          </mat-form-field>
+          <br />
+          <mat-form-field>
+            <input matInput id="relatiesKinderen" type="text" aria-label="relaties kinderen" placeholder="Kinderen" formControlName="relaties_Kinderen"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput id="relatiesKinderenIN" type="text" aria-label="relaties kinderen IN" placeholder="Energie IN" formControlName="relaties_KinderenIN"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput id="relatiesKinderenUIT" type="text" aria-label="relaties kinderen UIT" placeholder="Energie UIT" formControlName="relaties_KinderenUIT"/>
+          </mat-form-field>
+          <br />
+          <mat-form-field>
+            <input matInput id="relatiesOuders" type="text" aria-label="relaties ouders" placeholder="Ouders" formControlName="relaties_Ouders"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput id="relatiesOudersIN" type="text" aria-label="relaties ouders IN" placeholder="Energie IN" formControlName="relaties_OudersIN"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput id="relatiesOudersUIT" type="text" aria-label="relaties ouders UIT" placeholder="Energie UIT" formControlName="relaties_OudersUIT"/>
+          </mat-form-field>
+          <br />
+        </div>
       </div>
 
       <mat-form-field class="inputveld"> <!-- gezondheid -->
@@ -89,19 +129,43 @@
           {{ getErrorMessage(meting.get('gezondheid')['errors']) }}
         </mat-error>
       </mat-form-field>
-      <button type="button" class="collapsible"></button>
-      <div class="content">   <!--openvouwen gezondheid-->
-        <ol class="ol">
-          <li>
-            <input type="text" placeholder="%">
-          </li>
-          <li>
-            <input type="text" placeholder="%">
-          </li>
-          <li>
-            <input type="text" placeholder="%">
-          </li>
-        </ol>
+      <button type="button" class="collapsible"></button> <!--openvouwen gezondheid-->
+      <div class="content" formArrayName="resultaten" *ngFor="
+          let item of meting.get('resultaten')['controls'];
+          let i = index
+        ">
+        <div [formGroupName]="i" >  <!--input fields -->
+          <mat-form-field>
+            <input matInput id="gezondheidVoeding" type="text" aria-label="gezondheid voeding" placeholder="Voeding" formControlName="gezondheid_Voeding"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput id="gezondheidVoedingIN" type="text" aria-label="gezondheid voeding IN" placeholder="Energie IN" formControlName="gezondheid_VoedingIN"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput id="gezondheidVoedingUIT" type="text" aria-label="gezondheid voeding UIT" placeholder="Energie UIT" formControlName="gezondheid_VoedingUIT"/>
+          </mat-form-field>
+          <br />
+          <mat-form-field>
+            <input matInput id="gezondheidSport" type="text" aria-label="gezondheid Sport" placeholder="Sport" formControlName="gezondheid_Sport"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput id="gezondheidSportIN" type="text" aria-label="gezondheid Sport IN" placeholder="Energie IN" formControlName="gezondheid_SportIN"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput id="gezondheidSportUIT" type="text" aria-label="gezondheid Sport UIT" placeholder="Energie UIT" formControlName="gezondheid_SportUIT"/>
+          </mat-form-field>
+          <br />
+          <mat-form-field>
+            <input matInput id="gezondheidYoga" type="text" aria-label="gezondheid Yoga" placeholder="Yoga" formControlName="gezondheid_Yoga"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput id="gezondheidYogaIN" type="text" aria-label="gezondheid Yoga IN" placeholder="Energie IN" formControlName="gezondheid_YogaIN"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput id="gezondheidYogaUIT" type="text" aria-label="gezondheid Yoga UIT" placeholder="Energie UIT" formControlName="gezondheid_YogaUIT"/>
+          </mat-form-field>
+          <br/>
+        </div>
       </div>
 
       <mat-form-field class="inputveld"> <!-- vrije tijd -->
@@ -120,19 +184,43 @@
           {{ getErrorMessage(meting.get('vrijetijd')['errors']) }}
         </mat-error>
       </mat-form-field>
-      <button type="button" class="collapsible"></button>
-      <div class="content">   <!--openvouwen vrije tijd-->
-        <ol class="ol">
-          <li>
-            <input type="text" placeholder="%">
-          </li>
-          <li>
-            <input type="text" placeholder="%">
-          </li>
-          <li>
-            <input type="text" placeholder="%">
-          </li>
-        </ol>
+      <button type="button" class="collapsible"></button> <!--openvouwen vrije tijd-->
+      <div class="content" formArrayName="resultaten" *ngFor="  
+          let item of meting.get('resultaten')['controls'];
+          let i = index
+        ">
+        <div [formGroupName]="i" >  <!--input fields -->
+          <mat-form-field>
+            <input matInput id="vrijetijdSM" type="text" aria-label="vrijetijd SM" placeholder="SmartPhone" formControlName="vrijetijd_SM"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput id="vrijetijdSMIN" type="text" aria-label="vrijetijd SM IN" placeholder="Energie IN" formControlName="vrijetijd_SMIN"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput id="vrijetijdSMUIT" type="text" aria-label="vrijetijd SM UIT" placeholder="Energie UIT" formControlName="vrijetijd_SMUIT"/>
+          </mat-form-field>
+          <br/>
+          <mat-form-field>
+            <input matInput id="vrijetijdTV" type="text" aria-label="vrijetijd TV" placeholder="TV" formControlName="vrijetijd_TV"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput id="vrijetijdTVIN" type="text" aria-label="vrijetijd TV IN" placeholder="Energie IN" formControlName="vrijetijd_TVIN"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput id="vrijetijdTVUIT" type="text" aria-label="vrijetijd TV UIT" placeholder="Energie UIT" formControlName="vrijetijd_TVUIT"/>
+          </mat-form-field>
+          <br/>
+          <mat-form-field>
+            <input matInput id="vrijetijdHobby" type="text" aria-label="vrijetijd Hobby" placeholder="Hobby" formControlName="vrijetijd_Hobby"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput id="vrijetijdHobbyIN" type="text" aria-label="vrijetijd Hobby IN" placeholder="Energie IN" formControlName="vrijetijd_HobbyIN"/>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput id="vrijetijdHobbyUIT" type="text" aria-label="vrijetijd Hobby UIT" placeholder="Energie UIT" formControlName="vrijetijd_HobbyUIT"/>
+          </mat-form-field>
+          <br/>
+        </div>
       </div>
      
       <button class="opslaan" mat-raised-button type="submit" [disabled]="!meting.valid">

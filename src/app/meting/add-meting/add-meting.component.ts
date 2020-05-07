@@ -66,7 +66,7 @@ export class AddMetingComponent implements OnInit {
       });
     }
 
-    var input1 = (<HTMLInputElement>document.getElementById("werkAdminInput")); //automatisch input value aanpassen wanneer 
+    /*var input1 = (<HTMLInputElement>document.getElementById("werkAdminInput")); //automatisch input value aanpassen wanneer 
     var array;
     var value;
     var somInputs;
@@ -91,7 +91,7 @@ export class AddMetingComponent implements OnInit {
         
         (<HTMLInputElement>document.getElementById("werkinput")).value = somInputs;
       }
-    });
+    });*/
 
     this.resultaten.valueChanges
       .pipe(debounceTime(400), distinctUntilChanged())
@@ -118,19 +118,108 @@ export class AddMetingComponent implements OnInit {
   createResultaten(): FormGroup {
     return this.fb.group(
       {
-        vraag: ['werk'],
-        amount: [''],
+        vraag: ['test'],
+        amount: [0],
+
+        //#region alle subcategorie inputvelden
         werk_Administratie: [''],
         werk_BezoekenKlanten: [''],
-        werk_TelefonerenKlanten: ['']
-        
+        werk_TelefonerenKlanten: [''],
+        werk_AdministratieIN: [''],
+        werk_BezoekenKlantenIN: [''],
+        werk_TelefonerenKlantenIN: [''],
+        werk_AdministratieUIT: [''],
+        werk_BezoekenKlantenUIT: [''],
+        werk_TelefonerenKlantenUIT: [''],
+
+        relaties_Partner: [''],
+        relaties_Kinderen: [''],
+        relaties_Ouders: [''],
+        relaties_PartnerIN: [''],
+        relaties_KinderenIN: [''],
+        relaties_OudersIN: [''],
+        relaties_PartnerUIT: [''],
+        relaties_KinderenUIT: [''],
+        relaties_OudersUIT: [''],
+
+        gezondheid_Voeding: [''],
+        gezondheid_Sport: [''],
+        gezondheid_Yoga: [''],
+        gezondheid_VoedingIN: [''],
+        gezondheid_SportIN: [''],
+        gezondheid_YogaIN: [''],
+        gezondheid_VoedingUIT: [''],
+        gezondheid_SportUIT: [''],
+        gezondheid_YogaUIT: [''],
+
+        vrijetijd_SM: [''],
+        vrijetijd_TV: [''],
+        vrijetijd_Hobby: [''],
+        vrijetijd_SMIN: [''],
+        vrijetijd_TVIN: [''],
+        vrijetijd_HobbyIN: [''],
+        vrijetijd_SMUIT: [''],
+        vrijetijd_TVUIT: [''],
+        vrijetijd_HobbyUIT: ['']
+        //#endregion
       }/*,
       { validator: validateResultaatType }*/
     );
   }
   onSubmit() {
     
+    //#region eindresult en vraag aanpassen voor werk-categorie
+    let resultaat1 = this.meting.value.resultaten.map(res => [res.werk_Administratie, res.werk_TelefonerenKlanten, res.werk_BezoekenKlanten]);
+    let resultaat2 = this.meting.value.werk;
+
+    let eindres1 = this.berekenEindresultaat(resultaat1, resultaat2);
+    console.log(eindres1);
+
+    this.resultaten.patchValue([
+      {vraag: "Werk", amount: eindres1}
+    ]);
+    //#endregion
     let resultaten = this.meting.value.resultaten.map(Resultaat.fromJSON);
+
+    //#region eindresult en vraag aanpassen voor relaties-categorie
+    let resultaat3 = this.meting.value.resultaten.map(res => [res.relaties_Partner, res.relaties_Kinderen, res.relaties_Ouders]);
+    let resultaat4 = this.meting.value.relaties;
+
+    let eindres2 = this.berekenEindresultaat(resultaat3, resultaat4);
+
+    this.resultaten.patchValue([
+      {vraag: "Relaties", amount: eindres2}
+    ]);
+    //#endregion
+    resultaten.push(this.meting.value.resultaten.map(Resultaat.fromJSON)[0]);
+
+    //#region eindresult en vraag aanpassen voor gezondheid-categorie
+    let resultaat5 = this.meting.value.resultaten.map(res => [res.gezondheid_Voeding, res.gezondheid_Sport, res.gezondheid_Yoga]);
+    let resultaat6 = this.meting.value.gezondheid;
+
+    let eindres3 = this.berekenEindresultaat(resultaat5, resultaat6);
+
+    this.resultaten.patchValue([
+      {vraag: "Gezondheid", amount: eindres3}
+    ]);
+    //#endregion
+    resultaten.push(this.meting.value.resultaten.map(Resultaat.fromJSON)[0]);
+
+    //#region eindresult en vraag aanpassen voor vrije tijd-categorie
+    let resultaat7 = this.meting.value.resultaten.map(res => [res.vrijetijd_SM, res.vrijetijd_TV, res.vrijetijd_Hobby]);
+    let resultaat8 = this.meting.value.vrijetijd;
+
+    let eindres4 = this.berekenEindresultaat(resultaat7, resultaat8);
+
+    this.resultaten.patchValue([
+      {vraag: "Vrije tijd", amount: eindres4}
+    ]);
+    //#endregion
+    resultaten.push(this.meting.value.resultaten.map(Resultaat.fromJSON)[0]);
+
+    console.log(resultaten);
+
+    //console.log(resultaten);
     let dateTime = new Date();
     //resultaten = resultaten.filter((res) => res.vraag.length > 2);
     this._metingDataService
@@ -145,10 +234,10 @@ export class AddMetingComponent implements OnInit {
         this.confirmationMessage = `a meting for ${rec.id} was successfully added`;
       });
 
-    this.meting = this.fb.group({
+    /*this.meting = this.fb.group({
       //vraag: ['', [Validators.required, Validators.minLength(2)]],
       resultaten: this.fb.array([this.createResultaten()]),
-    });
+    });*/
   }
 
   getErrorMessage(errors: any): string {
@@ -162,5 +251,32 @@ export class AddMetingComponent implements OnInit {
     } else if (errors.amountNoType) {
       return `if amount is set you must set a type`;
     }
+  }
+
+  berekenEindresultaat(resultaat1, resultaat2){     //berekening eindresturaat voor 1 categorie
+    let resultaat1Refined = resultaat1[0];
+
+    var sum = 0;
+    var teller = 0;
+    let eindres = 0;
+
+    for( var i = 0; i < resultaat1Refined.length; i++ ){
+      if(resultaat1Refined[i] == ''){
+        teller++;
+      }
+      else{
+        sum += parseInt(resultaat1Refined[i], 10);
+      }
+    }
+
+    if(sum == 0){     //als er geen subcategorieeën zijn ingevult enkel de hoofdcategorie meerekenen
+      eindres = resultaat2;
+    }
+    else{
+      var avg = sum / ((resultaat1Refined.length) - teller); //min elke input die leeg is gelaten
+      eindres = (avg * (resultaat2 / 100));
+    }
+
+    return eindres;
   }
 }
