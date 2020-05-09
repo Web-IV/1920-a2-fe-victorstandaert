@@ -1,25 +1,24 @@
 <mat-card>
   <mat-card-content>
     <form class="inputcontainer" [formGroup]="meting" (ngSubmit)="onSubmit()">
-      <mat-form-field class="inputveld">  <!-- werk -->
-
-        <input
-          matInput
-          id="werkinput"
-          aria-label="werk"
-          placeholder="Werk"
-          type="text"
-          formControlName="werk"
-        />
-
+    <div class="inputveld">
+      <mat-form-field>  <!-- werk -->
+        <input matInput id="werkinput" aria-label="werk" placeholder="Werk" type="text" formControlName="werk"/>
         <mat-error
           *ngIf="meting.get('werk')['errors'] && meting.get('werk').touched"
         >
           {{ getErrorMessage(meting.get('werk')['errors']) }}
         </mat-error>
       </mat-form-field>
+      <mat-form-field>
+        <input matInput id="werkInputIN" type="text" aria-label="werk IN" placeholder="Energie IN" formControlName="werk_IN"/>
+      </mat-form-field>
+      <mat-form-field >
+        <input matInput id="werkInputUIT" type="text" aria-label="werk UIT" placeholder="Energie UIT" formControlName="werk_UIT"/>
+      </mat-form-field>
+    </div> 
 
-      <button type="button" class="collapsible"></button>     <!--openvouwen werk-->
+      <button type="button" class="collapsible"></button>    <!--openvouwen werk-->
       <div class="content" formArrayName="resultaten" *ngFor="
           let item of meting.get('resultaten')['controls'];
           let i = index
@@ -58,22 +57,22 @@
         </div>
       </div>
 
-      <mat-form-field class="inputveld"> <!-- relaties -->
-
-        <input
-          matInput
-          aria-label="relaties"
-          placeholder="Relaties"
-          type="text"
-          formControlName="relaties"
-          #spy
-        />
+      <div class="inputveld">
+      <mat-form-field> <!-- relaties -->
+        <input matInput aria-label="relaties" placeholder="Relaties" type="text" formControlName="relaties" #spy/>
         <mat-error
           *ngIf="meting.get('relaties')['errors'] && meting.get('relaties').touched"
         >
           {{ getErrorMessage(meting.get('relaties')['errors']) }}
         </mat-error>
       </mat-form-field>
+      <mat-form-field>
+        <input matInput id="relatiesIN" type="text" aria-label="relaties IN" placeholder="Energie IN" formControlName="relaties_IN"/>
+      </mat-form-field>
+      <mat-form-field  >
+        <input matInput id="relatiesUIT" type="text" aria-label="relaties UIT" placeholder="Energie UIT" formControlName="relaties_UIT"/>
+      </mat-form-field>
+    </div>
       <button type="button" class="collapsible"></button> <!--openvouwen relaties-->
       <div class="content" formArrayName="resultaten" *ngFor="
           let item of meting.get('resultaten')['controls'];
@@ -112,23 +111,22 @@
           <br />
         </div>
       </div>
-
-      <mat-form-field class="inputveld"> <!-- gezondheid -->
-
-        <input
-          matInput
-          aria-label="gezondheid"
-          placeholder="Gezondheid"
-          type="text"
-          formControlName="gezondheid"
-          #spy
-        />
+      <div class="inputveld">
+      <mat-form-field > <!-- gezondheid -->
+        <input matInput aria-label="gezondheid" placeholder="Gezondheid" type="text" formControlName="gezondheid" #spy/>
         <mat-error
           *ngIf="meting.get('gezondheid')['errors'] && meting.get('gezondheid').touched"
         >
           {{ getErrorMessage(meting.get('gezondheid')['errors']) }}
         </mat-error>
       </mat-form-field>
+      <mat-form-field>
+        <input matInput id="gezondheidIN" type="text" aria-label="gezondheid IN" placeholder="Energie IN" formControlName="gezondheid_IN"/>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput id="gezondheidUIT" type="text" aria-label="gezondheid UIT" placeholder="Energie UIT" formControlName="gezondheid_UIT"/>
+      </mat-form-field>
+</div>
       <button type="button" class="collapsible"></button> <!--openvouwen gezondheid-->
       <div class="content" formArrayName="resultaten" *ngFor="
           let item of meting.get('resultaten')['controls'];
@@ -167,23 +165,22 @@
           <br/>
         </div>
       </div>
-
-      <mat-form-field class="inputveld"> <!-- vrije tijd -->
-
-        <input
-          matInput
-          aria-label="vrijetijd"
-          placeholder="Vrije Tijd"
-          type="text"
-          formControlName="vrijetijd"
-          #spy
-        />
+      <div class="inputveld">
+      <mat-form-field > <!-- vrije tijd -->
+        <input matInput aria-label="vrijetijd" placeholder="Vrije Tijd" type="text" formControlName="vrijetijd" #spy/>
         <mat-error
           *ngIf="meting.get('vrijetijd')['errors'] && meting.get('vrijetijd').touched"
         >
           {{ getErrorMessage(meting.get('vrijetijd')['errors']) }}
         </mat-error>
       </mat-form-field>
+      <mat-form-field>
+        <input matInput id="vrijetijdIN" type="text" aria-label="vrijetijd IN" placeholder="Energie IN" formControlName="vrijetijd_IN"/>
+      </mat-form-field>
+      <mat-form-field >
+        <input matInput id="vrijetijdUIT" type="text" aria-label="vrijetijd UIT" placeholder="Energie UIT" formControlName="vrijetijd_UIT"/>
+      </mat-form-field>
+</div>
       <button type="button" class="collapsible"></button> <!--openvouwen vrije tijd-->
       <div class="content" formArrayName="resultaten" *ngFor="  
           let item of meting.get('resultaten')['controls'];

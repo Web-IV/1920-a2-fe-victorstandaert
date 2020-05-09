@@ -14,6 +14,9 @@
       <mat-list-item *ngFor="let resultaat of meting.resultaten">
         <app-resultaat [resultaat]="resultaat"></app-resultaat>
       </mat-list-item>
+      <mat-list-item class="metingResultaat">
+        Score: {{ meting.metingResultaat }}
+      </mat-list-item>
     </mat-list>
     <div class="deleteWrapper">
       <button class="deleteKnop" (click)="deleteMeting()">

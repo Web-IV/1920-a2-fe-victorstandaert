@@ -45,10 +45,18 @@ export class AddMetingComponent implements OnInit {
     this.meting = this.fb.group({
       id: [''],
       werk: [''],
+      werk_IN: [''],
+      werk_UIT: [''],
       relaties: [''],
+      relaties_IN: [''],
+      relaties_UIT: [''],
       gezondheid: [''],
+      gezondheid_IN: [''],
+      gezondheid_UIT: [''],
       vrijetijd: [''],
-      resultaten: this.fb.array([this.createResultaten()]),
+      vrijetijd_IN: [''],
+      vrijetijd_UIT: [''],
+      resultaten: this.fb.array([this.createResultaten()])
     });
 
     var coll = document.getElementsByClassName("collapsible");  //openvouwen categorie
@@ -169,11 +177,15 @@ export class AddMetingComponent implements OnInit {
   onSubmit() {
     
     //#region eindresult en vraag aanpassen voor werk-categorie
-    let resultaat1 = this.meting.value.resultaten.map(res => [res.werk_Administratie, res.werk_TelefonerenKlanten, res.werk_BezoekenKlanten]);
-    let resultaat2 = this.meting.value.werk;
+    let energieINenUITsubcat1 = this.meting.value.resultaten.map(res => [res.werk_AdministratieIN, res.werk_AdministratieUIT,
+                                                                  res.werk_TelefonerenKlantenIN, res.werk_TelefonerenKlantenUIT,
+                                                                  res.werk_BezoekenKlantenIN, res.werk_BezoekenKlantenUIT]);
+    let energieINenUITcat1 = [this.meting.value.werk_IN, this.meting.value.werk_UIT];
+    let ondercategorien1 = this.meting.value.resultaten.map(res => [res.werk_Administratie, res.werk_TelefonerenKlanten, res.werk_BezoekenKlanten]);
+    let categorie1 = this.meting.value.werk;
 
-    let eindres1 = this.berekenEindresultaat(resultaat1, resultaat2);
-    console.log(eindres1);
+    let eindres1 = this.berekenEindresultaatCategorie(ondercategorien1, categorie1, energieINenUITsubcat1, energieINenUITcat1);
+    eindres1 = parseFloat(eindres1.toFixed(2));
 
     this.resultaten.patchValue([
       {vraag: "Werk", amount: eindres1}
@@ -182,10 +194,15 @@ export class AddMetingComponent implements OnInit {
     let resultaten = this.meting.value.resultaten.map(Resultaat.fromJSON);
 
     //#region eindresult en vraag aanpassen voor relaties-categorie
-    let resultaat3 = this.meting.value.resultaten.map(res => [res.relaties_Partner, res.relaties_Kinderen, res.relaties_Ouders]);
-    let resultaat4 = this.meting.value.relaties;
+    let energieINenUITsubcat2 = this.meting.value.resultaten.map(res => [res.relaties_PartnerIN, res.relaties_PartnerUIT,
+                                                                  res.relaties_KinderenIN, res.relaties_KinderenUIT,
+                                                                  res.relaties_OudersIN, res.relaties_OudersUIT])
+    let energieINenUITcat2 = [this.meting.value.relaties_IN, this.meting.value.relaties_UIT];
+    let ondercategorien2 = this.meting.value.resultaten.map(res => [res.relaties_Partner, res.relaties_Kinderen, res.relaties_Ouders]);
+    let categorie2 = this.meting.value.relaties;
 
-    let eindres2 = this.berekenEindresultaat(resultaat3, resultaat4);
+    let eindres2 = this.berekenEindresultaatCategorie(ondercategorien2, categorie2, energieINenUITsubcat2, energieINenUITcat2);
+    eindres2 = parseFloat(eindres2.toFixed(2));
 
     this.resultaten.patchValue([
       {vraag: "Relaties", amount: eindres2}
@@ -194,11 +211,16 @@ export class AddMetingComponent implements OnInit {
     resultaten.push(this.meting.value.resultaten.map(Resultaat.fromJSON)[0]);
 
     //#region eindresult en vraag aanpassen voor gezondheid-categorie
-    let resultaat5 = this.meting.value.resultaten.map(res => [res.gezondheid_Voeding, res.gezondheid_Sport, res.gezondheid_Yoga]);
-    let resultaat6 = this.meting.value.gezondheid;
+    let energieINenUITsubcat3 = this.meting.value.resultaten.map(res => [res.gezondheid_VoedingIN, res.gezondheid_VoedingUIT,
+                                                                  res.gezondheid_SportIN, res.gezondheid_SportUIT,
+                                                                  res.gezondheid_YogaIN, res.gezondheid_YogaUIT])
+    let energieINenUITcat3 = [this.meting.value.gezondheid_IN, this.meting.value.gezondheid_UIT];
+    let ondercategorien3 = this.meting.value.resultaten.map(res => [res.gezondheid_Voeding, res.gezondheid_Sport, res.gezondheid_Yoga]);
+    let categorie3 = this.meting.value.gezondheid;
 
-    let eindres3 = this.berekenEindresultaat(resultaat5, resultaat6);
-
+    let eindres3 = this.berekenEindresultaatCategorie(ondercategorien3, categorie3, energieINenUITsubcat3, energieINenUITcat3);
+    eindres3 = parseFloat(eindres3.toFixed(2));
+    
     this.resultaten.patchValue([
       {vraag: "Gezondheid", amount: eindres3}
     ]);
@@ -206,10 +228,15 @@ export class AddMetingComponent implements OnInit {
     resultaten.push(this.meting.value.resultaten.map(Resultaat.fromJSON)[0]);
 
     //#region eindresult en vraag aanpassen voor vrije tijd-categorie
-    let resultaat7 = this.meting.value.resultaten.map(res => [res.vrijetijd_SM, res.vrijetijd_TV, res.vrijetijd_Hobby]);
-    let resultaat8 = this.meting.value.vrijetijd;
+    let energieINenUITsubcat4 = this.meting.value.resultaten.map(res => [res.vrijetijd_SMIN, res.vrijetijd_SMUIT,
+                                                                  res.vrijetijd_TVIN, res.vrijetijd_TVUIT,
+                                                                  res.vrijetijd_HobbyIN, res.vrijetijd_HobbyUIT])
+    let energieINenUITcat4 = [this.meting.value.vrijetijd_IN, this.meting.value.vrijetijd_UIT];
+    let ondercategorien4 = this.meting.value.resultaten.map(res => [res.vrijetijd_SM, res.vrijetijd_TV, res.vrijetijd_Hobby]);
+    let categorie4 = this.meting.value.vrijetijd;
 
-    let eindres4 = this.berekenEindresultaat(resultaat7, resultaat8);
+    let eindres4 = this.berekenEindresultaatCategorie(ondercategorien4, categorie4, energieINenUITsubcat4, energieINenUITcat4);
+    eindres4 = parseFloat(eindres4.toFixed(2));
 
     this.resultaten.patchValue([
       {vraag: "Vrije tijd", amount: eindres4}
@@ -219,11 +246,14 @@ export class AddMetingComponent implements OnInit {
 
     console.log(resultaten);
 
+    let metingResultaat = this.berekenMetingResultaat([eindres1, eindres2, eindres3, eindres4]);
+    metingResultaat = parseFloat(metingResultaat.toFixed(2));
+
     //console.log(resultaten);
     let dateTime = new Date();
     //resultaten = resultaten.filter((res) => res.vraag.length > 2);
     this._metingDataService
-      .addNewMeting(new Meting(resultaten, dateTime))
+      .addNewMeting(new Meting(resultaten, dateTime, metingResultaat))
       .pipe(
         catchError((err) => {
           this.errorMessage = err;
@@ -253,30 +283,67 @@ export class AddMetingComponent implements OnInit {
     }
   }
 
-  berekenEindresultaat(resultaat1, resultaat2){     //berekening eindresturaat voor 1 categorie
-    let resultaat1Refined = resultaat1[0];
+  berekenEindresultaatCategorie(ondercategorien, categorie, energieINenUITsubcat, energieINenUITcat){     //berekening eindresturaat voor 1 categorie
+    let ondercategorienRefined = ondercategorien[0];
+    let energieINenUITsubcatRefined = energieINenUITsubcat[0];
+    //let energieInenUITcatRefined = energieINenUITcat[0];
+    let categorieRes = 0;
 
-    var sum = 0;
+    categorieRes = Math.sqrt(Math.pow(energieINenUITcat[0], 2) + Math.pow(energieINenUITcat[1], 2));
+    categorieRes = categorieRes * energieINenUITcat[1];
+    categorieRes = categorieRes * categorie / 100;
+
+    var energiesum = 0;
+    var energiesumsum = 0;
+    var energieIN = 0;
+    var energieUIT = 0;
     var teller = 0;
     let eindres = 0;
 
-    for( var i = 0; i < resultaat1Refined.length; i++ ){
-      if(resultaat1Refined[i] == ''){
+    for(var i = 0; i < energieINenUITsubcatRefined.length; i += 2 ){
+      energieIN = parseInt(energieINenUITsubcatRefined[i], 10);
+      energieUIT = parseInt(energieINenUITsubcatRefined[i+1], 10);
+
+      if(energieINenUITsubcatRefined[i] == '' || ondercategorienRefined[i- (i / 2)] == ''){
         teller++;
       }
       else{
-        sum += parseInt(resultaat1Refined[i], 10);
+        energiesum = Math.sqrt(Math.pow(energieIN, 2) + Math.pow(energieUIT, 2));
+        energiesum = energiesum * energieUIT;
+        energiesum = energiesum * (ondercategorienRefined[i - (i / 2)]) / 100;
+        energiesum = energiesum * categorieRes / 100;
+
+        energiesumsum += energiesum;
       }
     }
 
-    if(sum == 0){     //als er geen subcategorieeën zijn ingevult enkel de hoofdcategorie meerekenen
-      eindres = resultaat2;
+    if(energiesumsum == 0){     //als er geen subcategorieeën zijn ingevult enkel de hoofdcategorie meerekenen
+      eindres = categorieRes;
     }
     else{
-      var avg = sum / ((resultaat1Refined.length) - teller); //min elke input die leeg is gelaten
-      eindres = (avg * (resultaat2 / 100));
+      var avg = energiesumsum / ((ondercategorienRefined.length) - teller/2); //min elke input die leeg is gelaten
+      eindres = avg;
     }
 
     return eindres;
+  }
+
+  berekenMetingResultaat(eindresultaten){   //berekenen metingresultaat
+    var som = 0;
+    var avg = 0;
+    var teller = 0;
+
+    eindresultaten.forEach(eindres => {
+      if(eindres == ''){
+        teller++;
+      }
+      else{
+        som += eindres;
+      }
+    });
+
+    avg = som / (eindresultaten.length - teller);
+    
+    return avg;
   }
 }

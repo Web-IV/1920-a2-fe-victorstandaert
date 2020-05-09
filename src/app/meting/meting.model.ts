@@ -5,12 +5,14 @@ interface MetingJson {
   resultaten: ResultaatJson[];
   created: string;
   user: string;
+  metingResultaat: number;
 }
 export class Meting {
   private _id: number;
   constructor(
     private _resultaten = new Array<Resultaat>(), 
     private _dateAdded = new Date(),
+    private _metingResultaat: number,
     private _user = ''
   ) {
     _resultaten = this.resultaten;
@@ -20,6 +22,7 @@ export class Meting {
     const rec = new Meting(
       json.resultaten.map(Resultaat.fromJSON),
       new Date(json.created),
+      json.metingResultaat,
       json.user
     );
     rec._id = json.id;
@@ -30,6 +33,7 @@ export class Meting {
     return <MetingJson>{
       resultaten: this.resultaten.map(ing => ing.toJSON()),
       created: this.dateAdded.toString(),
+      metingResultaat: this.metingResultaat,
       user: this.user
     };
   }
@@ -48,6 +52,9 @@ export class Meting {
     return this._user;
   }
 
+  get metingResultaat(): number {
+    return this._metingResultaat;
+  }
   addResultaat(type: string, amount?: number) {
     this._resultaten.push(new Resultaat(type, amount));
   }
