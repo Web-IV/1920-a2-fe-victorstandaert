@@ -14,7 +14,7 @@
       <mat-list-item *ngFor="let resultaat of meting.resultaten">
         <app-resultaat [resultaat]="resultaat"></app-resultaat>
       </mat-list-item>
-      <mat-list-item class="metingResultaat">
+      <mat-list-item class="metingResultaat" data-cy="score">
         Score: {{ meting.metingResultaat }}
       </mat-list-item>
     </mat-list>

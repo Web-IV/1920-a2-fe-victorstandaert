@@ -32,7 +32,7 @@ export class MetingDataService {
   }
 
   get metingen$(): Observable<Meting[]> {
-    return this.http.get(`${environment.apiUrl}/Meting/`).pipe(   //return alle metingen ( per account )
+    return this.http.get(`${environment.apiUrl}/Meting/`).pipe(   //return alle metingen ( per account ) MOET NOG GEBEUREN !!!!!
       tap(console.log),
       shareReplay(1),
       catchError(this.handleError),
