@@ -176,6 +176,7 @@ export class AddMetingComponent implements OnInit {
   }
   onSubmit() {
     
+
     //#region eindresult en vraag aanpassen voor werk-categorie
     let energieINenUITsubcat1 = this.meting.value.resultaten.map(res => [res.werk_AdministratieIN, res.werk_AdministratieUIT,
                                                                   res.werk_TelefonerenKlantenIN, res.werk_TelefonerenKlantenUIT,
@@ -286,39 +287,50 @@ export class AddMetingComponent implements OnInit {
   berekenEindresultaatCategorie(ondercategorien, categorie, energieINenUITsubcat, energieINenUITcat){     //berekening eindresturaat voor 1 categorie
     let ondercategorienRefined = ondercategorien[0];
     let energieINenUITsubcatRefined = energieINenUITsubcat[0];
-    //let energieInenUITcatRefined = energieINenUITcat[0];
-    let categorieRes = 0;
+    let energiesumCat = 0;
+    var alfaCat = 0;
+    var energieINCat = energieINenUITcat[0];
+    var energieUITCat = energieINenUITcat[1];
+    var energieTotaalCat = 0;
 
-    categorieRes = Math.sqrt(Math.pow(energieINenUITcat[0], 2) + Math.pow(energieINenUITcat[1], 2));
-    categorieRes = categorieRes * energieINenUITcat[1];
-    categorieRes = categorieRes * categorie / 100;
+    if(!(energieINCat == '' || categorie == ''|| energieUITCat == '')){
+      energiesumCat = Math.sqrt(Math.pow(energieINCat, 2) + Math.pow(energieUITCat, 2));
+      alfaCat = 180 / Math.PI * Math.asin(energieUITCat / energiesumCat);
+      energieTotaalCat = energiesumCat * alfaCat / 100; //energie totaal voor hoofdcategorie
 
-    var energiesum = 0;
+      energieTotaalCat = energieTotaalCat * categorie / 100; 
+    }
+
+    var energiesumSubCat = 0;
     var energiesumsum = 0;
-    var energieIN = 0;
-    var energieUIT = 0;
+    var energieINSubCat = 0;
+    var energieUITSubCat = 0;
     var teller = 0;
     let eindres = 0;
+    var alfaSubCat = 0;
+    var energieTotaalSubCat = 0;
 
     for(var i = 0; i < energieINenUITsubcatRefined.length; i += 2 ){
-      energieIN = parseInt(energieINenUITsubcatRefined[i], 10);
-      energieUIT = parseInt(energieINenUITsubcatRefined[i+1], 10);
+      energieINSubCat = parseInt(energieINenUITsubcatRefined[i], 10);
+      energieUITSubCat = parseInt(energieINenUITsubcatRefined[i+1], 10);
 
-      if(energieINenUITsubcatRefined[i] == '' || ondercategorienRefined[i- (i / 2)] == ''){
+      if(energieINenUITsubcatRefined[i] == '' || ondercategorienRefined[i- (i / 2)] == ''|| energieINenUITsubcatRefined[i+1] == ''){
         teller++;
       }
       else{
-        energiesum = Math.sqrt(Math.pow(energieIN, 2) + Math.pow(energieUIT, 2));
-        energiesum = energiesum * energieUIT;
-        energiesum = energiesum * (ondercategorienRefined[i - (i / 2)]) / 100;
-        energiesum = energiesum * categorieRes / 100;
+        energiesumSubCat = Math.sqrt(Math.pow(energieINSubCat, 2) + Math.pow(energieUITSubCat, 2));
+        alfaSubCat = 180 / Math.PI * Math.asin(energieUITSubCat / energiesumSubCat);
+        energieTotaalSubCat = energiesumSubCat * alfaSubCat / 100; //energie totaal voor subcategorie
 
-        energiesumsum += energiesum;
+        energieTotaalSubCat = energieTotaalSubCat * (ondercategorienRefined[i - (i / 2)]) / 100;
+        energieTotaalSubCat = energieTotaalSubCat * energieTotaalCat / 100;  //???????????????
+
+        energiesumsum += energieTotaalSubCat;
       }
     }
 
     if(energiesumsum == 0){     //als er geen subcategorieeën zijn ingevult enkel de hoofdcategorie meerekenen
-      eindres = categorieRes;
+      eindres = energieTotaalCat;
     }
     else{
       var avg = energiesumsum / ((ondercategorienRefined.length) - teller/2); //min elke input die leeg is gelaten
@@ -334,7 +346,7 @@ export class AddMetingComponent implements OnInit {
     var teller = 0;
 
     eindresultaten.forEach(eindres => {
-      if(eindres == ''){
+      if(eindres == 0 || eindres === NaN){
         teller++;
       }
       else{
@@ -342,7 +354,10 @@ export class AddMetingComponent implements OnInit {
       }
     });
 
-    avg = som / (eindresultaten.length - teller);
+    if(som != 0){
+      avg = som / (eindresultaten.length - teller);
+      console.log(avg);
+    }
     
     return avg;
   }
