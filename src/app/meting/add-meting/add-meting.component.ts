@@ -12,15 +12,66 @@ import { Resultaat } from '../resultaat.model';
 import { debounceTime, distinctUntilChanged, catchError } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 
-/*function validateResultaatType(control: FormGroup): { [key: string]: any } {
-  if (
-    control.get('werk_TelefonerenKlanten').value.length >= 1 &&
-    control.get('werk_Administratie').value.length < 2
-  ) {
-    return { amountNoType: true };
+function validateCategorien(control: FormGroup): { [key: string]: any } {
+  if(
+    parseInt(control.get('werk').value) +
+    parseInt(control.get('relaties').value) +
+    parseInt(control.get('gezondheid').value) +
+    parseInt(control.get('vrijetijd').value) != 100
+  ) { 
+    return { nietHonderdSamen: true }; 
   }
+
   return null;
-}*/
+}
+
+function validateOnderCategorien1(control : FormGroup): { [key: string]: any } {
+  if(
+    parseInt(control.get('werk_Administratie').value) +
+    parseInt(control.get('werk_BezoekenKlanten').value) +
+    parseInt(control.get('werk_TelefonerenKlanten').value) != 100
+  ){
+    return { nietHonderdSamen: true }
+  } 
+  
+  return null;
+}
+
+function validateOnderCategorien2(control : FormGroup): { [key: string]: any } {
+  if(
+    parseInt(control.get('gezondheid_Voeding').value) +
+    parseInt(control.get('gezondheid_Sport').value) +
+    parseInt(control.get('gezondheid_Yoga').value) != 100
+  ){
+    return {nietHonderdSamen: true }
+  }
+
+  return null;
+}
+
+function validateOnderCategorien3(control : FormGroup): { [key: string]: any } {
+  if(
+    parseInt(control.get('relaties_Partner').value) +
+    parseInt(control.get('relaties_Kinderen').value) +
+    parseInt(control.get('relaties_Ouders').value) != 100
+  ){
+    return { nietHonderdSamen: true }
+  }
+
+  return null;
+}
+
+function validateOnderCategorien4(control : FormGroup): { [key: string]: any } {
+  if(
+    parseInt(control.get('vrijetijd_SM').value) +
+    parseInt(control.get('vrijetijd_TV').value) +
+    parseInt(control.get('vrijetijd_Hobby').value) != 100
+  ){
+    return {nietHonderdSamen: true }
+  }
+
+  return null;
+}
 
 @Component({
   selector: 'app-add-meting',
@@ -28,7 +79,6 @@ import { EMPTY } from 'rxjs';
   styleUrls: ['./add-meting.component.css'],
 })
 export class AddMetingComponent implements OnInit {
-  public readonly types = ['Type1', 'Type2', 'Eindresultaat'];
   public meting: FormGroup;
   public errorMessage: string = '';
   public confirmationMessage: string = '';
@@ -44,20 +94,13 @@ export class AddMetingComponent implements OnInit {
   ngOnInit() : void {
     this.meting = this.fb.group({
       id: [''],
-      werk: [''],
-      werk_IN: [''],
-      werk_UIT: [''],
-      relaties: [''],
-      relaties_IN: [''],
-      relaties_UIT: [''],
-      gezondheid: [''],
-      gezondheid_IN: [''],
-      gezondheid_UIT: [''],
-      vrijetijd: [''],
-      vrijetijd_IN: [''],
-      vrijetijd_UIT: [''],
+      werk: ['0'],
+      relaties: ['0'],
+      gezondheid: ['0'],
+      vrijetijd: ['0'],
       resultaten: this.fb.array([this.createResultaten()])
-    });
+    }, {validator: validateCategorien }
+    );
 
     var coll = document.getElementsByClassName("collapsible");  //openvouwen categorie
     var i;
@@ -74,32 +117,7 @@ export class AddMetingComponent implements OnInit {
       });
     }
 
-    /*var input1 = (<HTMLInputElement>document.getElementById("werkAdminInput")); //automatisch input value aanpassen wanneer 
-    var array;
-    var value;
-    var somInputs;
-    var teller = 0;
-
-    input1.addEventListener("keyup", function(){
-      value  = (<HTMLInputElement>document.getElementById("werkinput")).value;
-      somInputs = 0;
-      teller = 0;
-
-      if(typeof input1.value !== 'string'){
-        array = [(<HTMLInputElement>document.getElementById("werkAdminInput")).value,
-                (<HTMLInputElement>document.getElementById("werkTelKlantInput")).value,
-                (<HTMLInputElement>document.getElementById("werkBezKlantInput")).value]
-        array.forEach(element => {
-          if(element){
-            somInputs += element;
-            teller ++;
-          }
-        });
-        (somInputs / teller) * value;       
-        
-        (<HTMLInputElement>document.getElementById("werkinput")).value = somInputs;
-      }
-    });*/
+    
 
     this.resultaten.valueChanges
       .pipe(debounceTime(400), distinctUntilChanged())
@@ -130,9 +148,9 @@ export class AddMetingComponent implements OnInit {
         amount: [0],
 
         //#region alle subcategorie inputvelden
-        werk_Administratie: [''],
-        werk_BezoekenKlanten: [''],
-        werk_TelefonerenKlanten: [''],
+        werk_Administratie: ['0'],
+        werk_BezoekenKlanten: ['0'],
+        werk_TelefonerenKlanten: ['0'],
         werk_AdministratieIN: [''],
         werk_BezoekenKlantenIN: [''],
         werk_TelefonerenKlantenIN: [''],
@@ -140,9 +158,9 @@ export class AddMetingComponent implements OnInit {
         werk_BezoekenKlantenUIT: [''],
         werk_TelefonerenKlantenUIT: [''],
 
-        relaties_Partner: [''],
-        relaties_Kinderen: [''],
-        relaties_Ouders: [''],
+        relaties_Partner: ['0'],
+        relaties_Kinderen: ['0'],
+        relaties_Ouders: ['0'],
         relaties_PartnerIN: [''],
         relaties_KinderenIN: [''],
         relaties_OudersIN: [''],
@@ -150,9 +168,9 @@ export class AddMetingComponent implements OnInit {
         relaties_KinderenUIT: [''],
         relaties_OudersUIT: [''],
 
-        gezondheid_Voeding: [''],
-        gezondheid_Sport: [''],
-        gezondheid_Yoga: [''],
+        gezondheid_Voeding: ['0'],
+        gezondheid_Sport: ['0'],
+        gezondheid_Yoga: ['0'],
         gezondheid_VoedingIN: [''],
         gezondheid_SportIN: [''],
         gezondheid_YogaIN: [''],
@@ -160,9 +178,9 @@ export class AddMetingComponent implements OnInit {
         gezondheid_SportUIT: [''],
         gezondheid_YogaUIT: [''],
 
-        vrijetijd_SM: [''],
-        vrijetijd_TV: [''],
-        vrijetijd_Hobby: [''],
+        vrijetijd_SM: ['0'],
+        vrijetijd_TV: ['0'],
+        vrijetijd_Hobby: ['0'],
         vrijetijd_SMIN: [''],
         vrijetijd_TVIN: [''],
         vrijetijd_HobbyIN: [''],
@@ -170,8 +188,8 @@ export class AddMetingComponent implements OnInit {
         vrijetijd_TVUIT: [''],
         vrijetijd_HobbyUIT: ['']
         //#endregion
-      }/*,
-      { validator: validateResultaatType }*/
+      },
+      {validators: [validateOnderCategorien1, validateOnderCategorien2, validateOnderCategorien3, validateOnderCategorien4]},
     );
   }
   onSubmit() {
@@ -181,12 +199,11 @@ export class AddMetingComponent implements OnInit {
     let energieINenUITsubcat1 = this.meting.value.resultaten.map(res => [res.werk_AdministratieIN, res.werk_AdministratieUIT,
                                                                   res.werk_TelefonerenKlantenIN, res.werk_TelefonerenKlantenUIT,
                                                                   res.werk_BezoekenKlantenIN, res.werk_BezoekenKlantenUIT]);
-    let energieINenUITcat1 = [this.meting.value.werk_IN, this.meting.value.werk_UIT];
     let ondercategorien1 = this.meting.value.resultaten.map(res => [res.werk_Administratie, res.werk_TelefonerenKlanten, res.werk_BezoekenKlanten]);
     let categorie1 = this.meting.value.werk;
 
-    let eindres1 = this.berekenEindresultaatCategorie(ondercategorien1, categorie1, energieINenUITsubcat1, energieINenUITcat1);
-    eindres1 = parseFloat(eindres1.toFixed(2));
+    let eindres1 = this.berekenEindresultaatCategorie(ondercategorien1, categorie1, energieINenUITsubcat1);
+    eindres1 = parseFloat(eindres1.toFixed(0));
 
     this.resultaten.patchValue([
       {vraag: "Werk", amount: eindres1}
@@ -198,12 +215,11 @@ export class AddMetingComponent implements OnInit {
     let energieINenUITsubcat2 = this.meting.value.resultaten.map(res => [res.relaties_PartnerIN, res.relaties_PartnerUIT,
                                                                   res.relaties_KinderenIN, res.relaties_KinderenUIT,
                                                                   res.relaties_OudersIN, res.relaties_OudersUIT])
-    let energieINenUITcat2 = [this.meting.value.relaties_IN, this.meting.value.relaties_UIT];
     let ondercategorien2 = this.meting.value.resultaten.map(res => [res.relaties_Partner, res.relaties_Kinderen, res.relaties_Ouders]);
     let categorie2 = this.meting.value.relaties;
 
-    let eindres2 = this.berekenEindresultaatCategorie(ondercategorien2, categorie2, energieINenUITsubcat2, energieINenUITcat2);
-    eindres2 = parseFloat(eindres2.toFixed(2));
+    let eindres2 = this.berekenEindresultaatCategorie(ondercategorien2, categorie2, energieINenUITsubcat2);
+    eindres2 = parseFloat(eindres2.toFixed(0));
 
     this.resultaten.patchValue([
       {vraag: "Relaties", amount: eindres2}
@@ -215,12 +231,11 @@ export class AddMetingComponent implements OnInit {
     let energieINenUITsubcat3 = this.meting.value.resultaten.map(res => [res.gezondheid_VoedingIN, res.gezondheid_VoedingUIT,
                                                                   res.gezondheid_SportIN, res.gezondheid_SportUIT,
                                                                   res.gezondheid_YogaIN, res.gezondheid_YogaUIT])
-    let energieINenUITcat3 = [this.meting.value.gezondheid_IN, this.meting.value.gezondheid_UIT];
     let ondercategorien3 = this.meting.value.resultaten.map(res => [res.gezondheid_Voeding, res.gezondheid_Sport, res.gezondheid_Yoga]);
     let categorie3 = this.meting.value.gezondheid;
 
-    let eindres3 = this.berekenEindresultaatCategorie(ondercategorien3, categorie3, energieINenUITsubcat3, energieINenUITcat3);
-    eindres3 = parseFloat(eindres3.toFixed(2));
+    let eindres3 = this.berekenEindresultaatCategorie(ondercategorien3, categorie3, energieINenUITsubcat3);
+    eindres3 = parseFloat(eindres3.toFixed(0));
     
     this.resultaten.patchValue([
       {vraag: "Gezondheid", amount: eindres3}
@@ -232,12 +247,11 @@ export class AddMetingComponent implements OnInit {
     let energieINenUITsubcat4 = this.meting.value.resultaten.map(res => [res.vrijetijd_SMIN, res.vrijetijd_SMUIT,
                                                                   res.vrijetijd_TVIN, res.vrijetijd_TVUIT,
                                                                   res.vrijetijd_HobbyIN, res.vrijetijd_HobbyUIT])
-    let energieINenUITcat4 = [this.meting.value.vrijetijd_IN, this.meting.value.vrijetijd_UIT];
     let ondercategorien4 = this.meting.value.resultaten.map(res => [res.vrijetijd_SM, res.vrijetijd_TV, res.vrijetijd_Hobby]);
     let categorie4 = this.meting.value.vrijetijd;
 
-    let eindres4 = this.berekenEindresultaatCategorie(ondercategorien4, categorie4, energieINenUITsubcat4, energieINenUITcat4);
-    eindres4 = parseFloat(eindres4.toFixed(2));
+    let eindres4 = this.berekenEindresultaatCategorie(ondercategorien4, categorie4, energieINenUITsubcat4);
+    eindres4 = parseFloat(eindres4.toFixed(0));
 
     this.resultaten.patchValue([
       {vraag: "Vrije tijd", amount: eindres4}
@@ -271,94 +285,67 @@ export class AddMetingComponent implements OnInit {
     });*/
   }
 
+
+  berekenEindresultaatCategorie(ondercategorien, categorie, energieINenUITsubcat){     //berekening eindresturaat voor 1 categorie
+    let ondercategorienRefined = ondercategorien[0];
+    let energieINenUITsubcatRefined = energieINenUITsubcat[0];
+
+    var energiesumSubCat = 0;
+    var energiesumsum = 0;
+    var energieINSubCat = 0;
+    var energieUITSubCat = 0;
+    let eindres = 0;
+    var alfaSubCat = 0;
+    var energieTotaalSubCat = 0;
+
+    for(var i = 0; i < energieINenUITsubcatRefined.length; i += 2 ){
+      if(!(energieINenUITsubcatRefined[i] == '' || energieINenUITsubcatRefined[i+1] == '' || ondercategorienRefined[i - (i/2)] == '')){
+        energieINSubCat = parseInt(energieINenUITsubcatRefined[i], 10);
+        energieUITSubCat = parseInt(energieINenUITsubcatRefined[i+1], 10);
+
+        energiesumSubCat = Math.sqrt(Math.pow(energieINSubCat, 2) + Math.pow(energieUITSubCat, 2));
+        alfaSubCat = 180 / Math.PI * Math.asin(energieUITSubCat / energiesumSubCat);
+        energieTotaalSubCat = energiesumSubCat * alfaSubCat / 100; //energie totaal voor subcategorie
+
+        energieTotaalSubCat = energieTotaalSubCat * (ondercategorienRefined[i - (i / 2)]) / 100;
+
+        energiesumsum += energieTotaalSubCat;
+        console.log(energiesumsum);
+
+      }      
+    }
+    
+    console.log("cat:" + categorie);
+    console.log("sum:" + energiesumsum);
+    eindres = energiesumsum * categorie / 100;
+    
+    console.log(eindres);
+    return eindres;
+  }
+
+  berekenMetingResultaat(eindresultaten){   //berekenen metingresultaat
+    var som = 0;
+
+    eindresultaten.forEach(eindres => {
+      som += eindres;
+    });
+
+    return som;
+  }
+
   getErrorMessage(errors: any): string {
     if (!errors) {
       return null;
     }
     if (errors.required) {
       return 'is required';
-    } else if (errors.minlength) {
+    } 
+    else if (errors.minlength) {
       return `needs at least ${errors.minlength.requiredLength} characters (got ${errors.minlength.actualLength})`;
-    } else if (errors.amountNoType) {
-      return `if amount is set you must set a type`;
-    }
-  }
-
-  berekenEindresultaatCategorie(ondercategorien, categorie, energieINenUITsubcat, energieINenUITcat){     //berekening eindresturaat voor 1 categorie
-    let ondercategorienRefined = ondercategorien[0];
-    let energieINenUITsubcatRefined = energieINenUITsubcat[0];
-    let energiesumCat = 0;
-    var alfaCat = 0;
-    var energieINCat = energieINenUITcat[0];
-    var energieUITCat = energieINenUITcat[1];
-    var energieTotaalCat = 0;
-
-    if(!(energieINCat == '' || categorie == ''|| energieUITCat == '')){
-      energiesumCat = Math.sqrt(Math.pow(energieINCat, 2) + Math.pow(energieUITCat, 2));
-      alfaCat = 180 / Math.PI * Math.asin(energieUITCat / energiesumCat);
-      energieTotaalCat = energiesumCat * alfaCat / 100; //energie totaal voor hoofdcategorie
-
-      energieTotaalCat = energieTotaalCat * categorie / 100; 
-    }
-
-    var energiesumSubCat = 0;
-    var energiesumsum = 0;
-    var energieINSubCat = 0;
-    var energieUITSubCat = 0;
-    var teller = 0;
-    let eindres = 0;
-    var alfaSubCat = 0;
-    var energieTotaalSubCat = 0;
-
-    for(var i = 0; i < energieINenUITsubcatRefined.length; i += 2 ){
-      energieINSubCat = parseInt(energieINenUITsubcatRefined[i], 10);
-      energieUITSubCat = parseInt(energieINenUITsubcatRefined[i+1], 10);
-
-      if(energieINenUITsubcatRefined[i] == '' || ondercategorienRefined[i- (i / 2)] == ''|| energieINenUITsubcatRefined[i+1] == ''){
-        teller++;
-      }
-      else{
-        energiesumSubCat = Math.sqrt(Math.pow(energieINSubCat, 2) + Math.pow(energieUITSubCat, 2));
-        alfaSubCat = 180 / Math.PI * Math.asin(energieUITSubCat / energiesumSubCat);
-        energieTotaalSubCat = energiesumSubCat * alfaSubCat / 100; //energie totaal voor subcategorie
-
-        energieTotaalSubCat = energieTotaalSubCat * (ondercategorienRefined[i - (i / 2)]) / 100;
-        energieTotaalSubCat = energieTotaalSubCat * energieTotaalCat / 100;  //???????????????
-
-        energiesumsum += energieTotaalSubCat;
-      }
-    }
-
-    if(energiesumsum == 0){     //als er geen subcategorieeën zijn ingevult enkel de hoofdcategorie meerekenen
-      eindres = energieTotaalCat;
-    }
-    else{
-      var avg = energiesumsum / ((ondercategorienRefined.length) - teller/2); //min elke input die leeg is gelaten
-      eindres = avg;
-    }
-
-    return eindres;
-  }
-
-  berekenMetingResultaat(eindresultaten){   //berekenen metingresultaat
-    var som = 0;
-    var avg = 0;
-    var teller = 0;
-
-    eindresultaten.forEach(eindres => {
-      if(eindres == 0 || eindres === NaN){
-        teller++;
-      }
-      else{
-        som += eindres;
-      }
-    });
-
-    if(som != 0){
-      avg = som / (eindresultaten.length - teller);
-      console.log(avg);
+    }  
+    else if(errors.nietHonderdSamen){
+      return 'alle categorien moeten samen 100 zijn!'
     }
     
-    return avg;
   }
 }
