@@ -11,6 +11,8 @@ import { environment } from 'src/environments/environment';
 export class MetingDataService {
   private _metingen$ = new BehaviorSubject<Meting[]>([]);
   private _metingen: Meting[];
+  private _meting$ = new BehaviorSubject<Meting>(new Meting(null, null, null, null));
+  private _meting: Meting;
 
   constructor(private http: HttpClient) {
     this.metingen$
@@ -25,6 +27,7 @@ export class MetingDataService {
         this._metingen = metingen;
         this._metingen$.next(this._metingen);
       });
+        
   }
 
   get allMetingen$(): Observable<Meting[]> {
@@ -32,7 +35,7 @@ export class MetingDataService {
   }
 
   get metingen$(): Observable<Meting[]> {
-    return this.http.get(`${environment.apiUrl}/Meting/`).pipe(   //return alle metingen ( per account ) MOET NOG GEBEUREN !!!!!
+    return this.http.get(`${environment.apiUrl}/Meting/`).pipe(   //return alle metingen ( per account MOET NOG GEBEUREN) !!!!!
       tap(console.log),
       shareReplay(1),
       catchError(this.handleError),
@@ -40,10 +43,13 @@ export class MetingDataService {
     );
   }
 
-  getMeting$(id: number): Observable<Meting> {
+  getMeting$(id: number): Observable<Meting>{
     return this.http
       .get(`${environment.apiUrl}/Meting/${id}`)
-      .pipe(catchError(this.handleError), map(Meting.fromJSON)); // returns just one Meting, as json
+      .pipe(
+        catchError(this.handleError), 
+        map(Meting.fromJSON)
+      ); // returns just one Meting, as json
   }
 
   addNewMeting(meting: Meting) {

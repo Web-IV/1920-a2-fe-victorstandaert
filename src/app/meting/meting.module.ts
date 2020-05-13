@@ -11,10 +11,16 @@ import { MetingResolver } from './MetingResolver';
 import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MetingAnalyseComponent } from './meting-analyse/meting-analyse.component';
 
 const routes: Routes = [
   { path: 'list', component: MetingListComponent },
   { path: 'add', component: AddMetingComponent },
+  { 
+    path: 'analyse/:id', 
+    component: MetingAnalyseComponent, 
+    resolve: { meting: MetingResolver }
+  },
   {
     path: 'detail/:id',
     component: MetingDetailComponent,
@@ -29,6 +35,7 @@ const routes: Routes = [
     AddMetingComponent,
     MetingFilterPipe,
     MetingDetailComponent,
+    MetingAnalyseComponent
   ],
   imports: [
     CommonModule,
@@ -37,6 +44,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     HttpClientModule
   ],
-  exports: [AddMetingComponent, MetingListComponent],
+  exports: [AddMetingComponent, MetingListComponent, MetingAnalyseComponent],
 })
 export class MetingModule {}

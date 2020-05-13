@@ -19,6 +19,7 @@
       fxLayout.xs="column"
       fxLayoutGap="0.5%"
       fxLayoutAlign="start"
+      
     >
       <div
         class="meting"
@@ -26,7 +27,13 @@
         fxFlex="0 0 calc(25%-0.5%)"
         fxFlex.xs="100%"
       >
-        <app-meting [meting]="meting" data-cy="metingCard"></app-meting>
+        <app-meting 
+          mat-list-item
+          [meting]="meting" 
+          data-cy="metingCard" 
+          class="eenMeting"
+          [routerLink]="['../../meting/analyse', meting.id]">
+        </app-meting>
       </div>
     </div>
   </div>
