@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserModule } from './user/user.module';
 import { httpInterceptorProviders } from './interceptors';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent, MainNavComponent],
@@ -22,6 +23,7 @@ import { httpInterceptorProviders } from './interceptors';
     HttpClientModule,
     UserModule,
     AppRoutingModule,
+    MatSliderModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],

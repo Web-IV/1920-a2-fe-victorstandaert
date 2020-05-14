@@ -1,6 +1,7 @@
 <mat-card>
   <mat-card-content>
     <form class="inputcontainer" [formGroup]="meting" (ngSubmit)="onSubmit()">
+      <h2>Werk</h2>
     <div class="inputveld">
       <mat-form-field>  <!-- werk -->
         <input matInput data-cy="werk" id="werkinput" aria-label="werk" placeholder="Werk" type="text" formControlName="werk" required #spy/>
@@ -57,6 +58,7 @@
         </div>
       </div>
 
+      <h2>Relaties</h2>
       <div class="inputveld">
       <mat-form-field> <!-- relaties -->
         <input matInput data-cy="relaties" aria-label="relaties" placeholder="Relaties" type="text" formControlName="relaties" required #spy/>
@@ -111,6 +113,8 @@
           </mat-error>
         </div>
       </div>
+
+      <h2>Gezondheid</h2>
       <div class="inputveld">
       <mat-form-field > <!-- gezondheid -->
         <input matInput data-cy="gezondheid" aria-label="gezondheid" placeholder="Gezondheid" type="text" formControlName="gezondheid" required #spy/>
@@ -165,6 +169,8 @@
           </mat-error>
         </div>
       </div>
+
+      <h2>Vrije tijd</h2>
       <div class="inputveld">
       <mat-form-field > <!-- vrije tijd -->
         <input matInput data-cy="vrijetijd" aria-label="vrijetijd" placeholder="Vrije Tijd" type="text" formControlName="vrijetijd" required #spy/>

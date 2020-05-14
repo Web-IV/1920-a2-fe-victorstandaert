@@ -84,6 +84,7 @@ export class AddMetingComponent implements OnInit {
   public errorMessage: string = '';
   public confirmationMessage: string = '';
   private _fetchMetingen$: Observable<Meting[]>;
+  value = 0;
 
   constructor(
     private fb: FormBuilder,
