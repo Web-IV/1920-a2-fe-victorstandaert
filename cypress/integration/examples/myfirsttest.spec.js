@@ -1,6 +1,6 @@
 import { createPartiallyEmittedExpression } from "typescript"
 
-function goToMetingList(){
+function goToMetingList(){ //ga naar de metinglijst pagina
   cy.visit('/')
   cy.location('pathname').should('equal', '/login')
 
@@ -10,7 +10,7 @@ function goToMetingList(){
   cy.contains('button', 'Login').click()
 }
 
-function goToAddMeting(){
+function goToAddMeting(){ //ga naar de nieuwe meting toevoegen pagina
   cy.visit('/')
   cy.location('pathname').should('equal', '/login')
 
@@ -22,8 +22,33 @@ function goToAddMeting(){
   cy.visit('/meting/add')
 }
 
+function goToMetingAnalyse1(){ //ga naar de eerste meting analyse
+  cy.visit('/')
+  cy.location('pathname').should('equal', '/login')
+
+  // enter valid username and password
+  cy.get('[data-cy=login-email]').type('student@hogent.be')
+  cy.get('[data-cy=login-password]').type('P@ssword1111')
+  cy.contains('button', 'Login').click()
+
+  cy.get('app-meting').eq(0).parent().click(); //klik op de eerste meting (id=1)
+}
+
+function goToMetingAnalyse2(){ //ga naar de tweede meting analyse
+  cy.visit('/')
+  cy.location('pathname').should('equal', '/login')
+
+  // enter valid username and password
+  cy.get('[data-cy=login-email]').type('student@hogent.be')
+  cy.get('[data-cy=login-password]').type('P@ssword1111')
+  cy.contains('button', 'Login').click()
+
+  cy.get('app-meting').eq(1).parent().click(); //klik op de eerste meting (id=2)
+}
+
 describe('My First Test', function() {
-  it('Filtertesten', function() {            //test filter
+  
+  it('Filter', function() {            //test filter
     
     goToMetingList();
 
@@ -40,11 +65,10 @@ describe('My First Test', function() {
     cy.get('[data-cy=metingCard]').should('have.length', 0);
   });
   
-  it('AddMetingtesten', function(){           //test add meting (formule)
+  it('AddMetingt', function(){           //test add meting (formule)
 
     goToAddMeting();
-
-    cy.get('[data-cy=openvouwknop]').click({multiple: true}); //openen collapsables
+    //cy.get('[data-cy=openvouwknop]').click({multiple: true}); //openen collapsables
     //#region add meting inputs
     cy.get('[data-cy=werk]').type('50');
       cy.get('[data-cy=werkAdmin]').type('50');
@@ -73,7 +97,6 @@ describe('My First Test', function() {
       cy.get('[data-cy=relatiesOudersUIT]').type('-25');
 
     cy.get('[data-cy=gezondheid]').type('20');
-
       cy.get('[data-cy=gezondheidVoeding]').type('50');
       cy.get('[data-cy=gezondheidVoedingIN]').type('0');
       cy.get('[data-cy=gezondheidVoedingUIT]').type('100');
@@ -110,6 +133,41 @@ describe('My First Test', function() {
     cy.get('[data-cy=metingCard]:last').contains('Vrije tijd: 5');
     cy.get('[data-cy=metingCard]:last').contains('Score: 51');
 
+  })
+
+  it('AddMetingValidatie', function(){
+
+    goToAddMeting();
+    //cy.get('[data-cy=openvouwknop]').click({multiple: true});
+
+    cy.get('[data-cy=werk]').type('50');
+      cy.get('[data-cy=werkAdmin]').type('50');
+      cy.get('[data-cy=werkTelKlant]').type('0');
+      cy.get('[data-cy=werkBezKlant]').type('0');
+
+    cy.get('[data-cy=errorWerk]').should('be.visible');
+    cy.get('[data-cy=errorOnderCatWerk]').should('be.visible');
+
+    cy.get('[data-cy=relaties]').type('50');
+      cy.get('[data-cy=relatiesPartner]').type('50');
+      cy.get('[data-cy=relatiesKinderen]').type('30');
+      cy.get('[data-cy=relatiesOuders]').type('20');
+
+    cy.get('[data-cy=errorRelaties]').should('not.be.visible');
+    cy.get('[data-cy=errorOnderCatRelaties]').should('not.be.visible');
+
+  }) 
+
+  it('Analysetest1', function(){
+    goToMetingAnalyse1();
+
+    cy.location('pathname').should('equal', '/meting/analyse/1')
+  })
+
+  it('Analysetest2', function(){
+    goToMetingAnalyse2();
+
+    cy.location('pathname').should('equal', '/meting/analyse/2')
   })
 
 })
