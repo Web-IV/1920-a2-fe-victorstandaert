@@ -1,5 +1,6 @@
 import { MetingDataService } from '../meting-data.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Subject, Observable, of, EMPTY, merge } from 'rxjs';
 import { Meting } from '../meting.model';
 import {
   FormGroup,
@@ -10,7 +11,7 @@ import {
 } from '@angular/forms';
 import { Resultaat } from '../resultaat.model';
 import { debounceTime, distinctUntilChanged, catchError } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 function validateCategorien(control: FormGroup): { [key: string]: any } {
   if(
@@ -31,31 +32,31 @@ function validateOnderCategorien1(control : FormGroup): { [key: string]: any } {
     parseInt(control.get('werk_BezoekenKlanten').value) +
     parseInt(control.get('werk_TelefonerenKlanten').value) != 100
   ){
-    return { nietHonderdSamen: true }
+    return { nietHonderdSamen1: true }
   } 
   
   return null;
 }
 
-function validateOnderCategorien2(control : FormGroup): { [key: string]: any } {
+function validateOnderCategorien3(control : FormGroup): { [key: string]: any } {
   if(
     parseInt(control.get('gezondheid_Voeding').value) +
     parseInt(control.get('gezondheid_Sport').value) +
     parseInt(control.get('gezondheid_Yoga').value) != 100
   ){
-    return {nietHonderdSamen: true }
+    return {nietHonderdSamen3: true }
   }
 
   return null;
 }
 
-function validateOnderCategorien3(control : FormGroup): { [key: string]: any } {
+function validateOnderCategorien2(control : FormGroup): { [key: string]: any } {
   if(
     parseInt(control.get('relaties_Partner').value) +
     parseInt(control.get('relaties_Kinderen').value) +
     parseInt(control.get('relaties_Ouders').value) != 100
   ){
-    return { nietHonderdSamen: true }
+    return { nietHonderdSamen2: true }
   }
 
   return null;
@@ -67,7 +68,7 @@ function validateOnderCategorien4(control : FormGroup): { [key: string]: any } {
     parseInt(control.get('vrijetijd_TV').value) +
     parseInt(control.get('vrijetijd_Hobby').value) != 100
   ){
-    return {nietHonderdSamen: true }
+    return {nietHonderdSamen4: true }
   }
 
   return null;
@@ -82,16 +83,19 @@ export class AddMetingComponent implements OnInit {
   public meting: FormGroup;
   public errorMessage: string = '';
   public confirmationMessage: string = '';
+  private _fetchMetingen$: Observable<Meting[]>;
 
   constructor(
     private fb: FormBuilder,
-    private _metingDataService: MetingDataService
+    private _metingDataService: MetingDataService,
+    private _router : Router
   ) {}
 
   get resultaten(): FormArray {
     return <FormArray>this.meting.get('resultaten');
   }
   ngOnInit() : void {
+
     this.meting = this.fb.group({
       id: [''],
       werk: ['0'],
@@ -333,6 +337,10 @@ export class AddMetingComponent implements OnInit {
     return som;
   }
 
+  get metingen$(): Observable<Meting[]> {
+    return this._fetchMetingen$;
+  }
+
   getErrorMessage(errors: any): string {
     if (!errors) {
       return null;
@@ -346,6 +354,35 @@ export class AddMetingComponent implements OnInit {
     else if(errors.nietHonderdSamen){
       return 'alle categorien moeten samen 100 zijn!'
     }
+    else if(errors.nietHonderdSamen1){
+      return 'alle ondercategorien moeten samen 100 zijn!'
+    }
+    else if(errors.nietHonderdSamen2){
+      return 'alle ondercategorien moeten samen 100 zijn!'
+    }
+    else if(errors.nietHonderdSamen3){
+      return 'alle ondercategorien moeten samen 100 zijn!'
+    }
+    else if(errors.nietHonderdSamen4){
+      return 'alle ondercategorien moeten samen 100 zijn!'
+    }
     
   }
+
+  /*bekijkMeting(){
+    console.log("bekijkmeting begin");
+    this._fetchMetingen$ = this._metingDataService.allMetingen$.pipe(
+      catchError((err) => {
+        this.errorMessage = err;
+        return EMPTY;
+      })
+    );
+
+    var lengte;
+    this.metingen$.subscribe(meting => lengte = meting.length);
+    var laatsteId = this.metingen$[lengte].map(val => val.id);
+    console.log("bekijkmeting einde");
+
+    this._router.navigate(['/../../meting/analyse', laatsteId])
+  }*/
 }

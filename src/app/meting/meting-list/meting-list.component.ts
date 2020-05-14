@@ -17,7 +17,7 @@ import {
   styleUrls: ['./meting-list.component.css'],
 })
 export class MetingListComponent implements OnInit {
-  public filterMetingId: string;
+  public filterMetingDatum: string;
   public filterMeting$ = new Subject<string>();
   private _fetchMetingen$: Observable<Meting[]>;
 
@@ -30,7 +30,7 @@ export class MetingListComponent implements OnInit {
         debounceTime(400),
         map((val) => val)
       )
-      .subscribe((val) => (this.filterMetingId = val));
+      .subscribe((val) => (this.filterMetingDatum = val));
   }
 
   ngOnInit(): void {
@@ -43,7 +43,7 @@ export class MetingListComponent implements OnInit {
   }
 
   applyFilter(filter: string) {
-    this.filterMetingId = filter;
+    this.filterMetingDatum = filter;
   }
 
   get metingen$(): Observable<Meting[]> {

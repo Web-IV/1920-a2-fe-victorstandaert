@@ -1,15 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
 import { Meting } from '../meting.model';
 import { MetingDataService } from '../meting-data.service';
-import { Subject, Observable, of, EMPTY, merge } from 'rxjs';
-import {
-  distinctUntilChanged,
-  debounceTime,
-  map,
-  filter,
-  catchError,
-  scan,
-} from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -17,21 +8,42 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './meting-analyse.component.html',
   styleUrls: ['./meting-analyse.component.css']
 })
+
 export class MetingAnalyseComponent implements OnInit {
 
-  private _fetchMeting$: Observable<Meting>;
+  public meting: Meting;
+  public metingResult: number;
+  public metingResultOp100: number;
 
-  public errorMessage: string = '';
-
-  constructor(private _metingDataService: MetingDataService, private route: ActivatedRoute) { }
-
-  ngOnInit(): void {
-    var id = this.route.snapshot.paramMap.get('id');
-    this._fetchMeting$ = this._metingDataService.getMeting$(parseInt(id));
+  public canvasWidth = 800
+  public needleValue: number 
+  public centralLabel = ''
+  public name = ''
+  public bottomLabel: number
+  public options = { //default waarden gauge chart
+      hasNeedle: true,
+      needleColor: 'gray',
+      needleUpdateSpeed: 5000,
+      arcColors: ['rgb(252, 55, 0)', 'rgb(255, 171, 25)', 'rgb(255, 224, 130)', 'rgb(168, 250, 206)', 'rgb(66, 223, 194)', 'rgb(0, 164, 96)'],
+      arcDelimiters: [10, 30, 50, 70, 90],
+      rangeLabel: ['-100', '100'],
+      needleStartValue: 0,
   }
 
-  get meting$(): Observable<Meting> {
-    return this._fetchMeting$;
-  }
+  constructor(private _metingDataService: MetingDataService, private route: ActivatedRoute) {}
 
+  ngOnInit() {
+    this.route.data.subscribe(item => (this.meting = item['meting'])); //haal de specifieke meting op adhv id
+
+    this.metingResult = this.meting.metingResultaat
+    console.log(this.metingResult);
+
+    this.metingResultOp100 = this.metingResult / 90 * 100; //default waarden gauge chart aanpassen
+    this.metingResultOp100 = (this.metingResultOp100 / 2) + 50;
+    console.log(this.metingResultOp100);
+
+    this.needleValue = this.metingResultOp100;
+    this.bottomLabel = this.metingResult;
+    //this.options.arcDelimiters = [this.metingResultOp100];
+  }
 }

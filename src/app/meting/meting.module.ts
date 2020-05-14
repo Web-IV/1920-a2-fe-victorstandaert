@@ -12,6 +12,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MetingAnalyseComponent } from './meting-analyse/meting-analyse.component';
+import { GaugeChartModule } from 'angular-gauge-chart';
 
 const routes: Routes = [
   { path: 'list', component: MetingListComponent },
@@ -42,8 +43,13 @@ const routes: Routes = [
     MaterialModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
-    HttpClientModule
+    HttpClientModule,
+    GaugeChartModule,
   ],
-  exports: [AddMetingComponent, MetingListComponent, MetingAnalyseComponent],
+  exports: [
+    AddMetingComponent, 
+    MetingListComponent, 
+    MetingAnalyseComponent, 
+  ],
 })
 export class MetingModule {}

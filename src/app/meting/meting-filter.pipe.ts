@@ -6,15 +6,15 @@ import { Meting } from './meting.model';
 })
 export class MetingFilterPipe implements PipeTransform {
 
-  transform(metingen: Meting[], id: string): Meting[] {
+  transform(metingen: Meting[], datum: string): Meting[] {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-    if (!id || id === "") {
+    if (!datum || datum === "") {
       return metingen;
     }
     
     return metingen.filter(rec =>
-      rec.dateAdded.toLocaleDateString('nl-BE', options).toLowerCase().includes(id.toLowerCase())
+      rec.dateAdded.toLocaleDateString('nl-BE', options).toLowerCase().includes(datum.toLowerCase())
     );
   }
 }

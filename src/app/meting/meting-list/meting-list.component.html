@@ -23,11 +23,12 @@
     >
       <div
         class="meting"
-        *ngFor="let meting of metingen | metingFilter: filterMetingId"
+        *ngFor="let meting of metingen | metingFilter: filterMetingDatum"
         fxFlex="0 0 calc(25%-0.5%)"
         fxFlex.xs="100%"
       >
-        <app-meting 
+        <app-meting
+          [id]=meting.id
           mat-list-item
           [meting]="meting" 
           data-cy="metingCard" 

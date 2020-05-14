@@ -6,11 +6,11 @@
         <input matInput data-cy="werk" id="werkinput" aria-label="werk" placeholder="Werk" type="text" formControlName="werk" required #spy/>
         <mat-error
           *ngIf="meting.get('werk')['errors'] && meting.get('werk').touched"
-        >
+        ><!-- is required error-->
           {{ getErrorMessage(meting.get('werk')['errors']) }}
         </mat-error>
-      </mat-form-field>
-      <mat-error *ngIf="meting.errors && meting.get('werk').touched">
+      </mat-form-field><!-- is 100 error-->
+      <mat-error *ngIf="meting.errors && meting.get('werk').touched" data-cy="errorWerk">
         {{ getErrorMessage(meting.errors) }}
       </mat-error>
     </div> 
@@ -51,8 +51,8 @@
             <input matInput data-cy="werkBezKlantUIT" id="werkTelKlantInputUIT" type="text" aria-label="werk telefoneren klanten UIT" placeholder="Energie UIT" formControlName="werk_BezoekenKlantenUIT"/>
           </mat-form-field>
           <br />
-          <mat-error *ngIf="item.errors && (item.get('werk_Administratie').touched || item.get('werk_TelefonerenKlanten').touched || item.get('werk_BezoekenKlanten').touched)">
-            {{ getErrorMessage(item.errors) }}
+          <mat-error data-cy="errorOnderCatWerk" *ngIf="item.errors?.nietHonderdSamen1 && (item.get('werk_Administratie').touched || item.get('werk_TelefonerenKlanten').touched || item.get('werk_BezoekenKlanten').touched)">
+            {{ getErrorMessage(item.errors) }}<!-- is 100 error-->
           </mat-error>
         </div>
       </div>
@@ -62,12 +62,12 @@
         <input matInput data-cy="relaties" aria-label="relaties" placeholder="Relaties" type="text" formControlName="relaties" required #spy/>
         <mat-error
           *ngIf="meting.get('relaties')['errors'] && meting.get('relaties').touched"
-        >
+        ><!-- is required error-->
           {{ getErrorMessage(meting.get('relaties')['errors']) }}
         </mat-error>
       </mat-form-field>
-      <mat-error *ngIf="meting.errors && meting.get('relaties').touched">
-        {{ getErrorMessage(meting.errors) }}
+      <mat-error data-cy="errorRelaties" *ngIf="meting.errors && meting.get('relaties').touched">
+        {{ getErrorMessage(meting.errors) }}<!-- is 100 error-->
       </mat-error>
     </div>
       <button type="button" class="collapsible" data-cy="openvouwknop"></button> <!--openvouwen relaties-->
@@ -106,8 +106,8 @@
             <input matInput data-cy="relatiesOudersUIT" id="relatiesOudersUIT" type="text" aria-label="relaties ouders UIT" placeholder="Energie UIT" formControlName="relaties_OudersUIT"/>
           </mat-form-field>
           <br />
-          <mat-error *ngIf="item.errors && (item.get('relaties_Partner').touched || item.get('relaties_Kinderen').touched || item.get('relaties_Ouders').touched)">
-            {{ getErrorMessage(item.errors) }}
+          <mat-error data-cy="errorOnderCatRelaties" *ngIf="item.errors?.nietHonderdSamen2 && (item.get('relaties_Partner').touched || item.get('relaties_Kinderen').touched || item.get('relaties_Ouders').touched)">
+            {{ getErrorMessage(item.errors) }}<!-- is 100 error-->
           </mat-error>
         </div>
       </div>
@@ -116,12 +116,12 @@
         <input matInput data-cy="gezondheid" aria-label="gezondheid" placeholder="Gezondheid" type="text" formControlName="gezondheid" required #spy/>
         <mat-error
           *ngIf="meting.get('gezondheid')['errors'] && meting.get('gezondheid').touched"
-        >
+        ><!-- is required error-->
           {{ getErrorMessage(meting.get('gezondheid')['errors']) }}
         </mat-error>
       </mat-form-field>
       <mat-error *ngIf="meting.errors && meting.get('gezondheid').touched">
-        {{ getErrorMessage(meting.errors) }}
+        {{ getErrorMessage(meting.errors) }}<!-- is 100 error-->
       </mat-error>
 </div>
       <button type="button" class="collapsible" data-cy="openvouwknop"></button> <!--openvouwen gezondheid-->
@@ -160,8 +160,8 @@
             <input matInput data-cy="gezondheidYogaUIT" id="gezondheidYogaUIT" type="text" aria-label="gezondheid Yoga UIT" placeholder="Energie UIT" formControlName="gezondheid_YogaUIT"/>
           </mat-form-field>
           <br/>
-          <mat-error *ngIf="item.errors && (item.get('gezondheid_Voeding').touched || item.get('gezondheid_Sport').touched || item.get('gezondheid_Yoga').touched)">
-            {{ getErrorMessage(item.errors) }}
+          <mat-error *ngIf="item.errors?.nietHonderdSamen3 && (item.get('gezondheid_Voeding').touched || item.get('gezondheid_Sport').touched || item.get('gezondheid_Yoga').touched)">
+            {{ getErrorMessage(item.errors) }}<!-- is 100 error-->
           </mat-error>
         </div>
       </div>
@@ -170,13 +170,13 @@
         <input matInput data-cy="vrijetijd" aria-label="vrijetijd" placeholder="Vrije Tijd" type="text" formControlName="vrijetijd" required #spy/>
         <mat-error
           *ngIf="meting.get('vrijetijd')['errors'] && meting.get('vrijetijd').touched"
-        >
+        > <!-- is required error-->
           {{ getErrorMessage(meting.get('vrijetijd')['errors']) }}
         </mat-error>
       </mat-form-field>
       <mat-error *ngIf="meting.errors && meting.get('vrijetijd').touched">
         {{ getErrorMessage(meting.errors) }}
-      </mat-error>
+      </mat-error><!-- is 100 error-->
 </div>
       <button type="button" class="collapsible" data-cy="openvouwknop"></button> <!--openvouwen vrije tijd-->
       <div class="content" formArrayName="resultaten" *ngFor="  
@@ -214,15 +214,19 @@
             <input matInput data-cy="vrijetijdHobbyUIT" id="vrijetijdHobbyUIT" type="text" aria-label="vrijetijd Hobby UIT" placeholder="Energie UIT" formControlName="vrijetijd_HobbyUIT"/>
           </mat-form-field>
           <br/>
-          <mat-error *ngIf="item.errors && (item.get('vrijetijd_SM').touched || item.get('vrijetijd_TV').touched || item.get('vrijetijd_Hobby').touched)">
-            {{ getErrorMessage(item.errors) }}
+          <mat-error *ngIf="item.errors?.nietHonderdSamen4 && (item.get('vrijetijd_SM').touched || item.get('vrijetijd_TV').touched || item.get('vrijetijd_Hobby').touched)">
+            {{ getErrorMessage(item.errors) }}<!-- is 100 error-->
           </mat-error>
         </div>
       </div>
-     
-      <button class="opslaan" mat-raised-button type="submit" [disabled]="!meting.valid">
-        Opslaan
-      </button>
+      
+          <button class="opslaan" mat-raised-button type="submit" [disabled]="!meting.valid" >
+            Opslaan
+          </button>
+          <!--<button type="button" (click)="bekijkMeting()">
+            Bekijk resultaat meting
+          </button>-->
+
     </form>
   </mat-card-content>
 </mat-card>

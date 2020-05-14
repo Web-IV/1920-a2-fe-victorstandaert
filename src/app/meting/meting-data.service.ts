@@ -11,8 +11,6 @@ import { environment } from 'src/environments/environment';
 export class MetingDataService {
   private _metingen$ = new BehaviorSubject<Meting[]>([]);
   private _metingen: Meting[];
-  private _meting$ = new BehaviorSubject<Meting>(new Meting(null, null, null, null));
-  private _meting: Meting;
 
   constructor(private http: HttpClient) {
     this.metingen$
