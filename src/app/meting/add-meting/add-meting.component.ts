@@ -84,6 +84,7 @@ export class AddMetingComponent implements OnInit {
   public errorMessage: string = '';
   public confirmationMessage: string = '';
   private _fetchMetingen$: Observable<Meting[]>;
+  value = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -98,6 +99,7 @@ export class AddMetingComponent implements OnInit {
 
     this.meting = this.fb.group({
       id: [''],
+      slider: [0],
       werk: ['0'],
       relaties: ['0'],
       gezondheid: ['0'],
@@ -198,6 +200,7 @@ export class AddMetingComponent implements OnInit {
   }
   onSubmit() {
     
+    console.log(this.meting.value.slider);
 
     //#region eindresult en vraag aanpassen voor werk-categorie
     let energieINenUITsubcat1 = this.meting.value.resultaten.map(res => [res.werk_AdministratieIN, res.werk_AdministratieUIT,
