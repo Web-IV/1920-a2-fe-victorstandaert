@@ -11,11 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserModule } from './user/user.module';
 import { httpInterceptorProviders } from './interceptors';
-<<<<<<< HEAD
-import { MatSliderModule } from '@angular/material/slider';
-=======
 import {MatSliderModule} from '@angular/material/slider';
->>>>>>> metslider
 
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent, MainNavComponent],
@@ -27,11 +23,7 @@ import {MatSliderModule} from '@angular/material/slider';
     HttpClientModule,
     UserModule,
     AppRoutingModule,
-<<<<<<< HEAD
-    MatSliderModule,
-=======
     MatSliderModule
->>>>>>> metslider
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],

@@ -85,10 +85,7 @@ export class AddMetingComponent implements OnInit {
   public confirmationMessage: string = '';
   private _fetchMetingen$: Observable<Meting[]>;
   value = 0;
-<<<<<<< HEAD
-=======
   floatLabelControl = new FormControl('auto');
->>>>>>> metslider
 
   constructor(
     private fb: FormBuilder,

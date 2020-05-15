@@ -2,25 +2,11 @@
   <mat-card-content>
     <form class="inputcontainer" [formGroup]="meting" (ngSubmit)="onSubmit()">
       <h2>Werk</h2>
-<<<<<<< HEAD
-    <div class="inputveld">
-      <mat-form-field>  <!-- werk -->
-        <input matInput data-cy="werk" id="werkinput" aria-label="werk" placeholder="Werk" type="text" formControlName="werk" required #spy/>
-        <mat-error
-          *ngIf="meting.get('werk')['errors'] && meting.get('werk').touched"
-        ><!-- is required error-->
-          {{ getErrorMessage(meting.get('werk')['errors']) }}
-        </mat-error>
-      </mat-form-field><!-- is 100 error-->
-      <mat-error *ngIf="meting.errors && meting.get('werk').touched" data-cy="errorWerk">
-        {{ getErrorMessage(meting.errors) }}
-=======
       <mat-slider thumbLabel step="5" formControlName="werk" id='sliderelement' type="MinRange" (input)="onInputChange($event, werkLabel.id)" ></mat-slider>
       <label #werkLabel id="werkLabel">50</label>
 
       <mat-error data-cy="errorWerk" *ngIf="meting.errors && meting.get('werk').dirty">
         {{ getErrorMessage(meting.errors) }}<!-- is 100 error-->
->>>>>>> metslider
       </mat-error>
 
       <button type="button" class="collapsible" data-cy="openvouwknop"></button>    <!--openvouwen werk-->
@@ -100,23 +86,10 @@
       </div>
 
       <h2>Relaties</h2>
-<<<<<<< HEAD
-      <div class="inputveld">
-      <mat-form-field> <!-- relaties -->
-        <input matInput data-cy="relaties" aria-label="relaties" placeholder="Relaties" type="text" formControlName="relaties" required #spy/>
-        <mat-error
-          *ngIf="meting.get('relaties')['errors'] && meting.get('relaties').touched"
-        ><!-- is required error-->
-          {{ getErrorMessage(meting.get('relaties')['errors']) }}
-        </mat-error>
-      </mat-form-field>
-      <mat-error data-cy="errorRelaties" *ngIf="meting.errors && meting.get('relaties').touched">
-=======
       <mat-slider thumbLabel step="5" formControlName="relaties" id='sliderelement' type="MinRange" (input)="onInputChange($event, relatiesLabel.id)" ></mat-slider>
       <label #relatiesLabel id="relatiesLabel">30</label>
 
       <mat-error data-cy="errorRelaties" *ngIf="meting.errors && meting.get('relaties').dirty">
->>>>>>> metslider
         {{ getErrorMessage(meting.errors) }}<!-- is 100 error-->
       </mat-error>
       <button type="button" class="collapsible" data-cy="openvouwknop"></button> <!--openvouwen relaties-->
@@ -193,23 +166,10 @@
       </div>
 
       <h2>Gezondheid</h2>
-<<<<<<< HEAD
-      <div class="inputveld">
-      <mat-form-field > <!-- gezondheid -->
-        <input matInput data-cy="gezondheid" aria-label="gezondheid" placeholder="Gezondheid" type="text" formControlName="gezondheid" required #spy/>
-        <mat-error
-          *ngIf="meting.get('gezondheid')['errors'] && meting.get('gezondheid').touched"
-        ><!-- is required error-->
-          {{ getErrorMessage(meting.get('gezondheid')['errors']) }}
-        </mat-error>
-      </mat-form-field>
-      <mat-error *ngIf="meting.errors && meting.get('gezondheid').touched">
-=======
       <mat-slider thumbLabel step="5" formControlName="gezondheid" id='sliderelement' type="MinRange" (input)="onInputChange($event, gezondheidLabel.id)" ></mat-slider>
       <label #gezondheidLabel id="gezondheidLabel">10</label>
 
       <mat-error *ngIf="meting.errors && meting.get('gezondheid').dirty">
->>>>>>> metslider
         {{ getErrorMessage(meting.errors) }}<!-- is 100 error-->
       </mat-error>
 
@@ -285,23 +245,10 @@
       </div>
 
       <h2>Vrije tijd</h2>
-<<<<<<< HEAD
-      <div class="inputveld">
-      <mat-form-field > <!-- vrije tijd -->
-        <input matInput data-cy="vrijetijd" aria-label="vrijetijd" placeholder="Vrije Tijd" type="text" formControlName="vrijetijd" required #spy/>
-        <mat-error
-          *ngIf="meting.get('vrijetijd')['errors'] && meting.get('vrijetijd').touched"
-        > <!-- is required error-->
-          {{ getErrorMessage(meting.get('vrijetijd')['errors']) }}
-        </mat-error>
-      </mat-form-field>
-      <mat-error *ngIf="meting.errors && meting.get('vrijetijd').touched">
-=======
       <mat-slider thumbLabel step="5" formControlName="vrijetijd" id='sliderelement' type="MinRange" (input)="onInputChange($event, vrijetijdLabel.id)" ></mat-slider>
       <label #vrijetijdLabel id="vrijetijdLabel">10</label>
 
       <mat-error *ngIf="meting.errors && meting.get('vrijetijd').dirty">
->>>>>>> metslider
         {{ getErrorMessage(meting.errors) }}
       </mat-error><!-- is 100 error-->
 
