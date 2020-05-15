@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MetingAnalyseComponent } from './meting-analyse/meting-analyse.component';
 import { GaugeChartModule } from 'angular-gauge-chart';
+import {MatSliderModule} from '@angular/material/slider';
 
 const routes: Routes = [
   { path: 'list', component: MetingListComponent },
@@ -45,6 +46,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     HttpClientModule,
     GaugeChartModule,
+    MatSliderModule
   ],
   exports: [
     AddMetingComponent, 

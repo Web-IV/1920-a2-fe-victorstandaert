@@ -28,9 +28,9 @@ function validateCategorien(control: FormGroup): { [key: string]: any } {
 
 function validateOnderCategorien1(control : FormGroup): { [key: string]: any } {
   if(
-    parseInt(control.get('werk_Administratie').value) +
-    parseInt(control.get('werk_BezoekenKlanten').value) +
-    parseInt(control.get('werk_TelefonerenKlanten').value) != 100
+  parseInt(control.get('werk_Administratie').value) +
+  parseInt(control.get('werk_BezoekenKlanten').value) +
+  parseInt(control.get('werk_TelefonerenKlanten').value) != 100
   ){
     return { nietHonderdSamen1: true }
   } 
@@ -46,7 +46,7 @@ function validateOnderCategorien3(control : FormGroup): { [key: string]: any } {
   ){
     return {nietHonderdSamen3: true }
   }
-
+  
   return null;
 }
 
@@ -58,7 +58,7 @@ function validateOnderCategorien2(control : FormGroup): { [key: string]: any } {
   ){
     return { nietHonderdSamen2: true }
   }
-
+  
   return null;
 }
 
@@ -70,7 +70,7 @@ function validateOnderCategorien4(control : FormGroup): { [key: string]: any } {
   ){
     return {nietHonderdSamen4: true }
   }
-
+  
   return null;
 }
 
@@ -85,6 +85,7 @@ export class AddMetingComponent implements OnInit {
   public confirmationMessage: string = '';
   private _fetchMetingen$: Observable<Meting[]>;
   value = 0;
+  floatLabelControl = new FormControl('auto');
 
   constructor(
     private fb: FormBuilder,
@@ -98,12 +99,12 @@ export class AddMetingComponent implements OnInit {
   ngOnInit() : void {
 
     this.meting = this.fb.group({
+      floatLabel: this.floatLabelControl,
       id: [''],
-      slider: [0],
-      werk: ['0'],
-      relaties: ['0'],
-      gezondheid: ['0'],
-      vrijetijd: ['0'],
+      werk: [50],
+      relaties: [30],
+      gezondheid: [10],
+      vrijetijd: [10],
       resultaten: this.fb.array([this.createResultaten()])
     }, {validator: validateCategorien }
     );
@@ -123,9 +124,7 @@ export class AddMetingComponent implements OnInit {
       });
     }
 
-    
-
-    this.resultaten.valueChanges
+    /*this.resultaten.valueChanges
       .pipe(debounceTime(400), distinctUntilChanged())
       .subscribe((ingList) => {
         // if the last entry's name is typed, add a new empty one
@@ -144,8 +143,15 @@ export class AddMetingComponent implements OnInit {
             this.resultaten.removeAt(this.resultaten.length - 1);
           }
         }
-      });
+      });*/
   }
+
+  //label aan value slider gelijk stellen
+  onInputChange(event: any, id: any) {
+      document.getElementById(id).innerHTML = event.value;
+  }
+  
+  
 
   createResultaten(): FormGroup {
     return this.fb.group(
@@ -154,7 +160,7 @@ export class AddMetingComponent implements OnInit {
         amount: [0],
 
         //#region alle subcategorie inputvelden
-        werk_Administratie: ['0'],
+        werk_Administratie: ['100'],
         werk_BezoekenKlanten: ['0'],
         werk_TelefonerenKlanten: ['0'],
         werk_AdministratieIN: [''],
@@ -164,7 +170,7 @@ export class AddMetingComponent implements OnInit {
         werk_BezoekenKlantenUIT: [''],
         werk_TelefonerenKlantenUIT: [''],
 
-        relaties_Partner: ['0'],
+        relaties_Partner: ['100'],
         relaties_Kinderen: ['0'],
         relaties_Ouders: ['0'],
         relaties_PartnerIN: [''],
@@ -174,7 +180,7 @@ export class AddMetingComponent implements OnInit {
         relaties_KinderenUIT: [''],
         relaties_OudersUIT: [''],
 
-        gezondheid_Voeding: ['0'],
+        gezondheid_Voeding: ['100'],
         gezondheid_Sport: ['0'],
         gezondheid_Yoga: ['0'],
         gezondheid_VoedingIN: [''],
@@ -184,7 +190,7 @@ export class AddMetingComponent implements OnInit {
         gezondheid_SportUIT: [''],
         gezondheid_YogaUIT: [''],
 
-        vrijetijd_SM: ['0'],
+        vrijetijd_SM: ['100'],
         vrijetijd_TV: ['0'],
         vrijetijd_Hobby: ['0'],
         vrijetijd_SMIN: [''],
