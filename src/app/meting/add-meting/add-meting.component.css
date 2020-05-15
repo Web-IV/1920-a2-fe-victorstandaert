@@ -29,6 +29,7 @@
     display: block;
     overflow: hidden;
     background-color: #f1f1f1;
+    margin-bottom: 30px;;
   }
 .SubCat{
   float: left;
@@ -36,4 +37,39 @@
 
 .EindeSubCat{
   clear: both;
+}
+
+.mat-slider-horizontal {
+  width: 80%;
+}
+
+::ng-deep .mat-slider.mat-primary .mat-slider-thumb {
+  background-color: #18C1C0;
+}
+
+::ng-deep .mat-slider.mat-primary .mat-slider-track-fill {
+  background-color: #18C1C0;
+}
+
+::ng-deep .mat-slider.mat-primary .mat-slider-thumb-label {
+  background-color: #18C1C0;
+}
+
+::ng-deep .mat-slider .mat-slider-thumb-label {
+  background-color: #18C1C0; /*replace with your color*/
+}
+
+::ng-deep .mat-slider .mat-slider-thumb {
+  background-color: #18C1C0; /*replace with your color*/
+}
+
+::ng-deep .mat-slider .mat-slider-track-fill {
+  background-color: #18C1C0;  /*replace with your color*/
+}
+
+
+
+td{
+  width: 400px;
+  
 }

@@ -2,6 +2,7 @@
   <mat-card-content>
     <form class="inputcontainer" [formGroup]="meting" (ngSubmit)="onSubmit()">
       <h2>Werk</h2>
+<<<<<<< HEAD
     <div class="inputveld">
       <mat-form-field>  <!-- werk -->
         <input matInput data-cy="werk" id="werkinput" aria-label="werk" placeholder="Werk" type="text" formControlName="werk" required #spy/>
@@ -13,8 +14,14 @@
       </mat-form-field><!-- is 100 error-->
       <mat-error *ngIf="meting.errors && meting.get('werk').touched" data-cy="errorWerk">
         {{ getErrorMessage(meting.errors) }}
+=======
+      <mat-slider thumbLabel step="5" formControlName="werk" id='sliderelement' type="MinRange" (input)="onInputChange($event, werkLabel.id)" ></mat-slider>
+      <label #werkLabel id="werkLabel">50</label>
+
+      <mat-error data-cy="errorWerk" *ngIf="meting.errors && meting.get('werk').dirty">
+        {{ getErrorMessage(meting.errors) }}<!-- is 100 error-->
+>>>>>>> metslider
       </mat-error>
-    </div> 
 
       <button type="button" class="collapsible" data-cy="openvouwknop"></button>    <!--openvouwen werk-->
       <div class="content" formArrayName="resultaten" *ngFor="
@@ -22,35 +29,69 @@
           let i = index
         ">
         <div [formGroupName]="i"> <!--input fields -->     
-          <mat-form-field>
-            <input matInput data-cy="werkAdmin" id="werkAdminInput" type="text" aria-label="werk administratie" placeholder="Administratie" formControlName="werk_Administratie"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="werkAdminIN" id="werkAdminInputIN" type="text" aria-label="werk administratie IN" placeholder="Energie IN" formControlName="werk_AdministratieIN"/>
-          </mat-form-field>
-          <mat-form-field >
-            <input matInput data-cy="werkAdminUIT" id="werkAdminInputUIT" type="text" aria-label="werk administratie UIT" placeholder="Energie UIT" formControlName="werk_AdministratieUIT"/>
-          </mat-form-field>
-          <br />
-          <mat-form-field>
-            <input matInput data-cy="werkTelKlant" id="werkTelKlantInput" type="text" aria-label="werk telefoneren klanten" placeholder="Telefoneren klanten" formControlName="werk_TelefonerenKlanten"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="werkTelKlantIN" id="werkTelKlantInputIN" type="text" aria-label="werk telefoneren klanten IN" placeholder="Energie IN" formControlName="werk_TelefonerenKlantenIN"/>
-          </mat-form-field>
-          <mat-form-field >
-            <input matInput data-cy="werkTelKlantUIT" id="werkTelKlantInputUIT" type="text" aria-label="werk telefoneren klanten UIT" placeholder="Energie UIT" formControlName="werk_TelefonerenKlantenUIT"/>
-          </mat-form-field>
-          <br />
-          <mat-form-field>
-            <input matInput data-cy="werkBezKlant" id="werkBezKlantInput" type="text" aria-label="werk bezoeken klanten" placeholder="Bezoeken klanten" formControlName="werk_BezoekenKlanten"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="werkBezKlantIN" id="werkTelKlantInputIN" type="text" aria-label="werk telefoneren klanten IN" placeholder="Energie IN" formControlName="werk_BezoekenKlantenIN"/>
-          </mat-form-field>
-          <mat-form-field >
-            <input matInput data-cy="werkBezKlantUIT" id="werkTelKlantInputUIT" type="text" aria-label="werk telefoneren klanten UIT" placeholder="Energie UIT" formControlName="werk_BezoekenKlantenUIT"/>
-          </mat-form-field>
+          <table>
+            <tr >
+              <td>
+                <mat-form-field style="font-weight: bold;" appearance="standard" [floatLabel]="floatLabelControl.value">
+                  <input matInput placeholder="Bv: Administratie" >
+                </mat-form-field>
+                <mat-slider thumbLabel step="5" data-cy="werkAdmin" formControlName="werk_Administratie" id='sliderelement' type="MinRange" (input)="onInputChange($event, werkAdminLabel.id)" ></mat-slider>
+                <label #werkAdminLabel id="werkAdminLabel">100</label>
+              </td>
+              
+              <td>
+                <h4>Energie IN</h4>
+                <mat-slider min="-100" max="100" thumbLabel data-cy="werkAdminIN" formControlName="werk_AdministratieIN" id='sliderelement' type="MinRange" (input)="onInputChange($event, werkAdminINLabel.id)" ></mat-slider>
+                <label #werkAdminINLabel id="werkAdminINLabel">0</label>
+              </td>
+              <td>
+                <h4>Energie UIT</h4>
+                <mat-slider min="-100" max="100" class="derdesubcat" thumbLabel data-cy="werkAdminUIT" formControlName="werk_AdministratieUIT" id='sliderelement' type="MinRange" (input)="onInputChange($event, werkAdminUITLabel.id)" ></mat-slider>
+                <label class="derdesubcat" #werkAdminUITLabel id="werkAdminUITLabel">0</label>
+              </td>
+            </tr>
+            <br />
+            <tr>
+              <td>
+                <mat-form-field style="font-weight: bold;" appearance="standard" [floatLabel]="floatLabelControl.value">
+                  <input matInput placeholder="Bv: Telefoneren Klanten" >
+                </mat-form-field>
+                <mat-slider thumbLabel step="5" data-cy="werkTelKlant" formControlName="werk_TelefonerenKlanten" id='sliderelement' type="MinRange" (input)="onInputChange($event, werkTelKlantLabel.id)" ></mat-slider>
+                <label #werkTelKlantLabel id="werkTelKlantLabel">0</label>
+              </td>
+              <td>
+                <h4>Energie IN</h4>
+                <mat-slider min="-100" max="100" thumbLabel data-cy="werkTelKlantIN" formControlName="werk_TelefonerenKlantenIN" id='sliderelement' type="MinRange" (input)="onInputChange($event, werkTelKlantINLabel.id)" ></mat-slider>
+                <label #werkTelKlantINLabel id="werkTelKlantINLabel">0</label>
+              </td>
+              <td>
+                <h4>Energie UIT</h4>
+                <mat-slider min="-100" max="100" class="derdesubcat" thumbLabel data-cy="werkTelKlantUIT" formControlName="werk_TelefonerenKlantenUIT" id='sliderelement' type="MinRange" (input)="onInputChange($event, werkTelKlantUITLabel.id)" ></mat-slider>
+                <label class="derdesubcat" #werkTelKlantUITLabel id="werkTelKlantUITLabel">0</label>
+              </td>
+            </tr>
+            <br />
+            <tr>
+              <td>
+                <mat-form-field style="font-weight: bold;" appearance="standard" [floatLabel]="floatLabelControl.value">
+                  <input matInput placeholder="Bv: Bezoeken Klanten" >
+                </mat-form-field>
+                <mat-slider thumbLabel step="5" data-cy="werkBezKlant" formControlName="werk_BezoekenKlanten" id='sliderelement' type="MinRange" (input)="onInputChange($event, werkBezKlantLabel.id)" ></mat-slider>
+                <label #werkBezKlantLabel id="werkBezKlantLabel">0</label>
+              </td>
+              <td>
+                <h4>Energie IN</h4>
+                <mat-slider min="-100" max="100" thumbLabel data-cy="werkBezKlantIN" formControlName="werk_BezoekenKlantenIN" id='sliderelement' type="MinRange" (input)="onInputChange($event, werkBezKlantINLabel.id)" ></mat-slider>
+                <label #werkBezKlantINLabel id="werkBezKlantINLabel">0</label>
+              </td>
+              <td>
+              <h4>Energie UIT</h4>
+              <mat-slider min="-100" max="100" class="derdesubcat" thumbLabel data-cy="werkBezKlantUIT" formControlName="werk_BezoekenKlantenUIT" id='sliderelement' type="MinRange" (input)="onInputChange($event, werkBezKlantUITLabel.id)" ></mat-slider>
+              <label class="derdesubcat" #werkBezKlantUITLabel id="werkBezKlantUITLabel">0</label>
+              </td>
+            </tr>
+          </table>
+
           <br />
           <mat-error data-cy="errorOnderCatWerk" *ngIf="item.errors?.nietHonderdSamen1 && (item.get('werk_Administratie').touched || item.get('werk_TelefonerenKlanten').touched || item.get('werk_BezoekenKlanten').touched)">
             {{ getErrorMessage(item.errors) }}<!-- is 100 error-->
@@ -59,6 +100,7 @@
       </div>
 
       <h2>Relaties</h2>
+<<<<<<< HEAD
       <div class="inputveld">
       <mat-form-field> <!-- relaties -->
         <input matInput data-cy="relaties" aria-label="relaties" placeholder="Relaties" type="text" formControlName="relaties" required #spy/>
@@ -69,44 +111,80 @@
         </mat-error>
       </mat-form-field>
       <mat-error data-cy="errorRelaties" *ngIf="meting.errors && meting.get('relaties').touched">
+=======
+      <mat-slider thumbLabel step="5" formControlName="relaties" id='sliderelement' type="MinRange" (input)="onInputChange($event, relatiesLabel.id)" ></mat-slider>
+      <label #relatiesLabel id="relatiesLabel">30</label>
+
+      <mat-error data-cy="errorRelaties" *ngIf="meting.errors && meting.get('relaties').dirty">
+>>>>>>> metslider
         {{ getErrorMessage(meting.errors) }}<!-- is 100 error-->
       </mat-error>
-    </div>
       <button type="button" class="collapsible" data-cy="openvouwknop"></button> <!--openvouwen relaties-->
       <div class="content" formArrayName="resultaten" *ngFor="
           let item of meting.get('resultaten')['controls'];
           let i = index
         ">
         <div [formGroupName]="i" >  <!--input fields -->
-          <mat-form-field>
-            <input matInput data-cy="relatiesPartner" id="relatiesPartner" type="text" aria-label="relaties partner" placeholder="Partner" formControlName="relaties_Partner"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="relatiesPartnerIN" id="relatiesPartnerIN" type="text" aria-label="relaties partner IN" placeholder="Energie IN" formControlName="relaties_PartnerIN"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="relatiesPartnerUIT" id="relatiesPartnerUIT" type="text" aria-label="relaties partner" placeholder="Energie UIT" formControlName="relaties_PartnerUIT"/>
-          </mat-form-field>
-          <br />
-          <mat-form-field>
-            <input matInput data-cy="relatiesKinderen" id="relatiesKinderen" type="text" aria-label="relaties kinderen" placeholder="Kinderen" formControlName="relaties_Kinderen"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="relatiesKinderenIN" id="relatiesKinderenIN" type="text" aria-label="relaties kinderen IN" placeholder="Energie IN" formControlName="relaties_KinderenIN"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="relatiesKinderenUIT" id="relatiesKinderenUIT" type="text" aria-label="relaties kinderen UIT" placeholder="Energie UIT" formControlName="relaties_KinderenUIT"/>
-          </mat-form-field>
-          <br />
-          <mat-form-field>
-            <input matInput data-cy="relatiesOuders" id="relatiesOuders" type="text" aria-label="relaties ouders" placeholder="Ouders" formControlName="relaties_Ouders"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="relatiesOudersIN" id="relatiesOudersIN" type="text" aria-label="relaties ouders IN" placeholder="Energie IN" formControlName="relaties_OudersIN"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="relatiesOudersUIT" id="relatiesOudersUIT" type="text" aria-label="relaties ouders UIT" placeholder="Energie UIT" formControlName="relaties_OudersUIT"/>
-          </mat-form-field>
+          <table>
+            <tr>
+              <td>
+                <mat-form-field style="font-weight: bold;" appearance="standard" [floatLabel]="floatLabelControl.value">
+                  <input matInput placeholder="Bv: Partner" >
+                </mat-form-field>
+                <mat-slider thumbLabel step="5" data-cy="relatiesPartner" formControlName="relaties_Partner" id='sliderelement' type="MinRange" (input)="onInputChange($event, relatiesPartnerLabel.id)" ></mat-slider>
+                <label #relatiesPartnerLabel id="relatiesPartnerLabel">100</label>
+              </td>
+              <td>
+                <h4>Energie IN</h4>
+                <mat-slider min="-100" max="100" thumbLabel data-cy="relatiesPartnerIN" formControlName="relaties_PartnerIN" id='sliderelement' type="MinRange" (input)="onInputChange($event, relatiesPartnerINLabel.id)" ></mat-slider>
+                <label #relatiesPartnerINLabel id="relatiesPartnerINLabel">0</label>
+              </td>
+              <td>
+                <h4>Energie UIT</h4>
+                <mat-slider min="-100" max="100" class="derdesubcat" thumbLabel data-cy="relatiesPartnerUIT" formControlName="relaties_PartnerUIT" id='sliderelement' type="MinRange" (input)="onInputChange($event, relatiesPartnerUITLabel.id)" ></mat-slider>
+                <label class="derdesubcat" #relatiesPartnerUITLabel id="relatiesPartnerUITLabel">0</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <mat-form-field style="font-weight: bold;" appearance="standard" [floatLabel]="floatLabelControl.value">
+                  <input matInput placeholder="Bv: Kinderen" >
+                </mat-form-field>
+                <mat-slider thumbLabel step="5" data-cy="relatiesKinderen" formControlName="relaties_Kinderen" id='sliderelement' type="MinRange" (input)="onInputChange($event, relatiesKinderenLabel.id)" ></mat-slider>
+                <label #relatiesKinderenLabel id="relatiesKinderenLabel">0</label>
+              </td>
+              <td>
+                <h4>Energie IN</h4>
+                <mat-slider min="-100" max="100" thumbLabel data-cy="relatiesKinderenIN" formControlName="relaties_KinderenIN" id='sliderelement' type="MinRange" (input)="onInputChange($event, relatiesKinderenINLabel.id)" ></mat-slider>
+                <label #relatiesKinderenINLabel id="relatiesKinderenINLabel">0</label>
+              </td>
+              <td>
+                <h4>Energie UIT</h4>
+                <mat-slider min="-100" max="100" class="derdesubcat" thumbLabel data-cy="relatiesKinderenUIT" formControlName="relaties_KinderenUIT" id='sliderelement' type="MinRange" (input)="onInputChange($event, relatiesKinderenUITLabel.id)" ></mat-slider>
+                <label class="derdesubcat" #relatiesKinderenUITLabel id="relatiesKinderenUITLabel">0</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <mat-form-field style="font-weight: bold;" appearance="standard" [floatLabel]="floatLabelControl.value">
+                  <input matInput placeholder="Bv: Ouders" >
+                </mat-form-field>
+                <mat-slider thumbLabel step="5" data-cy="relatiesOuders" formControlName="relaties_Ouders" id='sliderelement' type="MinRange" (input)="onInputChange($event, relatiesOudersLabel.id)" ></mat-slider>
+                <label #relatiesOudersLabel id="relatiesOudersLabel">0</label>
+              </td>
+              <td>
+                <h4>Energie IN</h4>
+                <mat-slider min="-100" max="100" thumbLabel data-cy="relatiesOudersIN" formControlName="relaties_OudersIN" id='sliderelement' type="MinRange" (input)="onInputChange($event, relatiesOudersINLabel.id)" ></mat-slider>
+                <label #relatiesOudersINLabel id="relatiesOudersINLabel">0</label>
+              </td>
+              <td>
+                <h4>Energie UIT</h4>
+                <mat-slider min="-100" max="100" class="derdesubcat" thumbLabel data-cy="relatiesOudersUIT" formControlName="relaties_OudersUIT" id='sliderelement' type="MinRange" (input)="onInputChange($event, relatiesOudersUITLabel.id)" ></mat-slider>
+                <label class="derdesubcat" #relatiesOudersUITLabel id="relatiesOudersUITLabel">0</label>
+              </td>
+            </tr>
+          </table>
+              
           <br />
           <mat-error data-cy="errorOnderCatRelaties" *ngIf="item.errors?.nietHonderdSamen2 && (item.get('relaties_Partner').touched || item.get('relaties_Kinderen').touched || item.get('relaties_Ouders').touched)">
             {{ getErrorMessage(item.errors) }}<!-- is 100 error-->
@@ -115,6 +193,7 @@
       </div>
 
       <h2>Gezondheid</h2>
+<<<<<<< HEAD
       <div class="inputveld">
       <mat-form-field > <!-- gezondheid -->
         <input matInput data-cy="gezondheid" aria-label="gezondheid" placeholder="Gezondheid" type="text" formControlName="gezondheid" required #spy/>
@@ -125,45 +204,80 @@
         </mat-error>
       </mat-form-field>
       <mat-error *ngIf="meting.errors && meting.get('gezondheid').touched">
+=======
+      <mat-slider thumbLabel step="5" formControlName="gezondheid" id='sliderelement' type="MinRange" (input)="onInputChange($event, gezondheidLabel.id)" ></mat-slider>
+      <label #gezondheidLabel id="gezondheidLabel">10</label>
+
+      <mat-error *ngIf="meting.errors && meting.get('gezondheid').dirty">
+>>>>>>> metslider
         {{ getErrorMessage(meting.errors) }}<!-- is 100 error-->
       </mat-error>
-</div>
+
       <button type="button" class="collapsible" data-cy="openvouwknop"></button> <!--openvouwen gezondheid-->
       <div class="content" formArrayName="resultaten" *ngFor="
           let item of meting.get('resultaten')['controls'];
           let i = index
         ">
         <div [formGroupName]="i" >  <!--input fields -->
-          <mat-form-field>
-            <input matInput data-cy="gezondheidVoeding" id="gezondheidVoeding" type="text" aria-label="gezondheid voeding" placeholder="Voeding" formControlName="gezondheid_Voeding"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="gezondheidVoedingIN" id="gezondheidVoedingIN" type="text" aria-label="gezondheid voeding IN" placeholder="Energie IN" formControlName="gezondheid_VoedingIN"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="gezondheidVoedingUIT" id="gezondheidVoedingUIT" type="text" aria-label="gezondheid voeding UIT" placeholder="Energie UIT" formControlName="gezondheid_VoedingUIT"/>
-          </mat-form-field>
-          <br />
-          <mat-form-field>
-            <input matInput data-cy="gezondheidSport" id="gezondheidSport" type="text" aria-label="gezondheid Sport" placeholder="Sport" formControlName="gezondheid_Sport"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="gezondheidSportIN" id="gezondheidSportIN" type="text" aria-label="gezondheid Sport IN" placeholder="Energie IN" formControlName="gezondheid_SportIN"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="gezondheidSportUIT" id="gezondheidSportUIT" type="text" aria-label="gezondheid Sport UIT" placeholder="Energie UIT" formControlName="gezondheid_SportUIT"/>
-          </mat-form-field>
-          <br />
-          <mat-form-field>
-            <input matInput data-cy="gezondheidYoga" id="gezondheidYoga" type="text" aria-label="gezondheid Yoga" placeholder="Yoga" formControlName="gezondheid_Yoga"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="gezondheidYogaIN" id="gezondheidYogaIN" type="text" aria-label="gezondheid Yoga IN" placeholder="Energie IN" formControlName="gezondheid_YogaIN"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="gezondheidYogaUIT" id="gezondheidYogaUIT" type="text" aria-label="gezondheid Yoga UIT" placeholder="Energie UIT" formControlName="gezondheid_YogaUIT"/>
-          </mat-form-field>
-          <br/>
+          <table>
+            <tr>
+              <td>
+                <mat-form-field style="font-weight: bold;" appearance="standard" [floatLabel]="floatLabelControl.value">
+                  <input matInput placeholder="Bv: Voeding" >
+                </mat-form-field>
+                <mat-slider step="5" thumbLabel data-cy="gezondheidVoeding" formControlName="gezondheid_Voeding" id='sliderelement' type="MinRange" (input)="onInputChange($event, gezondheidVoedingLabel.id)" ></mat-slider>
+                <label #gezondheidVoedingLabel id="gezondheidVoedingLabel">100</label>
+              </td>
+              <td>
+                <h4>Energie IN</h4>
+                <mat-slider min="-100" max="100" thumbLabel data-cy="gezondheidVoedingIN" formControlName="gezondheid_VoedingIN" id='sliderelement' type="MinRange" (input)="onInputChange($event, gezondheidVoedingINLabel.id)" ></mat-slider>
+                <label #gezondheidVoedingINLabel id="gezondheidVoedingINLabel"></label>
+              </td>
+              <td>
+                <h4>Energie UIT</h4>
+                <mat-slider min="-100" max="100" class="derdesubcat" thumbLabel  data-cy="gezondheidVoedingUIT" formControlName="gezondheid_VoedingUIT" id='sliderelement' type="MinRange" (input)="onInputChange($event, gezondheidVoedingUITLabel.id)" ></mat-slider>
+                <label class="derdesubcat" #gezondheidVoedingUITLabel id="gezondheidVoedingUITLabel">0</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <mat-form-field style="font-weight: bold;" appearance="standard" [floatLabel]="floatLabelControl.value">
+                  <input matInput placeholder="Bv: Sport" >
+                </mat-form-field>
+                <mat-slider step="5" thumbLabel data-cy="gezondheidSport" formControlName="gezondheid_Sport" id='sliderelement' type="MinRange" (input)="onInputChange($event, gezondheidSportLabel.id)" ></mat-slider>
+                <label #gezondheidSportLabel id="gezondheidSportLabel">0</label>
+              </td>
+              <td>
+                <h4>Energie IN</h4>
+                <mat-slider min="-100" max="100" thumbLabel  data-cy="gezondheidSportIN" formControlName="gezondheid_SportIN" id='sliderelement' type="MinRange" (input)="onInputChange($event, gezondheidSportINLabel.id)" ></mat-slider>
+                <label #gezondheidSportINLabel id="gezondheidSportINLabel">0</label>
+              </td>
+              <td>
+                <h4>Energie UIT</h4>
+                <mat-slider min="-100" max="100" class="derdesubcat" thumbLabel  data-cy="gezondheidSportUIT" formControlName="gezondheid_SportUIT" id='sliderelement' type="MinRange" (input)="onInputChange($event, gezondheidSportUITLabel.id)" ></mat-slider>
+                <label class="derdesubcat" #gezondheidSportUITLabel id="gezondheidSportUITLabel">0</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <mat-form-field style="font-weight: bold;" appearance="standard" [floatLabel]="floatLabelControl.value">
+                  <input matInput placeholder="Bv: Yoga" >
+                </mat-form-field>
+                <mat-slider step="5" thumbLabel data-cy="gezondheidYoga" formControlName="gezondheid_Yoga" id='sliderelement' type="MinRange" (input)="onInputChange($event, gezondheidYogaLabel.id)" ></mat-slider>
+                <label #gezondheidYogaLabel id="gezondheidYogaLabel">0</label>
+              </td>
+              <td>
+                <h4>Energie IN</h4>
+                <mat-slider min="-100" max="100" thumbLabel  data-cy="gezondheidYogaIN" formControlName="gezondheid_YogaIN" id='sliderelement' type="MinRange" (input)="onInputChange($event, gezondheidYogaINLabel.id)" ></mat-slider>
+                <label #gezondheidYogaINLabel id="gezondheidYogaINLabel">0</label>
+              </td>
+              <td>
+                <h4>Energie UIT</h4>
+                <mat-slider min="-100" max="100" class="derdesubcat" thumbLabel data-cy="gezondheidYogaUIT" formControlName="gezondheid_YogaUIT" id='sliderelement' type="MinRange" (input)="onInputChange($event, gezondheidYogaUITLabel.id)" ></mat-slider>
+                <label class="derdesubcat" #gezondheidYogaUITLabel id="gezondheidYogaUITLabel">0</label>
+              </td>
+            </tr>
+          </table>
           <mat-error *ngIf="item.errors?.nietHonderdSamen3 && (item.get('gezondheid_Voeding').touched || item.get('gezondheid_Sport').touched || item.get('gezondheid_Yoga').touched)">
             {{ getErrorMessage(item.errors) }}<!-- is 100 error-->
           </mat-error>
@@ -171,6 +285,7 @@
       </div>
 
       <h2>Vrije tijd</h2>
+<<<<<<< HEAD
       <div class="inputveld">
       <mat-form-field > <!-- vrije tijd -->
         <input matInput data-cy="vrijetijd" aria-label="vrijetijd" placeholder="Vrije Tijd" type="text" formControlName="vrijetijd" required #spy/>
@@ -181,45 +296,81 @@
         </mat-error>
       </mat-form-field>
       <mat-error *ngIf="meting.errors && meting.get('vrijetijd').touched">
+=======
+      <mat-slider thumbLabel step="5" formControlName="vrijetijd" id='sliderelement' type="MinRange" (input)="onInputChange($event, vrijetijdLabel.id)" ></mat-slider>
+      <label #vrijetijdLabel id="vrijetijdLabel">10</label>
+
+      <mat-error *ngIf="meting.errors && meting.get('vrijetijd').dirty">
+>>>>>>> metslider
         {{ getErrorMessage(meting.errors) }}
       </mat-error><!-- is 100 error-->
-</div>
+
       <button type="button" class="collapsible" data-cy="openvouwknop"></button> <!--openvouwen vrije tijd-->
       <div class="content" formArrayName="resultaten" *ngFor="  
           let item of meting.get('resultaten')['controls'];
           let i = index
         ">
         <div [formGroupName]="i" >  <!--input fields -->
-          <mat-form-field>
-            <input matInput data-cy="vrijetijdSM" id="vrijetijdSM" type="text" aria-label="vrijetijd SM" placeholder="SmartPhone" formControlName="vrijetijd_SM"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="vrijetijdSMIN" id="vrijetijdSMIN" type="text" aria-label="vrijetijd SM IN" placeholder="Energie IN" formControlName="vrijetijd_SMIN"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="vrijetijdSMUIT" id="vrijetijdSMUIT" type="text" aria-label="vrijetijd SM UIT" placeholder="Energie UIT" formControlName="vrijetijd_SMUIT"/>
-          </mat-form-field>
-          <br/>
-          <mat-form-field>
-            <input matInput data-cy="vrijetijdTV" id="vrijetijdTV" type="text" aria-label="vrijetijd TV" placeholder="TV" formControlName="vrijetijd_TV"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="vrijetijdTVIN" id="vrijetijdTVIN" type="text" aria-label="vrijetijd TV IN" placeholder="Energie IN" formControlName="vrijetijd_TVIN"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="vrijetijdTVUIT" id="vrijetijdTVUIT" type="text" aria-label="vrijetijd TV UIT" placeholder="Energie UIT" formControlName="vrijetijd_TVUIT"/>
-          </mat-form-field>
-          <br/>
-          <mat-form-field>
-            <input matInput data-cy="vrijetijdHobby" id="vrijetijdHobby" type="text" aria-label="vrijetijd Hobby" placeholder="Hobby" formControlName="vrijetijd_Hobby"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="vrijetijdHobbyIN" id="vrijetijdHobbyIN" type="text" aria-label="vrijetijd Hobby IN" placeholder="Energie IN" formControlName="vrijetijd_HobbyIN"/>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput data-cy="vrijetijdHobbyUIT" id="vrijetijdHobbyUIT" type="text" aria-label="vrijetijd Hobby UIT" placeholder="Energie UIT" formControlName="vrijetijd_HobbyUIT"/>
-          </mat-form-field>
-          <br/>
+          <table>
+            <tr>
+              <td>
+                <mat-form-field style="font-weight: bold;" appearance="standard" [floatLabel]="floatLabelControl.value">
+                  <input matInput placeholder="Bv: Smarthphone" >
+                </mat-form-field>
+                <mat-slider step="5" thumbLabel data-cy="vrijetijdSM" formControlName="vrijetijd_SM" id='sliderelement' type="MinRange" (input)="onInputChange($event, vrijetijdSMLabel.id)" ></mat-slider>
+                <label #vrijetijdSMLabel id="vrijetijdSMLabel">100</label>
+              </td>
+              <td>
+                <h4>Energie IN</h4>
+                <mat-slider min="-100" max="100" thumbLabel  data-cy="vrijetijdSMIN" formControlName="vrijetijd_SMIN" id='sliderelement' type="MinRange" (input)="onInputChange($event, vrijetijdSMINLabel.id)" ></mat-slider>
+                <label #vrijetijdSMINLabel id="vrijetijdSMINLabel">0</label>
+              </td>
+              <td>
+                <h4>Energie UIT</h4>
+                <mat-slider min="-100" max="100" class="derdesubcat" thumbLabel data-cy="vrijetijdSMUIT" formControlName="vrijetijd_SMUIT" id='sliderelement' type="MinRange" (input)="onInputChange($event, vrijetijdSMUITLabel.id)" ></mat-slider>
+                <label class="derdesubcat" #vrijetijdSMUITLabel  id="vrijetijdSMUITLabel">0</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <mat-form-field style="font-weight: bold;" appearance="standard" [floatLabel]="floatLabelControl.value">
+                  <input matInput placeholder="Bv: TV kijken" >
+                </mat-form-field>
+                <mat-slider step="5" thumbLabel data-cy="vrijetijdTV" formControlName="vrijetijd_TV" id='sliderelement' type="MinRange" (input)="onInputChange($event, vrijetijdTVLabel.id)" ></mat-slider>
+                <label #vrijetijdTVLabel id="vrijetijdTVLabel">0</label>
+              </td>
+              <td>
+                <h4>Energie IN</h4>
+                <mat-slider min="-100" max="100" thumbLabel  data-cy="vrijetijdTVIN" formControlName="vrijetijd_TVIN" id='sliderelement' type="MinRange" (input)="onInputChange($event, vrijetijdTVINLabel.id)" ></mat-slider>
+                <label #vrijetijdTVINLabel id="vrijetijdTVINLabel">0</label>
+              </td>
+              <td>
+                <h4>Energie UIT</h4>
+                <mat-slider min="-100" max="100" class="derdesubcat" thumbLabel  data-cy="vrijetijdTVUIT" formControlName="vrijetijd_TVUIT" id='sliderelement' type="MinRange" (input)="onInputChange($event, vrijetijdTVUITLabel.id)" ></mat-slider>
+                <label class="derdesubcat" #vrijetijdTVUITLabel id="vrijetijdTVUITLabel">0</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <mat-form-field style="font-weight: bold;" appearance="standard" [floatLabel]="floatLabelControl.value">
+                  <input matInput placeholder="Bv: Hobby" >
+                </mat-form-field>
+                <mat-slider step="5" thumbLabel data-cy="vrijetijdHobby" formControlName="vrijetijd_Hobby" id='sliderelement' type="MinRange" (input)="onInputChange($event, vrijetijdHobbyLabel.id)" ></mat-slider>
+                <label #vrijetijdHobbyLabel id="vrijetijdHobbyLabel">0</label>
+              </td>
+              <td>
+                <h4>Energie IN</h4>
+                <mat-slider min="-100" max="100" thumbLabel  data-cy="vrijetijdHobbyIN" formControlName="vrijetijd_HobbyIN" id='sliderelement' type="MinRange" (input)="onInputChange($event, vrijetijdHobbyINLabel.id)" ></mat-slider>
+                <label #vrijetijdHobbyINLabel id="vrijetijdHobbyINLabel">0</label>
+              </td>
+              <td>
+                <h4>Energie UIT</h4>
+                <mat-slider min="-100" max="100" class="derdesubcat"  data-cy="vrijetijdHobbyUIT" formControlName="vrijetijd_HobbyUIT" id='sliderelement' type="MinRange" (input)="onInputChange($event, vrijetijdHobbyUITLabel.id)" ></mat-slider>
+                <label class="derdesubcat" #vrijetijdHobbyUITLabel id="vrijetijdHobbyUITLabel">0</label>
+              </td>
+            </tr>
+          </table>
+          <br />
           <mat-error *ngIf="item.errors?.nietHonderdSamen4 && (item.get('vrijetijd_SM').touched || item.get('vrijetijd_TV').touched || item.get('vrijetijd_Hobby').touched)">
             {{ getErrorMessage(item.errors) }}<!-- is 100 error-->
           </mat-error>
