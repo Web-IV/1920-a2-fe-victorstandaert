@@ -52,16 +52,16 @@ describe('My First Test', function() {
     
     goToMetingList();
 
-    cy.get('[data-cy=filterInput]').type('maart');
+    cy.get('[data-cy=filterInput]').type('march');
     cy.get('[data-cy=metingCard]').should('have.length', 1);    
 
-    cy.get('[data-cy=filterInput]').type('Maart');
+    cy.get('[data-cy=filterInput]').type('March');
     cy.get('[data-cy=metingCard]').should('have.length', 1);
 
-    cy.get('[data-cy=filterInput]').type('maart 26');
+    cy.get('[data-cy=filterInput]').type('march 26');
     cy.get('[data-cy=metingCard]').should('have.length', 1);
 
-    cy.get('[data-cy=filterInput]').type('maart 27');
+    cy.get('[data-cy=filterInput]').type('march 27');
     cy.get('[data-cy=metingCard]').should('have.length', 0);
   });
   
