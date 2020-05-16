@@ -17,7 +17,7 @@ export class MetingResolver implements Resolve<Meting> {
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<Meting> {
+  ): Observable<Meting> { //returnt een specifieke meting dmv een id als Observable<Meting>
     return this.metingService.getMeting$(route.params['id']);
   }
 }

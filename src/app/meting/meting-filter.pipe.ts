@@ -13,8 +13,8 @@ export class MetingFilterPipe implements PipeTransform {
       return metingen;
     }
     
-    return metingen.filter(rec =>
-      rec.dateAdded.toLocaleDateString('nl-BE', options).toLowerCase().includes(datum.toLowerCase())
+    return metingen.filter(m =>
+      m.dateAdded.toLocaleDateString('en-UK', options).toLowerCase().includes(datum.toLowerCase()) //returns alle metingen die voldoen aan de filter voor de property dateAdded
     );
   }
 }

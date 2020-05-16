@@ -8,7 +8,7 @@ export class Resultaat {
     private _amount: number,
   ) {}
 
-  static fromJSON(json: ResultaatJson): Resultaat {
+  static fromJSON(json: ResultaatJson): Resultaat { //zet json object om naar resultaat vorm en returnt het
     const amount =
       typeof json.amount === 'string' ? parseInt(json.amount) : json.amount;
 
@@ -16,7 +16,7 @@ export class Resultaat {
     return ing;
   }
 
-  toJSON(): ResultaatJson {
+  toJSON(): ResultaatJson { //zet resultaat object om naar json vorm en returnt het
     return { 
       vraag: this.vraag, 
       amount: this.amount, 

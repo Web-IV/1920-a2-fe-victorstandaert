@@ -18,20 +18,20 @@ export class Meting {
     _resultaten = this.resultaten;
   }
 
-  static fromJSON(json: MetingJson): Meting {
-    const rec = new Meting(
+  static fromJSON(json: MetingJson): Meting { //zet json object om naar meting vorm en returnt het
+    const m = new Meting(
       json.resultaten.map(Resultaat.fromJSON),
       new Date(json.created),
       json.metingResultaat,
       json.user
     );
-    rec._id = json.id;
-    return rec;
+    m._id = json.id;
+    return m;
   }
 
-  toJSON(): MetingJson {
+  toJSON(): MetingJson { //zet meting object om naar json vorm en returnt het
     return <MetingJson>{
-      resultaten: this.resultaten.map(ing => ing.toJSON()),
+      resultaten: this.resultaten.map(r => r.toJSON()),
       created: this.dateAdded.toString(),
       metingResultaat: this.metingResultaat,
       user: this.user
@@ -55,7 +55,8 @@ export class Meting {
   get metingResultaat(): number {
     return this._metingResultaat;
   }
-  addResultaat(type: string, amount?: number) {
+
+  addResultaat(type: string, amount?: number) { //pushed een nieuw resultaat op de array met meegegeven parameters
     this._resultaten.push(new Resultaat(type, amount));
   }
 }

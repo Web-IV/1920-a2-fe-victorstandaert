@@ -1,7 +1,7 @@
 <div fxLayout="column" fxLayoutGap="2%">
   <mat-card>
-    <mat-form-field>
-      <input
+    <mat-form-field> <!-- filter inputfield-->
+      <input 
         matInput
         (keyup)="filterMeting$.next($event.target.value)"
         placeholder="dd maand yyyy"
@@ -13,7 +13,7 @@
   <mat-card class="error" *ngIf="errorMessage" data-cy="appError">
     got an error while loading the meting list: {{ errorMessage }}
   </mat-card>
-  <div *ngIf="metingen$ | async as metingen; else loadingOrError">
+  <div *ngIf="metingen$ | async as metingen; else loadingOrError"> <!-- get alle metingen uit database-->
     <div
       fxLayout="row wrap"
       fxLayout.xs="column"
@@ -21,19 +21,20 @@
       fxLayoutAlign="start"
       
     >
+    <!--voor elke meting in metingen, filter op datum-->
       <div
         class="meting"
         *ngFor="let meting of metingen | metingFilter: filterMetingDatum"
         fxFlex="0 0 calc(25%-0.5%)"
         fxFlex.xs="100%"
-      >
-        <app-meting
+      > <!-- een indivuele meting met zijn resultaat en score, wanneer op geklikt, wordt er naar de analyse pagina van deze meting doorgestuurd-->
+        <app-meting 
           [id]=meting.id
           mat-list-item
           [meting]="meting" 
           data-cy="metingCard" 
           class="eenMeting"
-          [routerLink]="['../../meting/analyse', meting.id]">
+          [routerLink]="['../../meting/analyse', meting.id]"> <!--meting id wordt meegegeven in url-->
         </app-meting>
       </div>
     </div>

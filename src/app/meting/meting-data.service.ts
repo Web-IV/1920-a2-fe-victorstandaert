@@ -16,12 +16,11 @@ export class MetingDataService {
     this.metingen$
       .pipe(
         catchError((err) => {
-          // temporary fix, while we use the behaviorsubject as a cache stream
           this._metingen$.error(err);
           return throwError(err);
         })
       )
-      .subscribe((metingen: Meting[]) => {
+      .subscribe((metingen: Meting[]) => { //vult onze private attributen met metingen uit de database
         this._metingen = metingen;
         this._metingen$.next(this._metingen);
       });
@@ -33,7 +32,7 @@ export class MetingDataService {
   }
 
   get metingen$(): Observable<Meting[]> {
-    return this.http.get(`${environment.apiUrl}/Meting/`).pipe(   //return alle metingen ( per account MOET NOG GEBEUREN) !!!!!
+    return this.http.get(`${environment.apiUrl}/Meting/`).pipe(   //return alle metingen als json ( per account MOET NOG GEBEUREN) !!!!!
       tap(console.log),
       shareReplay(1),
       catchError(this.handleError),
@@ -41,38 +40,37 @@ export class MetingDataService {
     );
   }
 
-  getMeting$(id: number): Observable<Meting>{
+  getMeting$(id: number): Observable<Meting>{ // returns één Meting adhv een meegegeven id, als json 
     return this.http
       .get(`${environment.apiUrl}/Meting/${id}`)
       .pipe(
         catchError(this.handleError), 
         map(Meting.fromJSON)
-      ); // returns just one Meting, as json
+      ); 
   }
 
-  addNewMeting(meting: Meting) {
+  addNewMeting(meting: Meting) { //voegt nieuwe meting toe aan de database
     return this.http
       .post(`${environment.apiUrl}/Meting/`, meting.toJSON())
       .pipe(catchError(this.handleError), map(Meting.fromJSON))
       .pipe(
-        // temporary fix, while we use the behaviorsubject as a cache stream
         catchError((err) => {
           this._metingen$.error(err);
           return throwError(err);
         }),
-        tap((rec: Meting) => {
-          this._metingen = [...this._metingen, rec];
+        tap((m: Meting) => {
+          this._metingen = [...this._metingen, m];
           this._metingen$.next(this._metingen);
         })
       );
   }
 
-  deleteMeting(meting: Meting) {
+  deleteMeting(meting: Meting) { //delete meting in database
     return this.http
       .delete(`${environment.apiUrl}/Meting/${meting.id}`)
       .pipe(tap(console.log), catchError(this.handleError))
       .subscribe(() => {
-        this._metingen = this._metingen.filter((rec) => rec.id != meting.id);
+        this._metingen = this._metingen.filter((m) => m.id != meting.id);
         this._metingen$.next(this._metingen);
       });
   }

@@ -24,7 +24,7 @@ export class MetingListComponent implements OnInit {
   public errorMessage: string = '';
 
   constructor(private _metingDataService: MetingDataService) {
-    this.filterMeting$
+    this.filterMeting$ //filter op datum
       .pipe(
         distinctUntilChanged(),
         debounceTime(400),
@@ -33,17 +33,13 @@ export class MetingListComponent implements OnInit {
       .subscribe((val) => (this.filterMetingDatum = val));
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void { //haal alle metingen uit database
     this._fetchMetingen$ = this._metingDataService.allMetingen$.pipe(
       catchError((err) => {
         this.errorMessage = err;
         return EMPTY;
       })
     );
-  }
-
-  applyFilter(filter: string) {
-    this.filterMetingDatum = filter;
   }
 
   get metingen$(): Observable<Meting[]> {

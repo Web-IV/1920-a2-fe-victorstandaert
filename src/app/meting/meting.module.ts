@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { MetingListComponent } from './meting-list/meting-list.component';
 import { AddMetingComponent } from './add-meting/add-meting.component';
 import { MetingFilterPipe } from './meting-filter.pipe';
-import { MetingDetailComponent } from './meting-detail/meting-detail.component';
 import { MetingResolver } from './MetingResolver';
 import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -23,11 +22,6 @@ const routes: Routes = [
     component: MetingAnalyseComponent, 
     resolve: { meting: MetingResolver }
   },
-  {
-    path: 'detail/:id',
-    component: MetingDetailComponent,
-    resolve: { meting: MetingResolver },
-  },
 ];
 @NgModule({
   declarations: [
@@ -36,7 +30,6 @@ const routes: Routes = [
     MetingListComponent,
     AddMetingComponent,
     MetingFilterPipe,
-    MetingDetailComponent,
     MetingAnalyseComponent
   ],
   imports: [
