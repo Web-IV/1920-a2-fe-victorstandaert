@@ -2,7 +2,7 @@
   <mat-card-content>
     <form class="inputcontainer" [formGroup]="meting" (ngSubmit)="onSubmit()">
       <h2>Werk</h2>
-      <mat-slider thumbLabel step="5" formControlName="werk" id='sliderelement' type="MinRange" (input)="onInputChange($event, werkLabel.id)" ></mat-slider>
+      <mat-slider thumbLabel step="5" data-cy="werk" formControlName="werk" id='sliderelement' type="MinRange" (input)="onInputChange($event, werkLabel.id)" ></mat-slider>
       <label #werkLabel id="werkLabel">50</label>
 
       <mat-error data-cy="errorWerk" *ngIf="meting.errors && meting.get('werk').dirty">
@@ -86,7 +86,7 @@
       </div>
 
       <h2>Relaties</h2>
-      <mat-slider thumbLabel step="5" formControlName="relaties" id='sliderelement' type="MinRange" (input)="onInputChange($event, relatiesLabel.id)" ></mat-slider>
+      <mat-slider thumbLabel step="5" data-cy="relaties" formControlName="relaties" id='sliderelement' type="MinRange" (input)="onInputChange($event, relatiesLabel.id)" ></mat-slider>
       <label #relatiesLabel id="relatiesLabel">30</label>
 
       <mat-error data-cy="errorRelaties" *ngIf="meting.errors && meting.get('relaties').dirty">
@@ -166,7 +166,7 @@
       </div>
 
       <h2>Gezondheid</h2>
-      <mat-slider thumbLabel step="5" formControlName="gezondheid" id='sliderelement' type="MinRange" (input)="onInputChange($event, gezondheidLabel.id)" ></mat-slider>
+      <mat-slider thumbLabel step="5" data-cy="gezondheid" formControlName="gezondheid" id='sliderelement' type="MinRange" (input)="onInputChange($event, gezondheidLabel.id)" ></mat-slider>
       <label #gezondheidLabel id="gezondheidLabel">10</label>
 
       <mat-error *ngIf="meting.errors && meting.get('gezondheid').dirty">
@@ -245,7 +245,7 @@
       </div>
 
       <h2>Vrije tijd</h2>
-      <mat-slider thumbLabel step="5" formControlName="vrijetijd" id='sliderelement' type="MinRange" (input)="onInputChange($event, vrijetijdLabel.id)" ></mat-slider>
+      <mat-slider thumbLabel step="5" data-cy="vrijetijd" formControlName="vrijetijd" id='sliderelement' type="MinRange" (input)="onInputChange($event, vrijetijdLabel.id)" ></mat-slider>
       <label #vrijetijdLabel id="vrijetijdLabel">10</label>
 
       <mat-error *ngIf="meting.errors && meting.get('vrijetijd').dirty">

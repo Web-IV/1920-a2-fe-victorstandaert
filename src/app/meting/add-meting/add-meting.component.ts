@@ -12,6 +12,7 @@ import {
 import { Resultaat } from '../resultaat.model';
 import { debounceTime, distinctUntilChanged, catchError } from 'rxjs/operators';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ConditionalExpr } from '@angular/compiler';
 
 function validateCategorien(control: FormGroup): { [key: string]: any } {
   if(
@@ -101,10 +102,10 @@ export class AddMetingComponent implements OnInit {
     this.meting = this.fb.group({
       floatLabel: this.floatLabelControl,
       id: [''],
-      werk: [50],
-      relaties: [30],
-      gezondheid: [10],
-      vrijetijd: [10],
+      werk: [0],
+      relaties: [0],
+      gezondheid: [0],
+      vrijetijd: [0],
       resultaten: this.fb.array([this.createResultaten()])
     }, {validator: validateCategorien }
     );
@@ -160,53 +161,51 @@ export class AddMetingComponent implements OnInit {
         amount: [0],
 
         //#region alle subcategorie inputvelden
-        werk_Administratie: ['100'],
+        werk_Administratie: ['0'],
         werk_BezoekenKlanten: ['0'],
         werk_TelefonerenKlanten: ['0'],
-        werk_AdministratieIN: [''],
-        werk_BezoekenKlantenIN: [''],
-        werk_TelefonerenKlantenIN: [''],
-        werk_AdministratieUIT: [''],
-        werk_BezoekenKlantenUIT: [''],
-        werk_TelefonerenKlantenUIT: [''],
+        werk_AdministratieIN: ['0'],
+        werk_BezoekenKlantenIN: ['0'],
+        werk_TelefonerenKlantenIN: ['0'],
+        werk_AdministratieUIT: ['0'],
+        werk_BezoekenKlantenUIT: ['0'],
+        werk_TelefonerenKlantenUIT: ['0'],
 
-        relaties_Partner: ['100'],
+        relaties_Partner: ['0'],
         relaties_Kinderen: ['0'],
         relaties_Ouders: ['0'],
-        relaties_PartnerIN: [''],
-        relaties_KinderenIN: [''],
-        relaties_OudersIN: [''],
-        relaties_PartnerUIT: [''],
-        relaties_KinderenUIT: [''],
-        relaties_OudersUIT: [''],
+        relaties_PartnerIN: ['0'],
+        relaties_KinderenIN: ['0'],
+        relaties_OudersIN: ['0'],
+        relaties_PartnerUIT: ['0'],
+        relaties_KinderenUIT: ['0'],
+        relaties_OudersUIT: ['0'],
 
-        gezondheid_Voeding: ['100'],
+        gezondheid_Voeding: ['0'],
         gezondheid_Sport: ['0'],
         gezondheid_Yoga: ['0'],
-        gezondheid_VoedingIN: [''],
-        gezondheid_SportIN: [''],
-        gezondheid_YogaIN: [''],
-        gezondheid_VoedingUIT: [''],
-        gezondheid_SportUIT: [''],
-        gezondheid_YogaUIT: [''],
+        gezondheid_VoedingIN: ['0'],
+        gezondheid_SportIN: ['0'],
+        gezondheid_YogaIN: ['0'],
+        gezondheid_VoedingUIT: ['0'],
+        gezondheid_SportUIT: ['0'],
+        gezondheid_YogaUIT: ['0'],
 
-        vrijetijd_SM: ['100'],
+        vrijetijd_SM: ['0'],
         vrijetijd_TV: ['0'],
         vrijetijd_Hobby: ['0'],
-        vrijetijd_SMIN: [''],
-        vrijetijd_TVIN: [''],
-        vrijetijd_HobbyIN: [''],
-        vrijetijd_SMUIT: [''],
-        vrijetijd_TVUIT: [''],
-        vrijetijd_HobbyUIT: ['']
+        vrijetijd_SMIN: ['0'],
+        vrijetijd_TVIN: ['0'],
+        vrijetijd_HobbyIN: ['0'],
+        vrijetijd_SMUIT: ['0'],
+        vrijetijd_TVUIT: ['0'],
+        vrijetijd_HobbyUIT: ['0']
         //#endregion
       },
       {validators: [validateOnderCategorien1, validateOnderCategorien2, validateOnderCategorien3, validateOnderCategorien4]},
     );
   }
   onSubmit() {
-    
-    console.log(this.meting.value.slider);
 
     //#region eindresult en vraag aanpassen voor werk-categorie
     let energieINenUITsubcat1 = this.meting.value.resultaten.map(res => [res.werk_AdministratieIN, res.werk_AdministratieUIT,
@@ -312,7 +311,7 @@ export class AddMetingComponent implements OnInit {
     var energieTotaalSubCat = 0;
 
     for(var i = 0; i < energieINenUITsubcatRefined.length; i += 2 ){
-      if(!(energieINenUITsubcatRefined[i] == '' || energieINenUITsubcatRefined[i+1] == '' || ondercategorienRefined[i - (i/2)] == '')){
+      if(!(ondercategorienRefined[i - (i/2)] == 0)){
         energieINSubCat = parseInt(energieINenUITsubcatRefined[i], 10);
         energieUITSubCat = parseInt(energieINenUITsubcatRefined[i+1], 10);
 
@@ -323,16 +322,11 @@ export class AddMetingComponent implements OnInit {
         energieTotaalSubCat = energieTotaalSubCat * (ondercategorienRefined[i - (i / 2)]) / 100;
 
         energiesumsum += energieTotaalSubCat;
-        console.log(energiesumsum);
-
       }      
     }
     
-    console.log("cat:" + categorie);
-    console.log("sum:" + energiesumsum);
     eindres = energiesumsum * categorie / 100;
     
-    console.log(eindres);
     return eindres;
   }
 

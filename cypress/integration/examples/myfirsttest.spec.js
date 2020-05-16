@@ -67,60 +67,70 @@ describe('My First Test', function() {
   
   it('AddMetingt', function(){           //test add meting (formule)
 
-    goToAddMeting();
+    var vijftigRechts = [];
+    for(var i = 0; i <= 50; i++){
+      vijftigRechts[i] = '{rightarrow}';
+    }
+
+    var vijventwintigLinks = [];
+    for(var i = 0; i < 25; i++){
+      vijventwintigLinks[i] = '{leftarrow}';
+    }
+
+    goToAddMeting(); 
     //cy.get('[data-cy=openvouwknop]').click({multiple: true}); //openen collapsables
     //#region add meting inputs
-    cy.get('[data-cy=werk]').type('50');
-      cy.get('[data-cy=werkAdmin]').type('50');
-      cy.get('[data-cy=werkAdminIN]').type('0');
-      cy.get('[data-cy=werkAdminUIT]').type('100');
+    cy.get('[data-cy=werk]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 50
+      cy.get('[data-cy=werkAdmin]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 50
+      cy.get('[data-cy=werkAdminIN]').type('{rightarrow}'); //naar 0
+      cy.get('[data-cy=werkAdminUIT]').type('{end}'); //naar 100
 
-      cy.get('[data-cy=werkTelKlant]').type('30');
-      cy.get('[data-cy=werkTelKlantIN]').type('50');
-      cy.get('[data-cy=werkTelKlantUIT]').type('50');
+      cy.get('[data-cy=werkTelKlant]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); // naar 30
+      cy.get('[data-cy=werkTelKlantIN]').type(vijftigRechts.toString()); //naar 50
+      cy.get('[data-cy=werkTelKlantUIT]').type(vijftigRechts.toString()); //naar 50
 
-      cy.get('[data-cy=werkBezKlant]').type('20');
-      cy.get('[data-cy=werkBezKlantIN]').type('75');
-      cy.get('[data-cy=werkBezKlantUIT]').type('-25');
+      cy.get('[data-cy=werkBezKlant]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 20
+      cy.get('[data-cy=werkBezKlantIN]').type('{end}' + vijventwintigLinks.toString()); //naar 75
+      cy.get('[data-cy=werkBezKlantUIT]').type('{rightarrow}' + vijventwintigLinks.toString()); //naar -25
 
-    cy.get('[data-cy=relaties]').type('20');
-      cy.get('[data-cy=relatiesPartner]').type('50');
-      cy.get('[data-cy=relatiesPartnerIN]').type('-0');
-      cy.get('[data-cy=relatiesPartnerUIT]').type('100');
+    cy.get('[data-cy=relaties]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 20
+      cy.get('[data-cy=relatiesPartner]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 50
+      cy.get('[data-cy=relatiesPartnerIN]').type('{rightarrow}'); //blijft 0
+      cy.get('[data-cy=relatiesPartnerUIT]').type('{end}'); //naar 100
 
-      cy.get('[data-cy=relatiesKinderen]').type('30');
-      cy.get('[data-cy=relatiesKinderenIN]').type('50');
-      cy.get('[data-cy=relatiesKinderenUIT]').type('50');
+      cy.get('[data-cy=relatiesKinderen]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); // naar 30
+      cy.get('[data-cy=relatiesKinderenIN]').type(vijftigRechts.toString()); //naar 50
+      cy.get('[data-cy=relatiesKinderenUIT]').type(vijftigRechts.toString()); //naar 50
 
-      cy.get('[data-cy=relatiesOuders]').type('20');
-      cy.get('[data-cy=relatiesOudersIN]').type('75');
-      cy.get('[data-cy=relatiesOudersUIT]').type('-25');
+      cy.get('[data-cy=relatiesOuders]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 20
+      cy.get('[data-cy=relatiesOudersIN]').type('{end}' + vijventwintigLinks.toString()); //naar 75
+      cy.get('[data-cy=relatiesOudersUIT]').type('{rightarrow}' + vijventwintigLinks.toString()); //naar -25
 
-    cy.get('[data-cy=gezondheid]').type('20');
-      cy.get('[data-cy=gezondheidVoeding]').type('50');
-      cy.get('[data-cy=gezondheidVoedingIN]').type('0');
-      cy.get('[data-cy=gezondheidVoedingUIT]').type('100');
+    cy.get('[data-cy=gezondheid]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 20
+      cy.get('[data-cy=gezondheidVoeding]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 50
+      cy.get('[data-cy=gezondheidVoedingIN]').type('{rightarrow}'); //blijft 0
+      cy.get('[data-cy=gezondheidVoedingUIT]').type('{end}'); //naar 100
 
-      cy.get('[data-cy=gezondheidSport]').type('30');
-      cy.get('[data-cy=gezondheidSportIN]').type('50');
-      cy.get('[data-cy=gezondheidSportUIT]').type('50');
+      cy.get('[data-cy=gezondheidSport]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); // naar 30
+      cy.get('[data-cy=gezondheidSportIN]').type(vijftigRechts.toString()); //naar 50
+      cy.get('[data-cy=gezondheidSportUIT]').type(vijftigRechts.toString()); //naar 50
 
-      cy.get('[data-cy=gezondheidYoga]').type('20');
-      cy.get('[data-cy=gezondheidYogaIN]').type('75');
-      cy.get('[data-cy=gezondheidYogaUIT]').type('-25');
+      cy.get('[data-cy=gezondheidYoga]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 20
+      cy.get('[data-cy=gezondheidYogaIN]').type('{end}' + vijventwintigLinks.toString()); //naar 75
+      cy.get('[data-cy=gezondheidYogaUIT]').type('{rightarrow}' + vijventwintigLinks.toString()); //naar -25
 
-    cy.get('[data-cy=vrijetijd]').type('10');
-      cy.get('[data-cy=vrijetijdSM]').type('50');
-      cy.get('[data-cy=vrijetijdSMIN]').type('0');
-      cy.get('[data-cy=vrijetijdSMUIT]').type('100');
+    cy.get('[data-cy=vrijetijd]').type('{home}{rightarrow}{rightarrow}'); //naar 10
+      cy.get('[data-cy=vrijetijdSM]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 50
+      cy.get('[data-cy=vrijetijdSMIN]').type('{rightarrow}'); //blijft 0
+      cy.get('[data-cy=vrijetijdSMUIT]').type('{end}'); //naar 100
 
-      cy.get('[data-cy=vrijetijdTV]').type('30');
-      cy.get('[data-cy=vrijetijdTVIN]').type('50');
-      cy.get('[data-cy=vrijetijdTVUIT]').type('50');
+      cy.get('[data-cy=vrijetijdTV]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); // naar 30
+      cy.get('[data-cy=vrijetijdTVIN]').type(vijftigRechts.toString()); //naar 50
+      cy.get('[data-cy=vrijetijdTVUIT]').type(vijftigRechts.toString()); //naar 50
 
-      cy.get('[data-cy=vrijetijdHobby]').type('20');
-      cy.get('[data-cy=vrijetijdHobbyIN]').type('75');
-      cy.get('[data-cy=vrijetijdHobbyUIT]').type('-25');
+      cy.get('[data-cy=vrijetijdHobby]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 20
+      cy.get('[data-cy=vrijetijdHobbyIN]').type('{end}' + vijventwintigLinks.toString()); //naar 75
+      cy.get('[data-cy=vrijetijdHobbyUIT]').type('{rightarrow}' + vijventwintigLinks.toString()); //naar -25
 
     //#endregion
  
@@ -135,30 +145,30 @@ describe('My First Test', function() {
 
   })
 
-  it('AddMetingValidatie', function(){
+  it('AddMetingValidatie', function(){ //errormeldingen testen
 
     goToAddMeting();
     //cy.get('[data-cy=openvouwknop]').click({multiple: true});
 
-    cy.get('[data-cy=werk]').type('50');
-      cy.get('[data-cy=werkAdmin]').type('50');
-      cy.get('[data-cy=werkTelKlant]').type('0');
-      cy.get('[data-cy=werkBezKlant]').type('0');
+    cy.get('[data-cy=werk]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 50
+      cy.get('[data-cy=werkAdmin]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 50
+      cy.get('[data-cy=werkTelKlant]').type('{home}'); //naar 0
+      cy.get('[data-cy=werkBezKlant]').type('{home}'); //naar 0
 
     cy.get('[data-cy=errorWerk]').should('be.visible');
     cy.get('[data-cy=errorOnderCatWerk]').should('be.visible');
 
-    cy.get('[data-cy=relaties]').type('50');
-      cy.get('[data-cy=relatiesPartner]').type('50');
-      cy.get('[data-cy=relatiesKinderen]').type('30');
-      cy.get('[data-cy=relatiesOuders]').type('20');
+    cy.get('[data-cy=relaties]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 50
+      cy.get('[data-cy=relatiesPartner]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 50
+      cy.get('[data-cy=relatiesKinderen]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); // naar 30
+      cy.get('[data-cy=relatiesOuders]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 20
 
     cy.get('[data-cy=errorRelaties]').should('not.be.visible');
     cy.get('[data-cy=errorOnderCatRelaties]').should('not.be.visible');
 
   }) 
 
-  it('Analysetest1', function(){
+  it('Analysetest1', function(){ //test wanneer er op een meting wordt gedrukt, je wel naar de juiste metinganalyse pagina wordt gestuurd
     goToMetingAnalyse1();
 
     cy.location('pathname').should('equal', '/meting/analyse/1')
