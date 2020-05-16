@@ -6,11 +6,12 @@
     fxLayoutGap="0.5%"
     fxLayoutAlign="start">
 
-        <app-meting [meting]="meting" data-cy="metingCard" class="eenMeting"></app-meting>
+        <app-meting [meting]="meting" data-cy="metingCard" class="eenMeting"></app-meting> <!-- een individuale meting met zijn resultaten en score-->
 
     </div>
 
 
+    <!-- gauge chart voor de score-->
     <rg-gauge-chart class="chart"
         [canvasWidth]="canvasWidth"
         [needleValue]="needleValue"

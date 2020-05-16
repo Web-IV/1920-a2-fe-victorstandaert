@@ -14,7 +14,8 @@ import { debounceTime, distinctUntilChanged, catchError } from 'rxjs/operators';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ConditionalExpr } from '@angular/compiler';
 
-function validateCategorien(control: FormGroup): { [key: string]: any } {
+//#region custom validations
+function validateCategorien(control: FormGroup): { [key: string]: any } { //als de som van de categorieën niet gelijk is aan 100 => geef error
   if(
     parseInt(control.get('werk').value) +
     parseInt(control.get('relaties').value) +
@@ -27,7 +28,7 @@ function validateCategorien(control: FormGroup): { [key: string]: any } {
   return null;
 }
 
-function validateOnderCategorien1(control : FormGroup): { [key: string]: any } {
+function validateOnderCategorien1(control : FormGroup): { [key: string]: any } { //als de som van deze ondercategorieën niet gelijk is aan 100 => geef error
   if(
   parseInt(control.get('werk_Administratie').value) +
   parseInt(control.get('werk_BezoekenKlanten').value) +
@@ -39,7 +40,7 @@ function validateOnderCategorien1(control : FormGroup): { [key: string]: any } {
   return null;
 }
 
-function validateOnderCategorien3(control : FormGroup): { [key: string]: any } {
+function validateOnderCategorien3(control : FormGroup): { [key: string]: any } { //als de som van deze ondercategorieën niet gelijk is aan 100 => geef error
   if(
     parseInt(control.get('gezondheid_Voeding').value) +
     parseInt(control.get('gezondheid_Sport').value) +
@@ -51,7 +52,7 @@ function validateOnderCategorien3(control : FormGroup): { [key: string]: any } {
   return null;
 }
 
-function validateOnderCategorien2(control : FormGroup): { [key: string]: any } {
+function validateOnderCategorien2(control : FormGroup): { [key: string]: any } { //als de som van deze ondercategorieën niet gelijk is aan 100 => geef error
   if(
     parseInt(control.get('relaties_Partner').value) +
     parseInt(control.get('relaties_Kinderen').value) +
@@ -63,7 +64,7 @@ function validateOnderCategorien2(control : FormGroup): { [key: string]: any } {
   return null;
 }
 
-function validateOnderCategorien4(control : FormGroup): { [key: string]: any } {
+function validateOnderCategorien4(control : FormGroup): { [key: string]: any } { //als de som van deze ondercategorieën niet gelijk is aan 100 => geef error
   if(
     parseInt(control.get('vrijetijd_SM').value) +
     parseInt(control.get('vrijetijd_TV').value) +
@@ -74,6 +75,7 @@ function validateOnderCategorien4(control : FormGroup): { [key: string]: any } {
   
   return null;
 }
+//#endregion
 
 @Component({
   selector: 'app-add-meting',
@@ -99,18 +101,19 @@ export class AddMetingComponent implements OnInit {
   }
   ngOnInit() : void {
 
-    this.meting = this.fb.group({
+    this.meting = this.fb.group({ //formgroup van een meting
       floatLabel: this.floatLabelControl,
-      id: [''],
+      id: [''], //wordt automatisch toegewezen in backend
       werk: [0],
       relaties: [0],
       gezondheid: [0],
       vrijetijd: [0],
-      resultaten: this.fb.array([this.createResultaten()])
+      resultaten: this.fb.array([this.createResultaten()]) //formarray van resultaten
     }, {validator: validateCategorien }
     );
 
-    var coll = document.getElementsByClassName("collapsible");  //openvouwen categorie
+    //#region open- en dichvouwen categorie
+    var coll = document.getElementsByClassName("collapsible");  
     var i;
 
     for (i = 0; i < coll.length; i++) {
@@ -124,37 +127,15 @@ export class AddMetingComponent implements OnInit {
         }
       });
     }
-
-    /*this.resultaten.valueChanges
-      .pipe(debounceTime(400), distinctUntilChanged())
-      .subscribe((ingList) => {
-        // if the last entry's name is typed, add a new empty one
-        // if we're removing an entry's name, and there is an empty one after that one, remove the empty one
-        const lastElement = ingList[ingList.length - 1];
-
-        if (lastElement.type && lastElement.type.length > 2) {
-          this.resultaten.push(this.createResultaten());
-        } else if (ingList.length >= 2) {
-          const secondToLast = ingList[ingList.length - 2];
-          if (
-            !lastElement.vraag &&
-            !lastElement.amount &&
-            (!secondToLast.vraag || secondToLast.vraag.length < 2)
-          ) {
-            this.resultaten.removeAt(this.resultaten.length - 1);
-          }
-        }
-      });*/
+    //#endregion
   }
 
-  //label aan value slider gelijk stellen
+  //label aan slider-value gelijk stellen
   onInputChange(event: any, id: any) {
       document.getElementById(id).innerHTML = event.value;
-  }
-  
-  
+  }  
 
-  createResultaten(): FormGroup {
+  createResultaten(): FormGroup { //formgroup van een resultaat
     return this.fb.group(
       {
         vraag: ['test'],
@@ -205,82 +186,80 @@ export class AddMetingComponent implements OnInit {
       {validators: [validateOnderCategorien1, validateOnderCategorien2, validateOnderCategorien3, validateOnderCategorien4]},
     );
   }
+
   onSubmit() {
 
-    //#region eindresult en vraag aanpassen voor werk-categorie
-    let energieINenUITsubcat1 = this.meting.value.resultaten.map(res => [res.werk_AdministratieIN, res.werk_AdministratieUIT,
+    //#region amount en vraag aanpassen voor werk-categorie door in formule te steken
+    let energieINenUITsubcat1 = this.meting.value.resultaten.map(res => [res.werk_AdministratieIN, res.werk_AdministratieUIT, //ondercategorieen energie IN en UIT mappen
                                                                   res.werk_TelefonerenKlantenIN, res.werk_TelefonerenKlantenUIT,
                                                                   res.werk_BezoekenKlantenIN, res.werk_BezoekenKlantenUIT]);
-    let ondercategorien1 = this.meting.value.resultaten.map(res => [res.werk_Administratie, res.werk_TelefonerenKlanten, res.werk_BezoekenKlanten]);
+    let ondercategorien1 = this.meting.value.resultaten.map(res => [res.werk_Administratie, res.werk_TelefonerenKlanten, res.werk_BezoekenKlanten]); //ondercategorieen waarde mappen
     let categorie1 = this.meting.value.werk;
 
-    let eindres1 = this.berekenEindresultaatCategorie(ondercategorien1, categorie1, energieINenUITsubcat1);
+    let eindres1 = this.berekenEindresultaatCategorie(ondercategorien1, categorie1, energieINenUITsubcat1); //eindres van één subcategorie berekenen
     eindres1 = parseFloat(eindres1.toFixed(0));
 
-    this.resultaten.patchValue([
+    this.resultaten.patchValue([ //dit eindresultaat van één subcat in resultaten patchen
       {vraag: "Werk", amount: eindres1}
     ]);
     //#endregion
-    let resultaten = this.meting.value.resultaten.map(Resultaat.fromJSON);
+    let resultaten = this.meting.value.resultaten.map(Resultaat.fromJSON); //dit eindresultaat van één subcat in resultaten patchen
 
-    //#region eindresult en vraag aanpassen voor relaties-categorie
-    let energieINenUITsubcat2 = this.meting.value.resultaten.map(res => [res.relaties_PartnerIN, res.relaties_PartnerUIT,
+    //#region amount en vraag aanpassen voor relaties-categorie door in formule te steken
+    let energieINenUITsubcat2 = this.meting.value.resultaten.map(res => [res.relaties_PartnerIN, res.relaties_PartnerUIT, //ondercategorieen energie IN en UIT mappen
                                                                   res.relaties_KinderenIN, res.relaties_KinderenUIT,
                                                                   res.relaties_OudersIN, res.relaties_OudersUIT])
-    let ondercategorien2 = this.meting.value.resultaten.map(res => [res.relaties_Partner, res.relaties_Kinderen, res.relaties_Ouders]);
+    let ondercategorien2 = this.meting.value.resultaten.map(res => [res.relaties_Partner, res.relaties_Kinderen, res.relaties_Ouders]); //ondercategorieen waarde mappen
     let categorie2 = this.meting.value.relaties;
 
-    let eindres2 = this.berekenEindresultaatCategorie(ondercategorien2, categorie2, energieINenUITsubcat2);
+    let eindres2 = this.berekenEindresultaatCategorie(ondercategorien2, categorie2, energieINenUITsubcat2); //eindres van één subcategorie berekenen
     eindres2 = parseFloat(eindres2.toFixed(0));
 
-    this.resultaten.patchValue([
+    this.resultaten.patchValue([ //dit eindresultaat van één subcat in resultaten patchen
       {vraag: "Relaties", amount: eindres2}
     ]);
     //#endregion
-    resultaten.push(this.meting.value.resultaten.map(Resultaat.fromJSON)[0]);
+    resultaten.push(this.meting.value.resultaten.map(Resultaat.fromJSON)[0]); //dit eindresultaat van één subcat in resultaten patchen
 
-    //#region eindresult en vraag aanpassen voor gezondheid-categorie
-    let energieINenUITsubcat3 = this.meting.value.resultaten.map(res => [res.gezondheid_VoedingIN, res.gezondheid_VoedingUIT,
+    //#region amount en vraag aanpassen voor gezondheid-categorie door in formule te steken
+    let energieINenUITsubcat3 = this.meting.value.resultaten.map(res => [res.gezondheid_VoedingIN, res.gezondheid_VoedingUIT, //ondercategorieen energie IN en UIT mappen
                                                                   res.gezondheid_SportIN, res.gezondheid_SportUIT,
                                                                   res.gezondheid_YogaIN, res.gezondheid_YogaUIT])
-    let ondercategorien3 = this.meting.value.resultaten.map(res => [res.gezondheid_Voeding, res.gezondheid_Sport, res.gezondheid_Yoga]);
+    let ondercategorien3 = this.meting.value.resultaten.map(res => [res.gezondheid_Voeding, res.gezondheid_Sport, res.gezondheid_Yoga]); //ondercategorieen waarde mappen
     let categorie3 = this.meting.value.gezondheid;
 
-    let eindres3 = this.berekenEindresultaatCategorie(ondercategorien3, categorie3, energieINenUITsubcat3);
+    let eindres3 = this.berekenEindresultaatCategorie(ondercategorien3, categorie3, energieINenUITsubcat3); //eindres van één subcategorie berekenen
     eindres3 = parseFloat(eindres3.toFixed(0));
     
-    this.resultaten.patchValue([
+    this.resultaten.patchValue([ //dit eindresultaat van één subcat in resultaten patchen
       {vraag: "Gezondheid", amount: eindres3}
     ]);
     //#endregion
-    resultaten.push(this.meting.value.resultaten.map(Resultaat.fromJSON)[0]);
+    resultaten.push(this.meting.value.resultaten.map(Resultaat.fromJSON)[0]); //dit eindresultaat van één subcat in resultaten patchen
 
-    //#region eindresult en vraag aanpassen voor vrije tijd-categorie
-    let energieINenUITsubcat4 = this.meting.value.resultaten.map(res => [res.vrijetijd_SMIN, res.vrijetijd_SMUIT,
+    //#region amount en vraag aanpassen voor vrije tijd-categorie door in formule te steken
+    let energieINenUITsubcat4 = this.meting.value.resultaten.map(res => [res.vrijetijd_SMIN, res.vrijetijd_SMUIT, //ondercategorieen energie IN en UIT mappen
                                                                   res.vrijetijd_TVIN, res.vrijetijd_TVUIT,
                                                                   res.vrijetijd_HobbyIN, res.vrijetijd_HobbyUIT])
-    let ondercategorien4 = this.meting.value.resultaten.map(res => [res.vrijetijd_SM, res.vrijetijd_TV, res.vrijetijd_Hobby]);
-    let categorie4 = this.meting.value.vrijetijd;
+    let ondercategorien4 = this.meting.value.resultaten.map(res => [res.vrijetijd_SM, res.vrijetijd_TV, res.vrijetijd_Hobby]); //ondercategorieen waarde mappen
+    let categorie4 = this.meting.value.vrijetijd; //categorie waarde in let steken
 
-    let eindres4 = this.berekenEindresultaatCategorie(ondercategorien4, categorie4, energieINenUITsubcat4);
+    let eindres4 = this.berekenEindresultaatCategorie(ondercategorien4, categorie4, energieINenUITsubcat4); //eindres van één subcategorie berekenen
     eindres4 = parseFloat(eindres4.toFixed(0));
 
-    this.resultaten.patchValue([
+    this.resultaten.patchValue([ //dit eindresultaat van één subcat in resultaten patchen
       {vraag: "Vrije tijd", amount: eindres4}
     ]);
     //#endregion
-    resultaten.push(this.meting.value.resultaten.map(Resultaat.fromJSON)[0]);
+    resultaten.push(this.meting.value.resultaten.map(Resultaat.fromJSON)[0]); //dit eindresultaat van één subcat in resultaten patchen
 
-    console.log(resultaten);
 
-    let metingResultaat = this.berekenMetingResultaat([eindres1, eindres2, eindres3, eindres4]);
+    let metingResultaat = this.berekenMetingResultaat([eindres1, eindres2, eindres3, eindres4]); //eindresultaat (metingresultaat) berekenen adhv alle subcategorie resultatan
     metingResultaat = parseFloat(metingResultaat.toFixed(2));
 
-    //console.log(resultaten);
-    let dateTime = new Date();
-    //resultaten = resultaten.filter((res) => res.vraag.length > 2);
+    let dateTime = new Date(); //datum van vandaag nemen
     this._metingDataService
-      .addNewMeting(new Meting(resultaten, dateTime, metingResultaat))
+      .addNewMeting(new Meting(resultaten, dateTime, metingResultaat)) //nieuwe meting toevoegen met de subcategorieresultaten, de datum van vandaag en het metingresultaat
       .pipe(
         catchError((err) => {
           this.errorMessage = err;
@@ -290,42 +269,36 @@ export class AddMetingComponent implements OnInit {
       .subscribe((rec: Meting) => {
         this.confirmationMessage = `a meting for ${rec.id} was successfully added`;
       });
-
-    /*this.meting = this.fb.group({
-      //vraag: ['', [Validators.required, Validators.minLength(2)]],
-      resultaten: this.fb.array([this.createResultaten()]),
-    });*/
   }
 
+  berekenEindresultaatCategorie(subcategorien, categorie, energieINenUIT){     //berekening eindresturaat voor 1 categorie
+    let subcategorienRefined = subcategorien[0]; //onze array zit in een andere array voor een of andere reden, dus halen we die eruit
+    let energieINenUITRefined = energieINenUIT[0];
 
-  berekenEindresultaatCategorie(ondercategorien, categorie, energieINenUITsubcat){     //berekening eindresturaat voor 1 categorie
-    let ondercategorienRefined = ondercategorien[0];
-    let energieINenUITsubcatRefined = energieINenUITsubcat[0];
+    var energieSum = 0;
+    var energieTotaalSum = 0;
+    var energieIN = 0;
+    var energieUIT = 0;
+    var eindres = 0;
+    var alfa = 0;
+    var energieTotaal = 0;
 
-    var energiesumSubCat = 0;
-    var energiesumsum = 0;
-    var energieINSubCat = 0;
-    var energieUITSubCat = 0;
-    let eindres = 0;
-    var alfaSubCat = 0;
-    var energieTotaalSubCat = 0;
+    for(var i = 0; i < energieINenUITRefined.length; i += 2 ){ //forloop van de groote van de array. (i += 2 omdat er energieIN en -UIT is per subcategorie)
+      if(!(subcategorienRefined[i - (i/2)] == 0)){  // gaat enkel door als de subcategorie waarde die horen bij de enerieIN en UIT niet gelijk is aan 0
+        energieIN = parseInt(energieINenUITRefined[i], 10);
+        energieUIT = parseInt(energieINenUITRefined[i+1], 10);
 
-    for(var i = 0; i < energieINenUITsubcatRefined.length; i += 2 ){
-      if(!(ondercategorienRefined[i - (i/2)] == 0)){
-        energieINSubCat = parseInt(energieINenUITsubcatRefined[i], 10);
-        energieUITSubCat = parseInt(energieINenUITsubcatRefined[i+1], 10);
+        energieSum = Math.sqrt(Math.pow(energieIN, 2) + Math.pow(energieUIT, 2)); //formule
+        alfa = 180 / Math.PI * Math.asin(energieUIT / energieSum);
+        energieTotaal = energieSum * alfa / 100; //energie totaal voor subcategorie
 
-        energiesumSubCat = Math.sqrt(Math.pow(energieINSubCat, 2) + Math.pow(energieUITSubCat, 2));
-        alfaSubCat = 180 / Math.PI * Math.asin(energieUITSubCat / energiesumSubCat);
-        energieTotaalSubCat = energiesumSubCat * alfaSubCat / 100; //energie totaal voor subcategorie
+        energieTotaal = energieTotaal * (subcategorienRefined[i - (i / 2)]) / 100; //dit energietotaal maal de subcategoriewaarde (als je 50% invult bij die subcat weegt het maar voor de helft door)
 
-        energieTotaalSubCat = energieTotaalSubCat * (ondercategorienRefined[i - (i / 2)]) / 100;
-
-        energiesumsum += energieTotaalSubCat;
+        energieTotaalSum += energieTotaal; //som van alle subcategorie uitkomsten
       }      
     }
     
-    eindres = energiesumsum * categorie / 100;
+    eindres = energieTotaalSum * categorie / 100; //de som van alle subcat uitkomsten maal de hoofdcategorie percentage wordt het eindresultaat van één categorie
     
     return eindres;
   }
@@ -333,7 +306,7 @@ export class AddMetingComponent implements OnInit {
   berekenMetingResultaat(eindresultaten){   //berekenen metingresultaat
     var som = 0;
 
-    eindresultaten.forEach(eindres => {
+    eindresultaten.forEach(eindres => { //simpele som berekenen van alle categorieresultaten 
       som += eindres;
     });
 
@@ -354,38 +327,24 @@ export class AddMetingComponent implements OnInit {
     else if (errors.minlength) {
       return `needs at least ${errors.minlength.requiredLength} characters (got ${errors.minlength.actualLength})`;
     }  
-    else if(errors.nietHonderdSamen){
+    else if(errors.nietHonderdSamen){ //error voor de hoofdcategorieen
       return 'alle categorien moeten samen 100 zijn!'
     }
-    else if(errors.nietHonderdSamen1){
+    else if(errors.nietHonderdSamen1){ //error voor subcategorie werk
       return 'alle ondercategorien moeten samen 100 zijn!'
     }
-    else if(errors.nietHonderdSamen2){
+    else if(errors.nietHonderdSamen2){ //error voor subcategorie relaties
       return 'alle ondercategorien moeten samen 100 zijn!'
     }
-    else if(errors.nietHonderdSamen3){
+    else if(errors.nietHonderdSamen3){ //error voor subcategorie gezondheid
       return 'alle ondercategorien moeten samen 100 zijn!'
     }
-    else if(errors.nietHonderdSamen4){
+    else if(errors.nietHonderdSamen4){ //error voor subcategorie vrijetijd
       return 'alle ondercategorien moeten samen 100 zijn!'
     }
     
+//ik besef dat deze subcategorie error dezelfde zijn, maar als ik wil per categorie apart controleren of de subcategorieen gelijk zijn aan 100.
+//daarom controlleer ik in mijn html welke error wordt gegeven en zo kan ik per categorien controleren.
+
   }
-
-  /*bekijkMeting(){
-    console.log("bekijkmeting begin");
-    this._fetchMetingen$ = this._metingDataService.allMetingen$.pipe(
-      catchError((err) => {
-        this.errorMessage = err;
-        return EMPTY;
-      })
-    );
-
-    var lengte;
-    this.metingen$.subscribe(meting => lengte = meting.length);
-    var laatsteId = this.metingen$[lengte].map(val => val.id);
-    console.log("bekijkmeting einde");
-
-    this._router.navigate(['/../../meting/analyse', laatsteId])
-  }*/
 }

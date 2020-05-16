@@ -82,11 +82,11 @@ describe('My First Test', function() {
     //#region add meting inputs
     cy.get('[data-cy=werk]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 50
       cy.get('[data-cy=werkAdmin]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 50
-      cy.get('[data-cy=werkAdminIN]').type('{rightarrow}'); //naar 0
+      cy.get('[data-cy=werkAdminIN]').type('{home}'); //naar 0
       cy.get('[data-cy=werkAdminUIT]').type('{end}'); //naar 100
 
       cy.get('[data-cy=werkTelKlant]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); // naar 30
-      cy.get('[data-cy=werkTelKlantIN]').type(vijftigRechts.toString()); //naar 50
+      cy.get('[data-cy=werkTelKlantIN]').type('{home}' + vijftigRechts.toString() + '{leftarrow}'); //naar 50
       cy.get('[data-cy=werkTelKlantUIT]').type(vijftigRechts.toString()); //naar 50
 
       cy.get('[data-cy=werkBezKlant]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 20
@@ -95,11 +95,11 @@ describe('My First Test', function() {
 
     cy.get('[data-cy=relaties]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 20
       cy.get('[data-cy=relatiesPartner]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 50
-      cy.get('[data-cy=relatiesPartnerIN]').type('{rightarrow}'); //blijft 0
+      cy.get('[data-cy=relatiesPartnerIN]').type('{home}'); //blijft 0
       cy.get('[data-cy=relatiesPartnerUIT]').type('{end}'); //naar 100
 
       cy.get('[data-cy=relatiesKinderen]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); // naar 30
-      cy.get('[data-cy=relatiesKinderenIN]').type(vijftigRechts.toString()); //naar 50
+      cy.get('[data-cy=relatiesKinderenIN]').type('{home}' + vijftigRechts.toString() + '{leftarrow}'); //naar 50
       cy.get('[data-cy=relatiesKinderenUIT]').type(vijftigRechts.toString()); //naar 50
 
       cy.get('[data-cy=relatiesOuders]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 20
@@ -108,11 +108,11 @@ describe('My First Test', function() {
 
     cy.get('[data-cy=gezondheid]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 20
       cy.get('[data-cy=gezondheidVoeding]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 50
-      cy.get('[data-cy=gezondheidVoedingIN]').type('{rightarrow}'); //blijft 0
+      cy.get('[data-cy=gezondheidVoedingIN]').type('{home}'); //blijft 0
       cy.get('[data-cy=gezondheidVoedingUIT]').type('{end}'); //naar 100
 
       cy.get('[data-cy=gezondheidSport]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); // naar 30
-      cy.get('[data-cy=gezondheidSportIN]').type(vijftigRechts.toString()); //naar 50
+      cy.get('[data-cy=gezondheidSportIN]').type('{home}' + vijftigRechts.toString() + '{leftarrow}'); //naar 50
       cy.get('[data-cy=gezondheidSportUIT]').type(vijftigRechts.toString()); //naar 50
 
       cy.get('[data-cy=gezondheidYoga]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 20
@@ -121,11 +121,11 @@ describe('My First Test', function() {
 
     cy.get('[data-cy=vrijetijd]').type('{home}{rightarrow}{rightarrow}'); //naar 10
       cy.get('[data-cy=vrijetijdSM]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 50
-      cy.get('[data-cy=vrijetijdSMIN]').type('{rightarrow}'); //blijft 0
+      cy.get('[data-cy=vrijetijdSMIN]').type('{home}'); //blijft 0
       cy.get('[data-cy=vrijetijdSMUIT]').type('{end}'); //naar 100
 
       cy.get('[data-cy=vrijetijdTV]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); // naar 30
-      cy.get('[data-cy=vrijetijdTVIN]').type(vijftigRechts.toString()); //naar 50
+      cy.get('[data-cy=vrijetijdTVIN]').type('{home}' + vijftigRechts.toString() + '{leftarrow}'); //naar 50
       cy.get('[data-cy=vrijetijdTVUIT]').type(vijftigRechts.toString()); //naar 50
 
       cy.get('[data-cy=vrijetijdHobby]').type('{home}{rightarrow}{rightarrow}{rightarrow}{rightarrow}'); //naar 20

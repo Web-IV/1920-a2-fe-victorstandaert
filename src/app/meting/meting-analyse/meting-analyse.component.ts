@@ -36,14 +36,12 @@ export class MetingAnalyseComponent implements OnInit {
     this.route.data.subscribe(item => (this.meting = item['meting'])); //haal de specifieke meting op adhv id
 
     this.metingResult = this.meting.metingResultaat
-    console.log(this.metingResult);
 
-    this.metingResultOp100 = this.metingResult / 90 * 100; //default waarden gauge chart aanpassen
+    //default waarden gauge chart aanpassen
+    this.metingResultOp100 = this.metingResult / 90 * 100;  //waarde van een schaal van -90 tot 90 omzetten naar schaal van 0 tot 100
     this.metingResultOp100 = (this.metingResultOp100 / 2) + 50;
-    console.log(this.metingResultOp100);
 
     this.needleValue = this.metingResultOp100;
     this.bottomLabel = this.metingResult;
-    //this.options.arcDelimiters = [this.metingResultOp100];
   }
 }
