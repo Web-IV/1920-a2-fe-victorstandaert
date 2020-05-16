@@ -3,7 +3,7 @@
     <form class="inputcontainer" [formGroup]="meting" (ngSubmit)="onSubmit()">
       <h2>Werk</h2>
       <mat-slider thumbLabel step="5" data-cy="werk" formControlName="werk" id='sliderelement' type="MinRange" (input)="onInputChange($event, werkLabel.id)" ></mat-slider>
-      <label #werkLabel id="werkLabel">50</label>
+      <label #werkLabel id="werkLabel">0</label>
 
       <mat-error data-cy="errorWerk" *ngIf="meting.errors && meting.get('werk').dirty">
         {{ getErrorMessage(meting.errors) }}<!-- is 100 error-->
@@ -22,7 +22,7 @@
                   <input matInput placeholder="Bv: Administratie" >
                 </mat-form-field>
                 <mat-slider thumbLabel step="5" data-cy="werkAdmin" formControlName="werk_Administratie" id='sliderelement' type="MinRange" (input)="onInputChange($event, werkAdminLabel.id)" ></mat-slider>
-                <label #werkAdminLabel id="werkAdminLabel">100</label>
+                <label #werkAdminLabel id="werkAdminLabel">0</label>
               </td>
               
               <td>
@@ -87,7 +87,7 @@
 
       <h2>Relaties</h2>
       <mat-slider thumbLabel step="5" data-cy="relaties" formControlName="relaties" id='sliderelement' type="MinRange" (input)="onInputChange($event, relatiesLabel.id)" ></mat-slider>
-      <label #relatiesLabel id="relatiesLabel">30</label>
+      <label #relatiesLabel id="relatiesLabel">0</label>
 
       <mat-error data-cy="errorRelaties" *ngIf="meting.errors && meting.get('relaties').dirty">
         {{ getErrorMessage(meting.errors) }}<!-- is 100 error-->
@@ -105,7 +105,7 @@
                   <input matInput placeholder="Bv: Partner" >
                 </mat-form-field>
                 <mat-slider thumbLabel step="5" data-cy="relatiesPartner" formControlName="relaties_Partner" id='sliderelement' type="MinRange" (input)="onInputChange($event, relatiesPartnerLabel.id)" ></mat-slider>
-                <label #relatiesPartnerLabel id="relatiesPartnerLabel">100</label>
+                <label #relatiesPartnerLabel id="relatiesPartnerLabel">0</label>
               </td>
               <td>
                 <h4>Energie IN</h4>
@@ -167,7 +167,7 @@
 
       <h2>Gezondheid</h2>
       <mat-slider thumbLabel step="5" data-cy="gezondheid" formControlName="gezondheid" id='sliderelement' type="MinRange" (input)="onInputChange($event, gezondheidLabel.id)" ></mat-slider>
-      <label #gezondheidLabel id="gezondheidLabel">10</label>
+      <label #gezondheidLabel id="gezondheidLabel">0</label>
 
       <mat-error *ngIf="meting.errors && meting.get('gezondheid').dirty">
         {{ getErrorMessage(meting.errors) }}<!-- is 100 error-->
@@ -186,12 +186,12 @@
                   <input matInput placeholder="Bv: Voeding" >
                 </mat-form-field>
                 <mat-slider step="5" thumbLabel data-cy="gezondheidVoeding" formControlName="gezondheid_Voeding" id='sliderelement' type="MinRange" (input)="onInputChange($event, gezondheidVoedingLabel.id)" ></mat-slider>
-                <label #gezondheidVoedingLabel id="gezondheidVoedingLabel">100</label>
+                <label #gezondheidVoedingLabel id="gezondheidVoedingLabel">0</label>
               </td>
               <td>
                 <h4>Energie IN</h4>
                 <mat-slider min="-100" max="100" thumbLabel data-cy="gezondheidVoedingIN" formControlName="gezondheid_VoedingIN" id='sliderelement' type="MinRange" (input)="onInputChange($event, gezondheidVoedingINLabel.id)" ></mat-slider>
-                <label #gezondheidVoedingINLabel id="gezondheidVoedingINLabel"></label>
+                <label #gezondheidVoedingINLabel id="gezondheidVoedingINLabel">0</label>
               </td>
               <td>
                 <h4>Energie UIT</h4>
@@ -246,7 +246,7 @@
 
       <h2>Vrije tijd</h2>
       <mat-slider thumbLabel step="5" data-cy="vrijetijd" formControlName="vrijetijd" id='sliderelement' type="MinRange" (input)="onInputChange($event, vrijetijdLabel.id)" ></mat-slider>
-      <label #vrijetijdLabel id="vrijetijdLabel">10</label>
+      <label #vrijetijdLabel id="vrijetijdLabel">0</label>
 
       <mat-error *ngIf="meting.errors && meting.get('vrijetijd').dirty">
         {{ getErrorMessage(meting.errors) }}
@@ -265,7 +265,7 @@
                   <input matInput placeholder="Bv: Smarthphone" >
                 </mat-form-field>
                 <mat-slider step="5" thumbLabel data-cy="vrijetijdSM" formControlName="vrijetijd_SM" id='sliderelement' type="MinRange" (input)="onInputChange($event, vrijetijdSMLabel.id)" ></mat-slider>
-                <label #vrijetijdSMLabel id="vrijetijdSMLabel">100</label>
+                <label #vrijetijdSMLabel id="vrijetijdSMLabel">0</label>
               </td>
               <td>
                 <h4>Energie IN</h4>
