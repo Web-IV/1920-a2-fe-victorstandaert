@@ -11,8 +11,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MetingAnalyseComponent } from './meting-analyse/meting-analyse.component';
+import { MetingVooruitgangComponent } from './meting-vooruitgang/meting-vooruitgang.component';
 import { GaugeChartModule } from 'angular-gauge-chart';
-import {MatSliderModule} from '@angular/material/slider';
+import { MatSliderModule } from '@angular/material/slider';
+
 
 const routes: Routes = [
   { path: 'list', component: MetingListComponent },
@@ -22,6 +24,7 @@ const routes: Routes = [
     component: MetingAnalyseComponent, 
     resolve: { meting: MetingResolver }
   },
+  { path: 'vooruitgang', component: MetingVooruitgangComponent }
 ];
 @NgModule({
   declarations: [
@@ -30,7 +33,8 @@ const routes: Routes = [
     MetingListComponent,
     AddMetingComponent,
     MetingFilterPipe,
-    MetingAnalyseComponent
+    MetingAnalyseComponent,
+    MetingVooruitgangComponent
   ],
   imports: [
     CommonModule,
@@ -45,6 +49,7 @@ const routes: Routes = [
     AddMetingComponent, 
     MetingListComponent, 
     MetingAnalyseComponent, 
+    MetingVooruitgangComponent
   ],
 })
 export class MetingModule {}

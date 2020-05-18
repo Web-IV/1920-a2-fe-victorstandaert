@@ -1,5 +1,4 @@
 import { Component, NgModule } from '@angular/core';
-import { GoogleChartComponent } from 'angular-google-charts';
 
 
 @Component({
