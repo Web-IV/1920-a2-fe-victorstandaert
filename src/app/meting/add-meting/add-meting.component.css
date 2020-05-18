@@ -67,9 +67,16 @@
   background-color: #18C1C0;  /*replace with your color*/
 }
 
-
-
 td{
   width: 400px;
   
+}
+
+h3{
+  padding-left: 0.9em;
+}
+
+p{
+  padding-left: 1em;
+  font-family: 'Avenir', Helvetica, sans-serif;
 }
