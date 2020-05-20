@@ -16,8 +16,11 @@ export class MetingVooruitgangComponent implements OnInit  {
   private _fetchMetingen$: Observable<Meting[]>;
   canvas: any;
   ctx: any;
+  canvas2: any;
+  ctx2: any;
   errorMessage: string = '';
   metingenPerMaand: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  metingenPerMaandLijn: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   MaandTeller: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   dezeMaand = new Date().getMonth();
 
@@ -31,7 +34,7 @@ export class MetingVooruitgangComponent implements OnInit  {
         this.errorMessage = err;
         return EMPTY;
       })
-    );    
+    );       
 
     this._fetchMetingen$.forEach(meting => {
       meting.forEach(element => {
@@ -106,10 +109,13 @@ export class MetingVooruitgangComponent implements OnInit  {
       for(var i = 0; i < this.metingenPerMaand.length; i++){ //gemiddelde per maand
         if(this.MaandTeller[i] == 0 && i != 0 && i != 11){ 
           if(i >= (this.dezeMaand + 1)){
-            this.metingenPerMaand[i] = null; //als we de maand nog niet zijn, wordt de grafiek gestopt
+            this.metingenPerMaandLijn[i] = null; //als we de maand nog niet zijn, wordt de grafiek gestopt
           }else{
-            this.metingenPerMaand[i] = (this.metingenPerMaand[i-1] + this.metingenPerMaand[i+1]) /2; //als 0 is, pak gemiddelde van de maand ervoor en erachter
+            this.metingenPerMaandLijn[i] = (this.metingenPerMaand[i-1] + this.metingenPerMaand[i+1]) /2; //als 0 is, pak gemiddelde van de maand ervoor en erachter
           }
+        }
+        else{
+          this.metingenPerMaandLijn[i] = this.metingenPerMaand[i];
         }
       }
     });
@@ -117,8 +123,11 @@ export class MetingVooruitgangComponent implements OnInit  {
     this.canvas = document.getElementById('myChart');
     this.ctx = this.canvas.getContext('2d');
 
+    this.canvas2 = document.getElementById('myChart2');
+    this.ctx2 = this.canvas2.getContext('2d');
+
     let myChart = new Chart(this.ctx, {
-      type: 'line',
+      type: 'bar',
       data: {
         labels: ["Jan", "Feb", "March", "April", "May", "June","July","Aug","Sep","Oct","Nov","Dec"],
         datasets: [{
@@ -139,8 +148,49 @@ export class MetingVooruitgangComponent implements OnInit  {
           ],
           fill: false,
           lineTension: 0.2,
-          borderColor: "red",
-          borderWidth: 1
+          borderColor: "#18C1C0",
+          borderWidth: 2
+      }]
+      }, 
+      options: {
+        title:{
+          text:"Line Chart",
+          display: false
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+
+    let myChart2 = new Chart(this.ctx2, {
+      type: 'line',
+      data: {
+        labels: ["Jan", "Feb", "March", "April", "May", "June","July","Aug","Sep","Oct","Nov","Dec"],
+        datasets: [{
+          label: 'Gemiddelde score per maand',
+          data: [
+            this.metingenPerMaandLijn[0], 
+            this.metingenPerMaandLijn[1],
+            this.metingenPerMaandLijn[2], 
+            this.metingenPerMaandLijn[3],
+            this.metingenPerMaandLijn[4], 
+            this.metingenPerMaandLijn[5],
+            this.metingenPerMaandLijn[6], 
+            this.metingenPerMaandLijn[7],
+            this.metingenPerMaandLijn[8], 
+            this.metingenPerMaandLijn[9],
+            this.metingenPerMaandLijn[10], 
+            this.metingenPerMaandLijn[11],
+          ],
+          fill: false,
+          lineTension: 0.2,
+          borderColor: "#18C1C0",
+          borderWidth: 2
       }]
       }, 
       options: {

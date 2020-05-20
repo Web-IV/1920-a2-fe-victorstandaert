@@ -40,6 +40,13 @@ export class MetingListComponent implements OnInit {
         return EMPTY;
       })
     );
+
+    if (!localStorage.getItem('listIsLoaded')) { 
+      localStorage.setItem('listIsLoaded', 'no reload') 
+      location.reload() 
+    } else {
+      localStorage.removeItem('listIsLoaded') 
+    }
   }
 
   get metingen$(): Observable<Meting[]> {

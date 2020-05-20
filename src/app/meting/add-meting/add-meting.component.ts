@@ -29,49 +29,65 @@ function validateCategorien(control: FormGroup): { [key: string]: any } { //als 
 }
 
 function validateOnderCategorien1(control : FormGroup): { [key: string]: any } { //als de som van deze ondercategorieën niet gelijk is aan 100 => geef error
-  if(
-  parseInt(control.get('werk_Administratie').value) +
-  parseInt(control.get('werk_BezoekenKlanten').value) +
-  parseInt(control.get('werk_TelefonerenKlanten').value) != 100
-  ){
-    return { nietHonderdSamen1: true }
-  } 
+  
+  if(document.getElementById("werkLabel").innerHTML != "0"){ //als de categorie nog op 0 staat, moet er niet gecontrolleerd worden of de subcategorieen gelijk zijn aan 100
+    if(
+      parseInt(control.get('werk_Administratie').value) +
+      parseInt(control.get('werk_BezoekenKlanten').value) +
+      parseInt(control.get('werk_TelefonerenKlanten').value) != 100
+    ){
+      return { nietHonderdSamen1: true }
+    } 
+  }
+  
   
   return null;
 }
 
 function validateOnderCategorien3(control : FormGroup): { [key: string]: any } { //als de som van deze ondercategorieën niet gelijk is aan 100 => geef error
-  if(
-    parseInt(control.get('gezondheid_Voeding').value) +
-    parseInt(control.get('gezondheid_Sport').value) +
-    parseInt(control.get('gezondheid_Yoga').value) != 100
-  ){
-    return {nietHonderdSamen3: true }
+  
+  if(document.getElementById("gezondheidLabel").innerHTML != "0"){//als de categorie nog op 0 staat, moet er niet gecontrolleerd worden of de subcategorieen gelijk zijn aan 100
+    if(
+      parseInt(control.get('gezondheid_Voeding').value) +
+      parseInt(control.get('gezondheid_Sport').value) +
+      parseInt(control.get('gezondheid_Yoga').value) != 100
+    ){
+      return {nietHonderdSamen3: true }
+    }
   }
+  
   
   return null;
 }
 
 function validateOnderCategorien2(control : FormGroup): { [key: string]: any } { //als de som van deze ondercategorieën niet gelijk is aan 100 => geef error
-  if(
-    parseInt(control.get('relaties_Partner').value) +
-    parseInt(control.get('relaties_Kinderen').value) +
-    parseInt(control.get('relaties_Ouders').value) != 100
-  ){
-    return { nietHonderdSamen2: true }
+  
+  if(document.getElementById("relatiesLabel").innerHTML != "0"){//als de categorie nog op 0 staat, moet er niet gecontrolleerd worden of de subcategorieen gelijk zijn aan 100
+    if(
+      parseInt(control.get('relaties_Partner').value) +
+      parseInt(control.get('relaties_Kinderen').value) +
+      parseInt(control.get('relaties_Ouders').value) != 100
+    ){
+      return { nietHonderdSamen2: true }
+    }
   }
+  
   
   return null;
 }
 
 function validateOnderCategorien4(control : FormGroup): { [key: string]: any } { //als de som van deze ondercategorieën niet gelijk is aan 100 => geef error
-  if(
-    parseInt(control.get('vrijetijd_SM').value) +
-    parseInt(control.get('vrijetijd_TV').value) +
-    parseInt(control.get('vrijetijd_Hobby').value) != 100
-  ){
-    return {nietHonderdSamen4: true }
+  
+  if(document.getElementById("vrijetijdLabel").innerHTML != "0"){//als de categorie nog op 0 staat, moet er niet gecontrolleerd worden of de subcategorieen gelijk zijn aan 100
+    if(
+      parseInt(control.get('vrijetijd_SM').value) +
+      parseInt(control.get('vrijetijd_TV').value) +
+      parseInt(control.get('vrijetijd_Hobby').value) != 100
+    ){
+      return {nietHonderdSamen4: true }
+    }
   }
+  
   
   return null;
 }
@@ -109,10 +125,10 @@ export class AddMetingComponent implements OnInit {
       gezondheid: [0],
       vrijetijd: [0],
       resultaten: this.fb.array([this.createResultaten()]) //formarray van resultaten
-    }, {validator: validateCategorien }
+    }, {validator: validateCategorien}
     );
 
-    //#region open- en dichvouwen categorie
+    //#region open- en dichvouwen knop
     var coll = document.getElementsByClassName("collapsible");  
     var i;
 
@@ -133,12 +149,15 @@ export class AddMetingComponent implements OnInit {
   //label aan slider-value gelijk stellen
   onInputChange(event: any, id: any) {
       document.getElementById(id).innerHTML = event.value;
+      this.resultaten.patchValue([ //bij verandering van een slider, wordt de vraag veranderd (naar dezelfde waarde) omdat dan de validators opnieuw worden geccontrolleerd
+        {vraag: "startwaarde"}
+      ]);
   }  
 
   createResultaten(): FormGroup { //formgroup van een resultaat
     return this.fb.group(
       {
-        vraag: ['test'],
+        vraag: ['startwaarde'],
         amount: [0],
 
         //#region alle subcategorie inputvelden
@@ -253,9 +272,11 @@ export class AddMetingComponent implements OnInit {
     //#endregion
     resultaten.push(this.meting.value.resultaten.map(Resultaat.fromJSON)[0]); //dit eindresultaat van één subcat in resultaten patchen
 
-
+    console.log([eindres1, eindres2, eindres3, eindres4]);
     let metingResultaat = this.berekenMetingResultaat([eindres1, eindres2, eindres3, eindres4]); //eindresultaat (metingresultaat) berekenen adhv alle subcategorie resultatan
+    console.log(metingResultaat);
     metingResultaat = parseFloat(metingResultaat.toFixed(2));
+    console.log(metingResultaat);
 
     let dateTime = new Date(); //datum van vandaag nemen
     this._metingDataService
@@ -284,7 +305,7 @@ export class AddMetingComponent implements OnInit {
     var energieTotaal = 0;
 
     for(var i = 0; i < energieINenUITRefined.length; i += 2 ){ //forloop van de groote van de array. (i += 2 omdat er energieIN en -UIT is per subcategorie)
-      if(!(subcategorienRefined[i - (i/2)] == 0)){  // gaat enkel door als de subcategorie waarde die horen bij de enerieIN en UIT niet gelijk is aan 0
+      if(!(subcategorienRefined[i - (i/2)] == 0 || categorie == 0)){  // gaat enkel door als de subcategorie waarde die horen bij de enerieIN en UIT niet gelijk is aan 0
         energieIN = parseInt(energieINenUITRefined[i], 10);
         energieUIT = parseInt(energieINenUITRefined[i+1], 10);
 
@@ -307,7 +328,9 @@ export class AddMetingComponent implements OnInit {
     var som = 0;
 
     eindresultaten.forEach(eindres => { //simpele som berekenen van alle categorieresultaten 
-      som += eindres;
+      if(eindres !== NaN){
+        som += eindres;
+      }
     });
 
     return som;

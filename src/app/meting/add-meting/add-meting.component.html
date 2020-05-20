@@ -94,7 +94,7 @@
           </table>
 
           <br />
-          <mat-error data-cy="errorOnderCatWerk" *ngIf="item.errors?.nietHonderdSamen1 && (item.get('werk_Administratie').touched || item.get('werk_TelefonerenKlanten').touched || item.get('werk_BezoekenKlanten').touched)">
+          <mat-error data-cy="errorOnderCatWerk" *ngIf="item.errors?.nietHonderdSamen1"> <!-- er hoeft niet gekeken te worden naar .touched() omdat daar al wordt voor gezorgd in de typescript van add-meting-->
             {{ getErrorMessage(item.errors) }}<!-- is 100 error voor deze categorie alleen-->
           </mat-error>
         </div>
@@ -174,7 +174,7 @@
           </table>
               
           <br />
-          <mat-error data-cy="errorOnderCatRelaties" *ngIf="item.errors?.nietHonderdSamen2 && (item.get('relaties_Partner').touched || item.get('relaties_Kinderen').touched || item.get('relaties_Ouders').touched)">
+          <mat-error data-cy="errorOnderCatRelaties" *ngIf="item.errors?.nietHonderdSamen2"> <!-- er hoeft niet gekeken te worden naar .touched() omdat daar al wordt voor gezorgd in de typescript van add-meting-->
             {{ getErrorMessage(item.errors) }}<!-- is 100 error voor deze categorie alleen-->
           </mat-error>
         </div>
@@ -253,7 +253,7 @@
               </td>
             </tr>
           </table>
-          <mat-error *ngIf="item.errors?.nietHonderdSamen3 && (item.get('gezondheid_Voeding').touched || item.get('gezondheid_Sport').touched || item.get('gezondheid_Yoga').touched)">
+          <mat-error *ngIf="item.errors?.nietHonderdSamen3"> <!-- er hoeft niet gekeken te worden naar .touched() omdat daar al wordt voor gezorgd in de typescript van add-meting-->
             {{ getErrorMessage(item.errors) }}<!-- is 100 error voor deze categorie alleen-->
           </mat-error>
         </div>
@@ -333,7 +333,7 @@
             </tr>
           </table>
           <br />
-          <mat-error *ngIf="item.errors?.nietHonderdSamen4 && (item.get('vrijetijd_SM').touched || item.get('vrijetijd_TV').touched || item.get('vrijetijd_Hobby').touched)">
+          <mat-error *ngIf="item.errors?.nietHonderdSamen4 "> <!-- er hoeft niet gekeken te worden naar .touched() omdat daar al wordt voor gezorgd in de typescript van add-meting-->
             {{ getErrorMessage(item.errors) }}<!-- is 100 error voor deze categorie alleen-->
           </mat-error>
         </div>
