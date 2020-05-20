@@ -302,7 +302,7 @@ export class AddMetingComponent implements OnInit {
     var energieTotaal = 0;
 
     for(var i = 0; i < energieINenUITRefined.length; i += 2 ){ //forloop van de groote van de array. (i += 2 omdat er energieIN en -UIT is per subcategorie)
-      if(!(subcategorienRefined[i - (i/2)] == 0 || categorie == 0 || energieINenUITRefined[i] == 0 || energieINenUITRefined[i+1] == 0)){  // gaat enkel door als de subcategorie, categorie waarde die horen bij de enerieIN en UIT niet gelijk is aan 0, en ook energieIn en UIT zelf niet gelijk zijn aan 0
+      if(!(subcategorienRefined[i - (i/2)] == 0 || categorie == 0 || (energieINenUITRefined[i] == 0 && energieINenUITRefined[i+1] == 0))){  // gaat enkel door als de subcategorie, categorie waarde die horen bij de enerieIN en UIT niet gelijk is aan 0, en ook energieIn en UIT zelf niet gelijk zijn aan 0
 
         energieIN = parseInt(energieINenUITRefined[i], 10);
         energieUIT = parseInt(energieINenUITRefined[i+1], 10);

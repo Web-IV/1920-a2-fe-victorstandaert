@@ -31,7 +31,7 @@ function goToMetingAnalyse1(){ //ga naar de eerste meting analyse
   cy.get('[data-cy=login-password]').type('P@ssword1111')
   cy.contains('button', 'Login').click()
 
-  cy.get('app-meting').eq(0).parent().click(); //klik op de eerste meting (id=1)
+  cy.get('app-meting').eq(0).parent().click(); //klik op de eerste meting (id=4)
 }
 
 function goToMetingAnalyse2(){ //ga naar de tweede meting analyse
@@ -43,25 +43,30 @@ function goToMetingAnalyse2(){ //ga naar de tweede meting analyse
   cy.get('[data-cy=login-password]').type('P@ssword1111')
   cy.contains('button', 'Login').click()
 
-  cy.get('app-meting').eq(1).parent().click(); //klik op de eerste meting (id=2)
+  cy.get('app-meting').eq(1).parent().click(); //klik op de eerste meting (id=5)
 }
 
 describe('My First Test', function() {
   
   it('Filter', function() {            //test filter
     
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+
     goToMetingList();
 
-    cy.get('[data-cy=filterInput]').type('march');
-    cy.get('[data-cy=metingCard]').should('have.length', 1);    
+    cy.get('[data-cy=metingCard]').should('have.length', 2);
 
-    cy.get('[data-cy=filterInput]').type('March');
-    cy.get('[data-cy=metingCard]').should('have.length', 1);
+    cy.get('[data-cy=filterInput]').type('may');
+    cy.get('[data-cy=metingCard]').should('have.length', 2);    
 
-    cy.get('[data-cy=filterInput]').type('march 26');
-    cy.get('[data-cy=metingCard]').should('have.length', 1);
+    cy.get('[data-cy=filterInput]').type('May');
+    cy.get('[data-cy=metingCard]').should('have.length', 2);
 
-    cy.get('[data-cy=filterInput]').type('march 27');
+    cy.get('[data-cy=filterInput]').type('may ' + dd);
+    cy.get('[data-cy=metingCard]').should('have.length', 2);
+
+    cy.get('[data-cy=filterInput]').type('may ' +  (dd + 1));
     cy.get('[data-cy=metingCard]').should('have.length', 0);
   });
   
@@ -171,14 +176,14 @@ describe('My First Test', function() {
   it('Analysetest1', function(){ //test wanneer er op een meting wordt gedrukt, je wel naar de juiste metinganalyse pagina wordt gestuurd
     goToMetingAnalyse1();
 
-    cy.location('pathname').should('equal', '/meting/analyse/1')
+    cy.location('pathname').should('equal', '/meting/analyse/4')
   })
 
   it('Analysetest2', function(){
     goToMetingAnalyse2();
 
-    cy.location('pathname').should('equal', '/meting/analyse/2')
+    cy.location('pathname').should('equal', '/meting/analyse/5')
   })
 
-})
+}) 
 
