@@ -107,7 +107,7 @@ export class MetingVooruitgangComponent implements OnInit  {
         }
       }
       for(var i = 0; i < this.metingenPerMaand.length; i++){ //gemiddelde per maand
-        if(this.MaandTeller[i] == 0 && i != 0 && i != 11){ 
+        if(this.MaandTeller[i] == 0 && i != 0 && (i != 11 || i >= (this.dezeMaand + 1))){ //als de maand 0 is EN het is niet januari EN (het is niet december tenzij we deze maand nog niet zijn)
           if(i >= (this.dezeMaand + 1)){
             this.metingenPerMaandLijn[i] = null; //als we de maand nog niet zijn, wordt de grafiek gestopt
           }else{
@@ -147,10 +147,32 @@ export class MetingVooruitgangComponent implements OnInit  {
             this.metingenPerMaand[11],
           ],
           fill: false,
-          lineTension: 0.2,
+          lineTension: 0,
           borderColor: "#18C1C0",
           borderWidth: 2
-      }]
+      }, {
+      label: 'Gemiddelde score per maand',
+      data: [
+        this.metingenPerMaandLijn[0], 
+        this.metingenPerMaandLijn[1],
+        this.metingenPerMaandLijn[2], 
+        this.metingenPerMaandLijn[3],
+        this.metingenPerMaandLijn[4], 
+        this.metingenPerMaandLijn[5],
+        this.metingenPerMaandLijn[6], 
+        this.metingenPerMaandLijn[7],
+        this.metingenPerMaandLijn[8], 
+        this.metingenPerMaandLijn[9],
+        this.metingenPerMaandLijn[10], 
+        this.metingenPerMaandLijn[11],
+      ],
+      type: 'line',
+      fill: false,
+      lineTension: 0,
+      borderColor: "#18C1C0",
+      borderWidth: 2
+      
+    }]
       }, 
       options: {
         title:{
@@ -167,7 +189,7 @@ export class MetingVooruitgangComponent implements OnInit  {
       }
     });
 
-    let myChart2 = new Chart(this.ctx2, {
+    /*let myChart2 = new Chart(this.ctx2, {
       type: 'line',
       data: {
         labels: ["Jan", "Feb", "March", "April", "May", "June","July","Aug","Sep","Oct","Nov","Dec"],
@@ -206,7 +228,7 @@ export class MetingVooruitgangComponent implements OnInit  {
           }]
         }
       }
-    });
+    });*/
   
   }
   

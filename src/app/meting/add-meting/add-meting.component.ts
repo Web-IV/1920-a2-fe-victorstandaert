@@ -161,45 +161,45 @@ export class AddMetingComponent implements OnInit {
         amount: [0],
 
         //#region alle subcategorie inputvelden
-        werk_Administratie: ['0'],
-        werk_BezoekenKlanten: ['0'],
-        werk_TelefonerenKlanten: ['0'],
-        werk_AdministratieIN: ['0'],
-        werk_BezoekenKlantenIN: ['0'],
-        werk_TelefonerenKlantenIN: ['0'],
-        werk_AdministratieUIT: ['0'],
-        werk_BezoekenKlantenUIT: ['0'],
-        werk_TelefonerenKlantenUIT: ['0'],
+        werk_Administratie: [0],
+        werk_BezoekenKlanten: [0],
+        werk_TelefonerenKlanten: [0],
+        werk_AdministratieIN: [0],
+        werk_BezoekenKlantenIN: [0],
+        werk_TelefonerenKlantenIN: [0],
+        werk_AdministratieUIT: [0],
+        werk_BezoekenKlantenUIT: [0],
+        werk_TelefonerenKlantenUIT: [0],
 
-        relaties_Partner: ['0'],
-        relaties_Kinderen: ['0'],
-        relaties_Ouders: ['0'],
-        relaties_PartnerIN: ['0'],
-        relaties_KinderenIN: ['0'],
-        relaties_OudersIN: ['0'],
-        relaties_PartnerUIT: ['0'],
-        relaties_KinderenUIT: ['0'],
-        relaties_OudersUIT: ['0'],
+        relaties_Partner: [0],
+        relaties_Kinderen: [0],
+        relaties_Ouders: [0],
+        relaties_PartnerIN: [0],
+        relaties_KinderenIN: [0],
+        relaties_OudersIN: [0],
+        relaties_PartnerUIT: [0],
+        relaties_KinderenUIT: [0],
+        relaties_OudersUIT: [0],
 
-        gezondheid_Voeding: ['0'],
-        gezondheid_Sport: ['0'],
-        gezondheid_Yoga: ['0'],
-        gezondheid_VoedingIN: ['0'],
-        gezondheid_SportIN: ['0'],
-        gezondheid_YogaIN: ['0'],
-        gezondheid_VoedingUIT: ['0'],
-        gezondheid_SportUIT: ['0'],
-        gezondheid_YogaUIT: ['0'],
+        gezondheid_Voeding: [0],
+        gezondheid_Sport: [0],
+        gezondheid_Yoga: [0],
+        gezondheid_VoedingIN: [0],
+        gezondheid_SportIN: [0],
+        gezondheid_YogaIN: [0],
+        gezondheid_VoedingUIT: [0],
+        gezondheid_SportUIT: [0],
+        gezondheid_YogaUIT: [0],
 
-        vrijetijd_SM: ['0'],
-        vrijetijd_TV: ['0'],
-        vrijetijd_Hobby: ['0'],
-        vrijetijd_SMIN: ['0'],
-        vrijetijd_TVIN: ['0'],
-        vrijetijd_HobbyIN: ['0'],
-        vrijetijd_SMUIT: ['0'],
-        vrijetijd_TVUIT: ['0'],
-        vrijetijd_HobbyUIT: ['0']
+        vrijetijd_SM: [0],
+        vrijetijd_TV: [0],
+        vrijetijd_Hobby: [0],
+        vrijetijd_SMIN: [0],
+        vrijetijd_TVIN: [0],
+        vrijetijd_HobbyIN: [0],
+        vrijetijd_SMUIT: [0],
+        vrijetijd_TVUIT: [0],
+        vrijetijd_HobbyUIT: [0]
         //#endregion
       },
       {validators: [validateOnderCategorien1, validateOnderCategorien2, validateOnderCategorien3, validateOnderCategorien4]},
@@ -272,11 +272,8 @@ export class AddMetingComponent implements OnInit {
     //#endregion
     resultaten.push(this.meting.value.resultaten.map(Resultaat.fromJSON)[0]); //dit eindresultaat van één subcat in resultaten patchen
 
-    console.log([eindres1, eindres2, eindres3, eindres4]);
-    let metingResultaat = this.berekenMetingResultaat([eindres1, eindres2, eindres3, eindres4]); //eindresultaat (metingresultaat) berekenen adhv alle subcategorie resultatan
-    console.log(metingResultaat);
+    let metingResultaat = this.berekenMetingResultaat([eindres1, eindres2, eindres3, eindres4]); //eindresultaat (metingresultaat) berekenen adhv alle subcategorie resultaten
     metingResultaat = parseFloat(metingResultaat.toFixed(2));
-    console.log(metingResultaat);
 
     let dateTime = new Date(); //datum van vandaag nemen
     this._metingDataService
@@ -305,7 +302,8 @@ export class AddMetingComponent implements OnInit {
     var energieTotaal = 0;
 
     for(var i = 0; i < energieINenUITRefined.length; i += 2 ){ //forloop van de groote van de array. (i += 2 omdat er energieIN en -UIT is per subcategorie)
-      if(!(subcategorienRefined[i - (i/2)] == 0 || categorie == 0)){  // gaat enkel door als de subcategorie waarde die horen bij de enerieIN en UIT niet gelijk is aan 0
+      if(!(subcategorienRefined[i - (i/2)] == 0 || categorie == 0 || energieINenUITRefined[i] == 0 || energieINenUITRefined[i+1] == 0)){  // gaat enkel door als de subcategorie, categorie waarde die horen bij de enerieIN en UIT niet gelijk is aan 0, en ook energieIn en UIT zelf niet gelijk zijn aan 0
+
         energieIN = parseInt(energieINenUITRefined[i], 10);
         energieUIT = parseInt(energieINenUITRefined[i+1], 10);
 
