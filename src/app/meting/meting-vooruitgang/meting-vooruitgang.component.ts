@@ -188,47 +188,6 @@ export class MetingVooruitgangComponent implements OnInit  {
         }
       }
     });
-
-    /*let myChart2 = new Chart(this.ctx2, {
-      type: 'line',
-      data: {
-        labels: ["Jan", "Feb", "March", "April", "May", "June","July","Aug","Sep","Oct","Nov","Dec"],
-        datasets: [{
-          label: 'Gemiddelde score per maand',
-          data: [
-            this.metingenPerMaandLijn[0], 
-            this.metingenPerMaandLijn[1],
-            this.metingenPerMaandLijn[2], 
-            this.metingenPerMaandLijn[3],
-            this.metingenPerMaandLijn[4], 
-            this.metingenPerMaandLijn[5],
-            this.metingenPerMaandLijn[6], 
-            this.metingenPerMaandLijn[7],
-            this.metingenPerMaandLijn[8], 
-            this.metingenPerMaandLijn[9],
-            this.metingenPerMaandLijn[10], 
-            this.metingenPerMaandLijn[11],
-          ],
-          fill: false,
-          lineTension: 0.2,
-          borderColor: "#18C1C0",
-          borderWidth: 2
-      }]
-      }, 
-      options: {
-        title:{
-          text:"Line Chart",
-          display: false
-        },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
-    });*/
   
   }
   
