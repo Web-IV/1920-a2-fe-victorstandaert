@@ -9,3 +9,16 @@
     padding-top: 12px;
 }
 
+.uitleg{
+    float: left;
+    padding-top: 2%;
+    font-family: 'Avenir', Helvetica, sans-serif;
+}
+table{
+    padding: 12px;
+    
+}
+
+td{
+    padding: 8px;
+}
